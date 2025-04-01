@@ -9,8 +9,8 @@ export const projectId = process.env.SANITY_STUDIO_PROJECT_ID!
 export const dataset = process.env.SANITY_STUDIO_DATASET!
 
 export default defineConfig({
-  name: 'project-name',
-  title: 'Project Name',
+  name: 'knk-2025',
+  title: 'KNK 2025',
   projectId,
   dataset,
   plugins: [

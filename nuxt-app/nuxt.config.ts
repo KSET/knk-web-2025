@@ -1,11 +1,20 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import Aura from '@primeuix/themes/aura';
+import tsconfigPaths from 'vite-tsconfig-paths'
+
 export default defineNuxtConfig({
+  css: ['@/assets/fonts/fonts.css'],
+  vite: {
+    plugins: [tsconfigPaths()]
+  },
   modules: [
     '@nuxtjs/sanity',
+    '@primevue/nuxt-module',
     [
       '@nuxtjs/google-fonts',
       {
         families: {
+          'Montserrat': [500, 700],
           'IBM Plex Mono': [500, 700],
           Inter: [500, 700, 800],
           'PT Serif': [400, 700],
@@ -15,6 +24,17 @@ export default defineNuxtConfig({
       },
     ],
   ],
+
+  primevue: {
+    options: {
+        theme: {
+            preset: Aura,
+            options: {
+              darkModeSelector: false || "none",
+            },
+        }
+    }
+  },
 
   sanity: {
     projectId: process.env.NUXT_SANITY_PROJECT_ID,
