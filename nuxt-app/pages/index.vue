@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { Button } from 'primevue';
-import { type Post } from '~/types/Post'
+import { type Artist } from '~/types/Artist'
 
-const query = groq`*[ _type == "post" && defined(slug.current) ] | order(_createdAt desc)`
-const { data: posts } = await useSanityQuery<Post[]>(query)
+const query = groq`*[ _type == "artist"] | order(_createdAt desc)`
+const { data: artists } = await useSanityQuery<Artist[]>(query)
+
+console.log(artists)
 </script>
 
 <template>
@@ -31,15 +33,61 @@ const { data: posts } = await useSanityQuery<Post[]>(query)
       <div class="wall-text-container">
         <p class="title-text">O KNK-u</p>
         <p class="wall-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed odio in nunc sodales iaculis. Quisque scelerisque fermentum turpis cursus venenatis. Vestibulum semper sem in laoreet mattis. Nulla et vestibulum sem, sed sollicitudin arcu. Cras nunc dolor, pretium eu porttitor pretium, semper ut magna. Praesent euismod mauris non justo fringilla accumsan. In malesuada rutrum rhoncus. Sed quis lacinia erat. Mauris interdum gravida nibh a pharetra. Quisque in rutrum nunc. Donec vulputate sit amet velit pretium molestie. Integer vitae magna quis risus luctus iaculis. </p>
+      </div>
 
+        <p class="title-text">Izvođači</p>
+
+        <div class="artist-container">
+        <div v-for="artist in artists">
+          <img
+            v-if="artist.image"
+            :src="$urlFor(artist.image).url()"
+            alt="artist image"
+            class="artist-image"
+          />
+        </div>
       </div>
     </div>
   </div>
 
   
-  <img src="/assets/icons/prijelaz-zid-plaza.svg" alt="prijelaz-zid-plaza" class="prijelaz-zid-plaza-icon" />
+  <img src="/assets/icons/prijelaz-zid-plaza.svg" alt="prijelaz-zid-plaza" class="prijelaz-svg" />
 
-  <div class="prijelaz-divider"></div>
+  <div class="beach-wrapper">
+    <div class="beach-container">
+        <p class="title-text">Raspored</p>
+
+        <div class="artist-container">
+        <div v-for="artist in artists">
+          <img
+            v-if="artist.image"
+            :src="$urlFor(artist.image).url()"
+            alt="artist image"
+            class="artist-image"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <img src="/assets/icons/prijelaz-plaza-more.svg" alt="prijelaz-zid-plaza" class="prijelaz-svg" />
+
+  <div class="sea-wrapper">
+    <div class="sea-container">
+        <p class="title-text">Galerija</p>
+
+        <div class="artist-container">
+        <div v-for="artist in artists">
+          <img
+            v-if="artist.image"
+            :src="$urlFor(artist.image).url()"
+            alt="artist image"
+            class="artist-image"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
 
 </template>
 
@@ -101,6 +149,14 @@ const { data: posts } = await useSanityQuery<Post[]>(query)
   padding: 0;
 }
 
+.prijelaz-svg{
+  width: 100%;         /* Stretch to fill the full width of the container */
+  height: 4.5rem;      /* Fixed vertical height (adjust as needed) */
+  object-fit: cover;   /* Preserve aspect ratio and cover the area (crop overflow) */
+  object-position: 50% 50%; /* Center the SVG within its box (default) */
+  display: block; 
+}
+
 /*  --------------- WALL --------------- */
 
 .wall-divider{
@@ -116,19 +172,23 @@ const { data: posts } = await useSanityQuery<Post[]>(query)
 
   display: flex;
   justify-content: center;
-  flex-direction: row;
+  flex-direction: column;
 
   background-image: url('/assets/icons/zid-tekstura.svg');
   background-repeat: repeat;
   background-size: contain; 
+
+  padding-bottom: 1rem;
 }
 
 .wall-container{
-  width: 90%;
+  width: 100%;
+  padding-left: 1rem;
 }
 
 .wall-text{
   width: 100%;
+  padding-right: 1rem;
 }
 
 .title-text{
@@ -136,13 +196,53 @@ const { data: posts } = await useSanityQuery<Post[]>(query)
   font-weight: bold;
 }
 
-.prijelaz-divider {
-  height: 4.5rem;
-  width: 100%;
-  background-image: url('/assets/icons/prijelaz-zid-plaza.svg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%; /* stretch only vertically */
-  background-position: center;
+.artist-container{
+  display: flex;
+  flex-direction: row;
+  gap: 1rem ;
+  overflow: scroll;
+  padding-right: 1rem;
 }
 
+.artist-image{
+  width: 10rem;
+  height: 10rem;
+}
+
+
+/*  --------------- BEACH --------------- */
+
+.beach-wrapper{
+  background-color: #F3D864;
+  height: fit-content;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-bottom: 2rem;
+}
+
+.beach-container{
+  width: 100%;
+  padding-left: 1rem;
+}
+
+/*  --------------- SEA --------------- */
+
+.sea-wrapper{
+  background-color: #5C9C9C;
+  height: fit-content;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-bottom: 2rem;
+}
+
+.sea-container{
+  width: 100%;
+  padding-left: 1rem;
+}
 </style>
