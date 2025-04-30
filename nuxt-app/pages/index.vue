@@ -12,19 +12,19 @@ console.log(artists)
   <div class="header-wrapper">
     <div class="header-container">
 
-    <div class="header-text-container">
-      <p class="header-text">kset</p>
-      <p class="header-text" style="text-align: center">na krku</p>
-      <!-- <p class="header-text" style="text-align: end">2025</p> -->
-      <img src="/assets/icons/2025.svg" alt="2025" class="2025-icon" style="align-self: flex-end;" />
+      <div class="header-text-container">
+        <p class="header-text">kset</p>
+        <p class="header-text" style="text-align: center">na krku</p>
+        <!-- <p class="header-text" style="text-align: end">2025</p> -->
+        <img src="/assets/icons/2025.svg" alt="2025" class="2025-icon" style="align-self: flex-end;" />
+
+      </div>
+
+      <img src="/assets/icons/sunce.svg" alt="Sunce" class="sunce-icon" />
+      <img src="/assets/icons/oblaci.svg" alt="oblaci" class="oblaci-icon" />
 
     </div>
-
-    <img src="/assets/icons/sunce.svg" alt="Sunce" class="sunce-icon" />
-    <img src="/assets/icons/oblaci.svg" alt="oblaci" class="oblaci-icon" />
-
-  </div>
-  <p class="header-date">14.-16.8.2025.</p>
+    <p class="header-date">14.-16.8.2025.</p>
   </div>
 
   <div class="wall-divider" />
@@ -32,66 +32,85 @@ console.log(artists)
     <div class="wall-container">
       <div class="wall-text-container">
         <p class="title-text">O KNK-u</p>
-        <p class="wall-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed odio in nunc sodales iaculis. Quisque scelerisque fermentum turpis cursus venenatis. Vestibulum semper sem in laoreet mattis. Nulla et vestibulum sem, sed sollicitudin arcu. Cras nunc dolor, pretium eu porttitor pretium, semper ut magna. Praesent euismod mauris non justo fringilla accumsan. In malesuada rutrum rhoncus. Sed quis lacinia erat. Mauris interdum gravida nibh a pharetra. Quisque in rutrum nunc. Donec vulputate sit amet velit pretium molestie. Integer vitae magna quis risus luctus iaculis. </p>
+        <p class="wall-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed odio in nunc sodales
+          iaculis. Quisque scelerisque fermentum turpis cursus venenatis. Vestibulum semper sem in laoreet mattis. Nulla
+          et vestibulum sem, sed sollicitudin arcu. Cras nunc dolor, pretium eu porttitor pretium, semper ut magna.
+          Praesent euismod mauris non justo fringilla accumsan. In malesuada rutrum rhoncus. Sed quis lacinia erat.
+          Mauris interdum gravida nibh a pharetra. Quisque in rutrum nunc. Donec vulputate sit amet velit pretium
+          molestie. Integer vitae magna quis risus luctus iaculis. </p>
       </div>
 
-        <p class="title-text">Izvođači</p>
+      <p class="title-text">Izvođači</p>
 
-        <div class="artist-container">
+      <div class="artist-container">
         <div v-for="artist in artists">
-          <img
-            v-if="artist.image"
-            :src="$urlFor(artist.image).url()"
-            alt="artist image"
-            class="artist-image"
-          />
+          <img v-if="artist.image" :src="$urlFor(artist.image).url()" alt="artist image" class="artist-image" />
+          <p>{{ artist.name }}</p>
         </div>
       </div>
     </div>
   </div>
 
-  
-  <img src="/assets/icons/prijelaz-zid-plaza.svg" alt="prijelaz-zid-plaza" class="prijelaz-svg" />
+  <div class="prijelaz-container">
+    <img src="/assets/prijelazi/prijelaz-zid-plaza.svg" alt="prijelaz-zid-plaza" />
+  </div>
 
   <div class="beach-wrapper">
     <div class="beach-container">
-        <p class="title-text">Raspored</p>
+      <p class="title-text">Raspored</p>
 
-        <div class="artist-container">
+      <div class="artist-container">
         <div v-for="artist in artists">
-          <img
-            v-if="artist.image"
-            :src="$urlFor(artist.image).url()"
-            alt="artist image"
-            class="artist-image"
-          />
+          <img v-if="artist.image" :src="$urlFor(artist.image).url()" alt="artist image" class="artist-image" />
         </div>
       </div>
     </div>
   </div>
 
-  <img src="/assets/icons/prijelaz-plaza-more.svg" alt="prijelaz-zid-plaza" class="prijelaz-svg" />
+  <div class="prijelaz-container">
+    <img src="/assets/prijelazi/prijelaz-plaza-more.svg" alt="prijelaz-zid-plaza" />
+  </div>
 
   <div class="sea-wrapper">
     <div class="sea-container">
-        <p class="title-text">Galerija</p>
+      <p class="title-text">Galerija</p>
 
-        <div class="artist-container">
-        <div v-for="artist in artists">
-          <img
-            v-if="artist.image"
-            :src="$urlFor(artist.image).url()"
-            alt="artist image"
-            class="artist-image"
-          />
-        </div>
-      </div>
+      <Carousel :value="artists" :numVisible="1" :numScroll="1" :circular="true" :autoplayInterval="10000"
+        :autoplay="true">
+        <template #item="slotProps">
+          <div class="gallery-container">
+            <img v-if="slotProps.data.image" :src="$urlFor(slotProps.data.image).url()" alt="artist image"
+              class="gallery-image" />
+          </div>
+        </template>
+      </Carousel>
     </div>
   </div>
 
 </template>
 
+<style>
+:root {
+  --p-carousel-indicator-active-background: #E55A8E !important;
+}
+
+.p-carousel-indicator-active .p-carousel-indicator-button {
+  background-color: #E55A8E !important;
+}
+</style>
+
 <style scoped>
+.prijelaz-container {
+  height: 4.5rem;
+  width: 100%;
+  background-color: #F3D864;
+}
+
+.prijelaz-container img {
+  object-fit: fill;
+  width: 100%;
+}
+
 /*  --------------- HEADER --------------- */
 
 .header-wrapper {
@@ -102,7 +121,7 @@ console.log(artists)
 
 .header-container {
   position: relative;
-  
+
 
   display: flex;
   justify-content: center;
@@ -140,7 +159,7 @@ console.log(artists)
   width: 100%;
 }
 
-.header-date{
+.header-date {
   font-family: "Bright";
   color: #EFE5DD;
   font-size: 1rem;
@@ -149,23 +168,27 @@ console.log(artists)
   padding: 0;
 }
 
-.prijelaz-svg{
-  width: 100%;         /* Stretch to fill the full width of the container */
-  height: 4.5rem;      /* Fixed vertical height (adjust as needed) */
-  object-fit: cover;   /* Preserve aspect ratio and cover the area (crop overflow) */
-  object-position: 50% 50%; /* Center the SVG within its box (default) */
-  display: block; 
+.prijelaz-svg {
+  width: 100%;
+  /* Stretch to fill the full width of the container */
+  height: 4.5rem;
+  /* Fixed vertical height (adjust as needed) */
+  object-fit: cover;
+  /* Preserve aspect ratio and cover the area (crop overflow) */
+  object-position: 50% 50%;
+  /* Center the SVG within its box (default) */
+  display: block;
 }
 
 /*  --------------- WALL --------------- */
 
-.wall-divider{
+.wall-divider {
   background-color: #E55A8E;
   width: 100%;
   height: 1rem;
 }
 
-.wall-wrapper{
+.wall-wrapper {
   background-color: #DD7D91;
   height: fit-content;
   width: 100%;
@@ -176,35 +199,35 @@ console.log(artists)
 
   background-image: url('/assets/icons/zid-tekstura.svg');
   background-repeat: repeat;
-  background-size: contain; 
+  background-size: contain;
 
   padding-bottom: 1rem;
 }
 
-.wall-container{
+.wall-container {
   width: 100%;
   padding-left: 1rem;
 }
 
-.wall-text{
+.wall-text {
   width: 100%;
   padding-right: 1rem;
 }
 
-.title-text{
+.title-text {
   font-size: 1.5rem;
   font-weight: bold;
 }
 
-.artist-container{
+.artist-container {
   display: flex;
   flex-direction: row;
-  gap: 1rem ;
+  gap: 1rem;
   overflow: scroll;
   padding-right: 1rem;
 }
 
-.artist-image{
+.artist-image {
   width: 10rem;
   height: 10rem;
 }
@@ -212,7 +235,7 @@ console.log(artists)
 
 /*  --------------- BEACH --------------- */
 
-.beach-wrapper{
+.beach-wrapper {
   background-color: #F3D864;
   height: fit-content;
   width: 100%;
@@ -223,14 +246,14 @@ console.log(artists)
   padding-bottom: 2rem;
 }
 
-.beach-container{
+.beach-container {
   width: 100%;
   padding-left: 1rem;
 }
 
 /*  --------------- SEA --------------- */
 
-.sea-wrapper{
+.sea-wrapper {
   background-color: #5C9C9C;
   height: fit-content;
   width: 100%;
@@ -241,8 +264,22 @@ console.log(artists)
   padding-bottom: 2rem;
 }
 
-.sea-container{
+.sea-container {
   width: 100%;
   padding-left: 1rem;
+}
+
+.gallery-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  overflow: scroll;
+  padding-right: 1rem;
+  justify-content: center;
+}
+
+.gallery-image {
+  width: 10rem;
+  height: 10rem;
 }
 </style>
