@@ -49,11 +49,14 @@ console.log(artists)
         </div>
       </div>
     </div>
+
+    <div class="prijelaz-container">
+      <img src="/assets/prijelazi/prijelaz-zid-plaza.svg" alt="prijelaz-zid-plaza" class="prijelaz-zid-plaza" />
+    </div>
+
   </div>
 
-  <div class="prijelaz-container">
-    <img src="/assets/prijelazi/prijelaz-zid-plaza.svg" alt="prijelaz-zid-plaza" />
-  </div>
+
 
   <div class="beach-wrapper">
     <div class="beach-container">
@@ -65,17 +68,19 @@ console.log(artists)
         </div>
       </div>
     </div>
+
+    <div class="prijelaz-container">
+      <img src="/assets/prijelazi/prijelaz-plaza-more.svg" alt="prijelaz-zid-plaza" />
+    </div>
   </div>
 
-  <div class="prijelaz-container">
-    <img src="/assets/prijelazi/prijelaz-plaza-more.svg" alt="prijelaz-zid-plaza" />
-  </div>
+
 
   <div class="sea-wrapper">
     <div class="sea-container">
       <p class="title-text">Galerija</p>
 
-      <Carousel :value="artists" :numVisible="1" :numScroll="1" :circular="true" :autoplayInterval="10000"
+      <Carousel :value="artists" :numVisible="2" :numScroll="1" :circular="true" :autoplayInterval="10000"
         :autoplay="true">
         <template #item="slotProps">
           <div class="gallery-container">
@@ -87,6 +92,17 @@ console.log(artists)
     </div>
   </div>
 
+  <div class="prijelaz-container">
+    <img src="/assets/prijelazi/prijelaz-more-dm.svg" alt="prijelaz-zid-plaza" style="background-color: #5C9C9C;" />
+  </div>
+
+  <Drawer v-model:visible="visibleRight" header="Right Drawer" position="right">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+      magna
+      aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+      consequat.
+    </p>
+  </Drawer>
 </template>
 
 <style>
@@ -103,12 +119,12 @@ console.log(artists)
 .prijelaz-container {
   height: 4.5rem;
   width: 100%;
-  background-color: #F3D864;
 }
 
 .prijelaz-container img {
   object-fit: fill;
   width: 100%;
+  height: 4.5rem;
 }
 
 /*  --------------- HEADER --------------- */
@@ -168,17 +184,6 @@ console.log(artists)
   padding: 0;
 }
 
-.prijelaz-svg {
-  width: 100%;
-  /* Stretch to fill the full width of the container */
-  height: 4.5rem;
-  /* Fixed vertical height (adjust as needed) */
-  object-fit: cover;
-  /* Preserve aspect ratio and cover the area (crop overflow) */
-  object-position: 50% 50%;
-  /* Center the SVG within its box (default) */
-  display: block;
-}
 
 /*  --------------- WALL --------------- */
 
@@ -201,8 +206,10 @@ console.log(artists)
   background-repeat: repeat;
   background-size: contain;
 
-  padding-bottom: 1rem;
+  margin-bottom: -1px;
 }
+
+.prijelaz-zid-plaza {}
 
 .wall-container {
   width: 100%;
@@ -223,8 +230,9 @@ console.log(artists)
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  overflow: scroll;
+  overflow: auto;
   padding-right: 1rem;
+  margin-bottom: 2rem;
 }
 
 .artist-image {
@@ -243,7 +251,6 @@ console.log(artists)
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding-bottom: 2rem;
 }
 
 .beach-container {
@@ -273,7 +280,7 @@ console.log(artists)
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  overflow: scroll;
+  overflow: auto;
   padding-right: 1rem;
   justify-content: center;
 }
@@ -281,5 +288,25 @@ console.log(artists)
 .gallery-image {
   width: 10rem;
   height: 10rem;
+}
+
+/*  --------------- RESPONNZIVNOST --------------- */
+
+.wall-wrapper,
+.beach-wrapper,
+.sea-wrapper,
+.header-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.wall-container,
+.beach-container,
+.sea-container,
+.header-container {
+  max-width: 50rem;
+  width: 100%;
 }
 </style>
