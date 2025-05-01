@@ -6,12 +6,22 @@ const query = groq`*[ _type == "artist"] | order(_createdAt desc)`
 const { data: artists } = await useSanityQuery<Artist[]>(query)
 
 console.log(artists)
+
+import { ref } from 'vue';
+
+const visibleRight = ref(false);
+
+const toggleVisibleRight = (): void => {
+  visibleRight.value = !visibleRight.value;
+};
+
+
 </script>
 
 <template>
   <div class="header-wrapper">
     <div class="header-container">
-
+      <img src="/assets/icons/burger.svg" alt="burger" @click="toggleVisibleRight" class="burger-icon"/>
       <div class="header-text-container">
         <p class="header-text">kset</p>
         <p class="header-text" style="text-align: center">na krku</p>
@@ -96,12 +106,25 @@ console.log(artists)
     <img src="/assets/prijelazi/prijelaz-more-dm.svg" alt="prijelaz-zid-plaza" style="background-color: #5C9C9C;" />
   </div>
 
-  <Drawer v-model:visible="visibleRight" header="Right Drawer" position="right">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-      magna
-      aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat.
-    </p>
+  <Drawer v-model:visible="visibleRight" hedaer=" " position="right">
+    <div class="drawer-wrapper">
+      <div class="drawer-container">
+        <div>
+          <NuxtLink to="/" class="hover:underline drawer-text" style="color: #844D99">Naslovnica</NuxtLink>
+        </div>
+        <div>
+          <NuxtLink to="/lineup" class="hover:underline drawer-text" style="color: #DD7D91">Izvođači</NuxtLink>
+        </div>
+        <div>
+          <NuxtLink to="/gallery" class="hover:underline drawer-text" style="color: #E55A8E">Galerija</NuxtLink>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <img src="/assets/icons/stolica.svg" alt="stolica" class="stolica-icon" />
+        <div class="zuta-podloga"></div>
+      </div>
+    </div>
   </Drawer>
 </template>
 
@@ -112,6 +135,14 @@ console.log(artists)
 
 .p-carousel-indicator-active .p-carousel-indicator-button {
   background-color: #E55A8E !important;
+}
+
+.p-drawer {
+  background-color: #F7DEC0 !important;
+}
+
+.p-drawer-content {
+  padding: 0 !important;
 }
 </style>
 
@@ -182,6 +213,13 @@ console.log(artists)
   text-align: center;
   margin: 0;
   padding: 0;
+}
+
+.burger-icon {
+  position: absolute;
+  right: 0%;
+  top: 15%;
+  cursor: pointer;
 }
 
 
@@ -289,6 +327,57 @@ console.log(artists)
   width: 10rem;
   height: 10rem;
 }
+
+/*  --------------- DRAWER --------------- */
+
+.drawer-wrapper {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 60% 40%;
+}
+
+.drawer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  height: 100%;
+}
+
+.drawer-text {
+  font-family: "Montserrat";
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.drawer-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.stolica-icon {
+  height: 80%;
+  z-index: 10;
+}
+
+.zuta-podloga {
+  background: #F3BB64;
+  position: absolute;
+  top: 70%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 
 /*  --------------- RESPONNZIVNOST --------------- */
 
