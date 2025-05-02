@@ -9,7 +9,6 @@
   </a>
 
   <NuxtPage />
-
 </template>
 
 <script setup lang="ts">
@@ -29,7 +28,6 @@ const { enabled: previewEnabled, inFrame } = useSanityVisualEditingState()
   --space-7: 84px;
   --space-8: 136px;
   --space-9: 220px;
-
 
   --font-size-0: 12px;
   --font-size-1: 14px;
@@ -77,11 +75,9 @@ html {
 body {
   margin: 0;
   font-family: Montserrat;
-
 }
 
 p {
-  color: #EFE5DD;
+  color: #efe5dd;
 }
 </style>
-

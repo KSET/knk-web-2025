@@ -44,7 +44,7 @@ gallerySections.value?.forEach((section) => {
 </script>
 
 <template>
-    <Header />
+  <Header />
   <div class="artists-wrapper">
     <div class="artists-container">
       <div
@@ -122,7 +122,6 @@ gallerySections.value?.forEach((section) => {
   align-items: center;
   overflow: hidden;
   border-radius: 8px;
-
 }
 
 .galleria-image {
@@ -130,7 +129,6 @@ gallerySections.value?.forEach((section) => {
   max-height: 100%;
   object-fit: contain;
   border-radius: 8px;
-
 }
 </style>
 

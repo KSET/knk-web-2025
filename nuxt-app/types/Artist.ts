@@ -1,11 +1,11 @@
-import type { ImageAsset } from "@sanity/types";
+import type { ImageAsset } from '@sanity/types'
 
 export interface Artist {
-  _id: string;
-  _type: "artist";
-  _createdAt: string;
-  name: string;
-  description?: string;
-  bio?: string;
-  image?: ImageAsset;
+  _id: string
+  _type: 'artist'
+  _createdAt: string
+  name: string
+  description?: string
+  bio?: string
+  image?: ImageAsset
 }

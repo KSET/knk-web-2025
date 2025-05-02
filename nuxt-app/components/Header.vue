@@ -1,49 +1,74 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const visibleRight = ref(false);
+const visibleRight = ref(false)
 
 const toggleVisibleRight = (): void => {
-  visibleRight.value = !visibleRight.value;
-};
-
+  visibleRight.value = !visibleRight.value
+}
 </script>
 
 <template>
-    <div class="header-wrapper">
-      <div class="header-container">
-        <img src="/assets/icons/burger.svg" alt="burger" @click="toggleVisibleRight" class="burger-icon"/>
-        <div class="header-text-container">
-          <p class="header-text">kset na krku</p>
-          <p class="header-text" style="text-align: center"></p>
-          <!-- <p class="header-text" style="text-align: end">2025</p> -->
-          <img src="/assets/icons/2025.svg" alt="2025" class="2025-icon" style="align-self: flex-end;" />
-  
-        </div>
-  
-        <img src="/assets/icons/sunce.svg" alt="Sunce" class="sunce-icon" />
-        <img src="/assets/icons/oblaci.svg" alt="oblaci" class="oblaci-icon" />
-  
+  <div class="header-wrapper">
+    <div class="header-container">
+      <img
+        src="/assets/icons/burger.svg"
+        alt="burger"
+        @click="toggleVisibleRight"
+        class="burger-icon"
+      />
+      <div class="header-text-container">
+        <p class="header-text">kset na krku</p>
+        <p class="header-text" style="text-align: center"></p>
+        <!-- <p class="header-text" style="text-align: end">2025</p> -->
+        <img
+          src="/assets/icons/2025.svg"
+          alt="2025"
+          class="2025-icon"
+          style="align-self: flex-end"
+        />
       </div>
+
+      <img src="/assets/icons/sunce.svg" alt="Sunce" class="sunce-icon" />
+      <img src="/assets/icons/oblaci.svg" alt="oblaci" class="oblaci-icon" />
     </div>
+  </div>
 
-
-<Drawer v-model:visible="visibleRight" hedaer=" " position="right">
+  <Drawer v-model:visible="visibleRight" hedaer=" " position="right">
     <div class="drawer-wrapper">
       <div class="drawer-container">
         <div>
-          <NuxtLink to="/" class="hover:underline drawer-text" style="color: #844D99">Naslovnica</NuxtLink>
+          <NuxtLink
+            to="/"
+            class="hover:underline drawer-text"
+            style="color: #844d99"
+            >Naslovnica</NuxtLink
+          >
         </div>
         <div>
-          <NuxtLink to="/lineup" class="hover:underline drawer-text" style="color: #DD7D91">Izvođači</NuxtLink>
+          <NuxtLink
+            to="/lineup"
+            class="hover:underline drawer-text"
+            style="color: #dd7d91"
+            >Izvođači</NuxtLink
+          >
         </div>
         <div>
-          <NuxtLink to="/gallery" class="hover:underline drawer-text" style="color: #E55A8E">Galerija</NuxtLink>
+          <NuxtLink
+            to="/gallery"
+            class="hover:underline drawer-text"
+            style="color: #e55a8e"
+            >Galerija</NuxtLink
+          >
         </div>
       </div>
 
       <div class="drawer-footer">
-        <img src="/assets/icons/stolica.svg" alt="stolica" class="stolica-icon" />
+        <img
+          src="/assets/icons/stolica.svg"
+          alt="stolica"
+          class="stolica-icon"
+        />
         <div class="zuta-podloga"></div>
       </div>
     </div>
@@ -51,9 +76,8 @@ const toggleVisibleRight = (): void => {
 </template>
 
 <style>
-
 .p-drawer {
-  background-color: #F7DEC0 !important;
+  background-color: #f7dec0 !important;
 }
 
 .p-drawer-content {
@@ -63,14 +87,13 @@ const toggleVisibleRight = (): void => {
 
 <style scoped>
 .header-wrapper {
-  background-color: #76C6D2;
+  background-color: #76c6d2;
   width: 100%;
   height: 6rem;
 }
 
 .header-container {
   position: relative;
-
 
   display: flex;
   justify-content: center;
@@ -92,16 +115,16 @@ const toggleVisibleRight = (): void => {
   font-size: 4rem;
   margin: 0;
   padding: 0;
-  font-family: "Bright";
-  color: #EFE5DD;
+  font-family: 'Bright';
+  color: #efe5dd;
   z-index: 10;
 }
 
 .sunce-icon {
   position: absolute;
   top: -100%;
-    width: 20%;
-    left: 10%;
+  width: 20%;
+  left: 10%;
 }
 
 .oblaci-icon {
@@ -111,8 +134,8 @@ const toggleVisibleRight = (): void => {
 }
 
 .header-date {
-  font-family: "Bright";
-  color: #EFE5DD;
+  font-family: 'Bright';
+  color: #efe5dd;
   font-size: 1rem;
   text-align: center;
   margin: 0;
@@ -156,7 +179,7 @@ const toggleVisibleRight = (): void => {
 }
 
 .drawer-text {
-  font-family: "Montserrat";
+  font-family: 'Montserrat';
   font-size: 1.5rem;
   text-align: center;
   margin: 0;
@@ -179,7 +202,7 @@ const toggleVisibleRight = (): void => {
 }
 
 .zuta-podloga {
-  background: #F3BB64;
+  background: #f3bb64;
   position: absolute;
   top: 70%;
   bottom: 0;

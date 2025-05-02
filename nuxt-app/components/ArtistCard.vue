@@ -59,13 +59,13 @@ const toggleShowDialog = (): void => {
 </template>
 
 <style>
-
-.p-dialog-close-button, .p-dialog{
-    color: white !important;
+.p-dialog-close-button,
+.p-dialog {
+  color: white !important;
 }
 
-.p-dialog-close-button:not(:disabled):hover,{
-    color: black !important;
+.p-dialog-close-button:not(:disabled):hover {
+  color: black !important;
 }
 .artist-dialog {
   width: 30rem;
