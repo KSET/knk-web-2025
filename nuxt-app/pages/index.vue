@@ -347,7 +347,7 @@ img {
   position: relative;
   text-shadow: 3px 4px 0 #e4c9b3;
 
-  font-size: 4rem;
+  font-size: 6rem;
   margin: 0;
   padding: 0;
   font-family: 'Bright';
@@ -587,6 +587,10 @@ img {
 
   .burger-icon {
     right: 7%;
+  }
+
+  .header-text{
+    font-size: 4rem;
   }
 }
 </style>
