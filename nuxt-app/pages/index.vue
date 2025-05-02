@@ -589,7 +589,7 @@ img {
     right: 7%;
   }
 
-  .header-text{
+  .header-text {
     font-size: 4rem;
   }
 }

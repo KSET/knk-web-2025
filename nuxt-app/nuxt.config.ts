@@ -3,6 +3,18 @@ import Aura from '@primeuix/themes/aura'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineNuxtConfig({
+  app: {
+    head: {
+      title: 'KSET na Krku',
+      meta: [
+        {
+          name: 'description',
+          content:
+            'KSET na Krku četverodnevni je festival, organiziran od strane Saveza studenata Fakulteta elektrotehnike i računarstva (poznatijeg kao KSET), koji promiče kulturu i neformalnu edukaciju te aktivno druženje uz razmjenu znanja i suradnju mladih.',
+        },
+      ],
+    },
+  },
   css: ['@/assets/fonts/fonts.css'],
   vite: {
     plugins: [tsconfigPaths()],
