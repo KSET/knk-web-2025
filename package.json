@@ -22,5 +22,5 @@
     "prettier": "^3.4.2",
     "prettier-plugin-packagejson": "2.5.0"
   },
-  "packageManager": "pnpm@9.15.0"
+  "packageManager": "npm@10.5.0"
 }
