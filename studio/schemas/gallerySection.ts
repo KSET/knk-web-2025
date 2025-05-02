@@ -29,7 +29,7 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Festival', value: 'Festival'},
+          {title: 'Koncerti', value: 'Koncerti'},
           {title: 'Radionice', value: 'Radionice'},
           {title: 'Kamp', value: 'Kamp'},
         ],

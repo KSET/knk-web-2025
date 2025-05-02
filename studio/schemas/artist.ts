@@ -19,9 +19,19 @@ export default defineType({
     }),
     defineField({
       name: 'bio',
-      title: 'bio-long',
+      title: 'Bio-long',
       type: 'text',
       rows: 8,
+    }),
+    defineField({
+      name: 'link',
+      title: 'Link',
+      type: 'url',
+      validation: (Rule) =>
+        Rule.uri({
+          allowRelative: false,
+          scheme: ['http', 'https'],
+        }),
     }),
     defineField({
       name: 'image',

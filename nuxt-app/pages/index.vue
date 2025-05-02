@@ -1,21 +1,19 @@
 <script setup lang="ts">
 import { Button } from 'primevue'
 import { type Artist } from '~/types/Artist'
+import { type GallerySection } from '~/types/GallerySection'
+import { ref } from 'vue'
+
+import Footer from '~/components/Footer.vue'
 
 const query = groq`*[ _type == "artist"] | order(_createdAt desc)`
 const { data: artists } = await useSanityQuery<Artist[]>(query)
-
-console.log(artists)
-
-import { ref } from 'vue'
 
 const visibleRight = ref(false)
 
 const toggleVisibleRight = (): void => {
   visibleRight.value = !visibleRight.value
 }
-
-import { type GallerySection } from '~/types/GallerySection'
 
 const queryGallerySections = groq`*[_type == "gallerySection"] | order(_createdAt desc)`
 const { data: gallerySections } =
@@ -28,8 +26,6 @@ const galleryImages =
       alt: `Image ${index + 1}`,
     })),
   ) || []
-
-console.log(galleryImages)
 
 const responsiveOptionsGalleryCarousel = [
   {
@@ -85,8 +81,20 @@ const responsiveOptionsGalleryCarousel = [
         </p>
       </div>
 
-      <p class="title-text">Izvođači</p>
+      <div class="title-text-container">
+        <p class="title-text">Izvođači</p>
 
+        <NuxtLink to="/gallery" style="text-decoration: none">
+          <div class="title-button" style="background-color: #5c9c9c">
+            Pogledaj više
+            <img
+              src="/assets/icons/arrow-right.svg"
+              alt="arrow-right"
+              class="arrow-icon"
+            />
+          </div>
+        </NuxtLink>
+      </div>
       <div class="artist-container">
         <div v-for="artist in artists">
           <img
@@ -153,7 +161,20 @@ const responsiveOptionsGalleryCarousel = [
 
   <div class="sea-wrapper">
     <div class="sea-container">
-      <p class="title-text">Galerija</p>
+      <div class="title-text-container">
+        <p class="title-text">Galerija</p>
+
+        <NuxtLink to="/lineup" style="text-decoration: none">
+          <div class="title-button">
+            Pogledaj više
+            <img
+              src="/assets/icons/arrow-right.svg"
+              alt="arrow-right"
+              class="arrow-icon"
+            />
+          </div>
+        </NuxtLink>
+      </div>
 
       <Carousel
         :value="galleryImages"
@@ -185,6 +206,8 @@ const responsiveOptionsGalleryCarousel = [
       style="background-color: #5c9c9c"
     />
   </div>
+
+  <Footer />
 
   <Drawer v-model:visible="visibleRight" hedaer=" " position="right">
     <div class="drawer-wrapper">
@@ -249,6 +272,7 @@ const responsiveOptionsGalleryCarousel = [
   align-items: center;
   justify-content: center;
 }
+
 img {
   border-radius: 8px;
 }
@@ -266,6 +290,34 @@ img {
   height: 4.5rem;
 
   border-radius: 0px;
+}
+
+.title-text-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-right: 1rem;
+}
+
+.title-button {
+  font-family: 'Montserrat';
+  background-color: #dd7d91;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  width: fit-content;
+
+  display: flex;
+  align-items: center;
+}
+
+.arrow-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.5rem;
 }
 
 /*  --------------- HEADER --------------- */
@@ -376,7 +428,7 @@ img {
 }
 
 .artist-container {
-  display: flex;
+  display: none;
   flex-direction: row;
   gap: 1rem;
   overflow: auto;
@@ -400,7 +452,7 @@ img {
 }
 
 .artist-carousel {
-  display: none;
+  display: flex;
 }
 
 /*  --------------- BEACH --------------- */
@@ -524,13 +576,17 @@ img {
   width: 100%;
 }
 
-@media (min-width: 900px) {
+@media (max-width: 900px) {
   .artist-carousel {
-    display: flex;
+    display: none;
   }
 
   .artist-container {
-    display: none;
+    display: flex;
+  }
+
+  .burger-icon {
+    right: 7%;
   }
 }
 </style>

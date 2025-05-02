@@ -18,7 +18,13 @@ const toggleVisibleRight = (): void => {
         class="burger-icon"
       />
       <div class="header-text-container">
-        <p class="header-text">kset na krku</p>
+        <NuxtLink
+          to="/"
+          class="hover:underline drawer-text"
+          style="color: #844d99"
+        >
+          <p class="header-text">kset na krku</p></NuxtLink
+        >
         <p class="header-text" style="text-align: center"></p>
         <!-- <p class="header-text" style="text-align: end">2025</p> -->
         <img
@@ -42,7 +48,7 @@ const toggleVisibleRight = (): void => {
             to="/"
             class="hover:underline drawer-text"
             style="color: #844d99"
-            >Naslovnica</NuxtLink
+            >NASLOVNICA</NuxtLink
           >
         </div>
         <div>
@@ -50,7 +56,7 @@ const toggleVisibleRight = (): void => {
             to="/lineup"
             class="hover:underline drawer-text"
             style="color: #dd7d91"
-            >Izvođači</NuxtLink
+            >IZVOĐAČI</NuxtLink
           >
         </div>
         <div>
@@ -58,7 +64,7 @@ const toggleVisibleRight = (): void => {
             to="/gallery"
             class="hover:underline drawer-text"
             style="color: #e55a8e"
-            >Galerija</NuxtLink
+            >GALERIJA</NuxtLink
           >
         </div>
       </div>
@@ -185,7 +191,6 @@ const toggleVisibleRight = (): void => {
   margin: 0;
   padding: 0;
   text-decoration: none;
-  text-transform: uppercase;
   font-weight: bold;
 }
 
@@ -208,5 +213,17 @@ const toggleVisibleRight = (): void => {
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+@media (max-width: 900px) {
+  .header-text {
+    font-size: 3rem;
+  }
+
+  .sunce-icon {
+    top: -86%;
+    width: 10rem;
+    left: 5%;
+  }
 }
 </style>
