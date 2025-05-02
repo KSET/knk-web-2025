@@ -5,6 +5,14 @@ const props = defineProps<{
   artist: Artist
   reverse?: boolean
 }>()
+
+import { ref } from 'vue'
+
+const showDialog = ref(false)
+
+const toggleShowDialog = (): void => {
+  showDialog.value = !showDialog.value
+}
 </script>
 
 <template>
@@ -19,7 +27,7 @@ const props = defineProps<{
       <p class="artist-name">{{ artist.name }}</p>
       <p class="artist-description">{{ artist.description }}</p>
 
-      <div class="artist-button">
+      <div class="artist-button" @click="toggleShowDialog">
         Saznaj više
         <img
           src="/assets/icons/arrow-right.svg"
@@ -29,7 +37,51 @@ const props = defineProps<{
       </div>
     </div>
   </div>
+
+  <Dialog
+    v-model:visible="showDialog"
+    modal
+    :header="artist.name"
+    class="artist-dialog"
+    style="max-width: 30rem"
+  >
+    <template #default>
+      <img
+        v-if="artist.image"
+        :src="$urlFor(artist.image).url()"
+        alt="artist image"
+        class="artist-dialog-image"
+      />
+      <p v-if="artist.bio">{{ artist.bio }}</p>
+      <p v-else>Nema dodatnih informacija.</p>
+    </template>
+  </Dialog>
 </template>
+
+<style>
+
+.p-dialog-close-button, .p-dialog{
+    color: white !important;
+}
+
+.p-dialog-close-button:not(:disabled):hover,{
+    color: black !important;
+}
+.artist-dialog {
+  width: 30rem;
+  height: fit-content;
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  background-color: rgba(165, 101, 189, 0.7);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6px);
+}
+</style>
 
 <style scoped>
 .artist-card {
@@ -68,6 +120,8 @@ const props = defineProps<{
   justify-content: space-around;
   align-content: stretch;
   align-items: flex-start;
+
+  gap: 0.5rem;
   height: 100%;
   width: 100%;
 }
@@ -109,6 +163,15 @@ const props = defineProps<{
   margin-left: 0.5rem;
 }
 
+.artist-dialog-image {
+  max-height: 12rem;
+  width: 100%;
+  object-fit: cover;
+  max-width: 100%;
+
+  border-radius: 12px;
+}
+
 @media (max-width: 650px) {
   .artist-card,
   .artist-card.reverse {
@@ -116,7 +179,6 @@ const props = defineProps<{
     flex-direction: column;
     height: 20rem;
     height: fit-content;
-
   }
 
   .artist-image,
