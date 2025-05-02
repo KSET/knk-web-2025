@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import Header from '~/components/Header.vue'
 import ArtistCard from '~/components/ArtistCard.vue'
+import Footer from '~/components/Footer.vue'
 
 import { type Artist } from '~/types/Artist'
 import { Button } from 'primevue'
@@ -25,6 +26,16 @@ console.log(artists)
       />
     </div>
   </div>
+
+  <div class="prijelaz-container">
+    <img
+      src="/assets/prijelazi/prijelaz-more-dm.svg"
+      alt="prijelaz-zid-plaza"
+      style="background-color: #844d99"
+    />
+  </div>
+
+  <Footer />
 </template>
 
 <style scoped>
@@ -56,5 +67,18 @@ console.log(artists)
   background-size: contain;
 
   padding-top: 2rem;
+}
+
+.prijelaz-container {
+  height: 4.5rem;
+  width: 100%;
+}
+
+.prijelaz-container img {
+  object-fit: fill;
+  width: 100%;
+  height: 4.5rem;
+
+  border-radius: 0px;
 }
 </style>

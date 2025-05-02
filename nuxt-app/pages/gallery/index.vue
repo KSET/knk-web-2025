@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import Header from '~/components/Header.vue'
 import ArtistCard from '~/components/ArtistCard.vue'
-
+import Footer from '~/components/Footer.vue'
 import { type GallerySection } from '~/types/GallerySection'
 
 const query = groq`*[_type == "gallerySection"] | order(_createdAt desc)`
@@ -45,8 +45,8 @@ gallerySections.value?.forEach((section) => {
 
 <template>
   <Header />
-  <div class="artists-wrapper">
-    <div class="artists-container">
+  <div class="gallery-wrapper">
+    <div class="gallery-container">
       <div
         v-for="year in [...new Set(galleries.map((g) => g.year))]"
         :key="year"
@@ -108,6 +108,16 @@ gallerySections.value?.forEach((section) => {
       </div>
     </div>
   </div>
+
+  <div class="prijelaz-container">
+    <img
+      src="/assets/prijelazi/prijelaz-more-dm.svg"
+      alt="prijelaz-zid-plaza"
+      style="background-color: #5c9c9c"
+    />
+  </div>
+
+  <Footer />
 </template>
 
 <style>
@@ -133,22 +143,22 @@ gallerySections.value?.forEach((section) => {
 </style>
 
 <style scoped>
-.artists-wrapper {
+.gallery-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.artists-container {
+.gallery-container {
   max-width: 50rem;
   width: 100%;
 
   padding: 1rem;
 }
 
-.artists-wrapper {
-  background-color: #844d99;
+.gallery-wrapper {
+  background-color: #5c9c9c;
   height: fit-content;
   width: 100%;
 
@@ -158,7 +168,7 @@ gallerySections.value?.forEach((section) => {
   justify-content: center;
   gap: 1rem;
 
-  background-image: url('/assets/icons/zid-tekstura-lineup.svg');
+  background-image: url('/assets/icons/zid-tekstura-gallery.svg');
   background-repeat: repeat;
   background-size: contain;
 
@@ -180,5 +190,18 @@ gallerySections.value?.forEach((section) => {
   height: auto;
   display: block;
   border-radius: 8px;
+}
+
+.prijelaz-container {
+  height: 4.5rem;
+  width: 100%;
+}
+
+.prijelaz-container img {
+  object-fit: fill;
+  width: 100%;
+  height: 4.5rem;
+
+  border-radius: 0px;
 }
 </style>
