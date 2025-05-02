@@ -6,5 +6,6 @@ export interface Artist {
   _createdAt: string;
   name: string;
   description?: string;
+  bio?: string;
   image?: ImageAsset;
 }

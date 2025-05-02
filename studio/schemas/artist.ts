@@ -13,9 +13,15 @@ export default defineType({
     }),
     defineField({
       name: 'description',
-      title: 'Description',
+      title: 'Description-short',
       type: 'text',
       rows: 4,
+    }),
+    defineField({
+      name: 'bio',
+      title: 'bio-long',
+      type: 'text',
+      rows: 8,
     }),
     defineField({
       name: 'image',
