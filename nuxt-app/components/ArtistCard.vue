@@ -139,7 +139,7 @@ const toggleShowDialog = (): void => {
 
 .artist-description {
   font-size: 1rem;
-  color: #444;
+  color: lightgray;
   margin: 0;
 }
 
@@ -206,7 +206,6 @@ const toggleShowDialog = (): void => {
 
   .artist-description {
     font-size: 0.8rem;
-    color: #444;
   }
 
   .artist-button {

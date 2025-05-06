@@ -24,6 +24,7 @@ console.log(artists)
         :artist="artist"
         :reverse="index % 2 !== 0"
       />
+      <p class="soon-text">+ još uskoro...</p>
     </div>
   </div>
 
@@ -80,5 +81,13 @@ console.log(artists)
   height: 4.5rem;
 
   border-radius: 0px;
+}
+
+.soon-text {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 2rem;
 }
 </style>

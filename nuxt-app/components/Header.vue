@@ -155,22 +155,14 @@ const toggleVisibleRight = (): void => {
   width: 100%;
 }
 
-.header-date {
-  font-family: 'Bright';
-  color: #efe5dd;
-  font-size: 1rem;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-
 .burger-icon {
   position: absolute;
   right: 0%;
   top: 15%;
   cursor: pointer;
   z-index: 20;
-  height: 60%;
+
+  border-radius: 0;
 }
 
 .header-wrapper {
@@ -240,6 +232,10 @@ const toggleVisibleRight = (): void => {
     top: -86%;
     width: 10rem;
     left: 5%;
+  }
+
+  .burger-icon {
+    right: 5%;
   }
 }
 </style>

@@ -176,7 +176,7 @@ gallerySections.value?.forEach((section) => {
 }
 
 .gallery-thumbnails {
-  column-count: 2;
+  column-count: 3;
   column-gap: 16px;
 }
 
@@ -203,5 +203,11 @@ gallerySections.value?.forEach((section) => {
   height: 4.5rem;
 
   border-radius: 0px;
+}
+
+@media (max-width: 650px) {
+  .gallery-thumbnails {
+    column-count: 2;
+  }
 }
 </style>

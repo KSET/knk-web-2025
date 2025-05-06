@@ -87,7 +87,7 @@ const responsiveOptionsGalleryCarousel = [
       <div class="title-text-container">
         <p class="title-text">Izvođači</p>
 
-        <NuxtLink to="/gallery" style="text-decoration: none">
+        <NuxtLink to="/lineup" style="text-decoration: none">
           <div class="title-button" style="background-color: #5c9c9c">
             Pogledaj više
             <img
@@ -100,13 +100,15 @@ const responsiveOptionsGalleryCarousel = [
       </div>
       <div class="artist-container">
         <div v-for="artist in artists">
-          <img
-            v-if="artist.image"
-            :src="$urlFor(artist.image).url()"
-            alt="artist image"
-            class="artist-image"
-          />
-          <p>{{ artist.name }}</p>
+          <NuxtLink to="/lineup" style="text-decoration: none">
+            <img
+              v-if="artist.image"
+              :src="$urlFor(artist.image).url()"
+              alt="artist image"
+              class="artist-image"
+            />
+            <p>{{ artist.name }}</p>
+          </NuxtLink>
         </div>
       </div>
 
@@ -122,13 +124,15 @@ const responsiveOptionsGalleryCarousel = [
       >
         <template #item="slotProps">
           <div class="artist-carousel-container">
-            <img
-              v-if="slotProps.data.image"
-              :src="$urlFor(slotProps.data.image).url()"
-              alt="artist image"
-              class="gallery-image"
-            />
-            <p>{{ slotProps.data.name }}</p>
+            <NuxtLink to="/lineup" style="text-decoration: none">
+              <img
+                v-if="slotProps.data.image"
+                :src="$urlFor(slotProps.data.image).url()"
+                alt="artist image"
+                class="gallery-image"
+              />
+              <p>{{ slotProps.data.name }}</p>
+            </NuxtLink>
           </div>
         </template>
       </Carousel>
@@ -167,7 +171,7 @@ const responsiveOptionsGalleryCarousel = [
       <div class="title-text-container">
         <p class="title-text">Galerija</p>
 
-        <NuxtLink to="/lineup" style="text-decoration: none">
+        <NuxtLink to="/gallery" style="text-decoration: none">
           <div class="title-button">
             Pogledaj više
             <img
@@ -187,6 +191,7 @@ const responsiveOptionsGalleryCarousel = [
         :circular="true"
         :autoplayInterval="10000"
         :autoplay="true"
+        class="gallery-carousel"
       >
         <template #item="slotProps">
           <div class="gallery-container">
@@ -270,11 +275,11 @@ const responsiveOptionsGalleryCarousel = [
 </template>
 
 <style>
-:root {
-  --p-carousel-indicator-active-background: #e55a8e !important;
+.artist-carousel .p-carousel-indicator-active .p-carousel-indicator-button {
+  background-color: #5c9c9c !important;
 }
 
-.p-carousel-indicator-active .p-carousel-indicator-button {
+.gallery-carousel .p-carousel-indicator-active .p-carousel-indicator-button {
   background-color: #e55a8e !important;
 }
 
@@ -294,6 +299,16 @@ const responsiveOptionsGalleryCarousel = [
 
 img {
   border-radius: 8px;
+}
+
+.p-carousel-next-button,
+.p-carousel-prev-button {
+  color: white !important;
+}
+
+.p-carousel-next-button:not(:disabled):hover,
+.p-carousel-prev-button:not(:disabled):hover {
+  color: black !important;
 }
 </style>
 
@@ -344,7 +359,7 @@ img {
 .header-wrapper {
   background-color: #76c6d2;
   width: 100%;
-  height: 15rem;
+  height: 16rem;
 }
 
 .header-container {
@@ -387,12 +402,12 @@ img {
 }
 
 .header-date {
-  font-family: 'Bright';
+  font-family: 'Montserrat';
   color: #efe5dd;
-  font-size: 1rem;
+  font-size: 2rem;
   text-align: center;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0.5rem 0;
 }
 
 .burger-icon {
