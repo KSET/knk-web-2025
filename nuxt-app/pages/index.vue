@@ -408,6 +408,8 @@ img {
   text-align: center;
   margin: 0;
   padding: 0 0 0.5rem 0;
+
+  text-shadow: 2px 2px 0 #d46558;
 }
 
 .burger-icon {
