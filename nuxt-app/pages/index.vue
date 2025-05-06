@@ -85,10 +85,32 @@ const responsiveOptionsGalleryCarousel = [
       </div>
 
       <div class="title-text-container">
+        <p class="title-text">O Kampu</p>
+
+        <NuxtLink to="/info" style="text-decoration: none">
+          <div class="title-button">
+            Više informacija
+            <img
+              src="/assets/icons/arrow-right.svg"
+              alt="arrow-right"
+              class="arrow-icon"
+            />
+          </div>
+        </NuxtLink>
+      </div>
+
+      <p class="wall-text">
+        <BlockContent
+          :blocks="translations?.landingKampText"
+          class="wall-text"
+        />
+      </p>
+
+      <div class="title-text-container">
         <p class="title-text">Izvođači</p>
 
         <NuxtLink to="/lineup" style="text-decoration: none">
-          <div class="title-button" style="background-color: #5c9c9c">
+          <div class="title-button">
             Pogledaj više
             <img
               src="/assets/icons/arrow-right.svg"
@@ -98,6 +120,7 @@ const responsiveOptionsGalleryCarousel = [
           </div>
         </NuxtLink>
       </div>
+
       <div class="artist-container">
         <div v-for="artist in artists">
           <NuxtLink to="/lineup" style="text-decoration: none">
@@ -136,6 +159,28 @@ const responsiveOptionsGalleryCarousel = [
           </div>
         </template>
       </Carousel>
+
+      <div class="title-text-container">
+        <p class="title-text">Ulaznice</p>
+
+        <NuxtLink to="/lineup" style="text-decoration: none">
+          <div class="title-button">
+            Kupi ulaznice
+            <img
+              src="/assets/icons/arrow-right.svg"
+              alt="arrow-right"
+              class="arrow-icon"
+            />
+          </div>
+        </NuxtLink>
+      </div>
+
+      <p class="wall-text">
+        <BlockContent
+          :blocks="translations?.landingTicketsText"
+          class="wall-text"
+        />
+      </p>
     </div>
 
     <div class="prijelaz-container">
@@ -172,14 +217,14 @@ const responsiveOptionsGalleryCarousel = [
         <p class="title-text">Galerija</p>
 
         <NuxtLink to="/gallery" style="text-decoration: none">
-          <div class="title-button">
+          <span class="title-button">
             Pogledaj više
             <img
               src="/assets/icons/arrow-right.svg"
               alt="arrow-right"
               class="arrow-icon"
             />
-          </div>
+          </span>
         </NuxtLink>
       </div>
 
@@ -336,10 +381,11 @@ img {
 
 .title-button {
   font-family: 'Montserrat';
-  background-color: #dd7d91;
+  /* background-color: #dd7d91; */
+  border-bottom: 1px solid white;
   color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
+  padding: 0 0 0.2rem 0;
+  border-radius: 0;
   text-align: center;
   cursor: pointer;
   width: fit-content;

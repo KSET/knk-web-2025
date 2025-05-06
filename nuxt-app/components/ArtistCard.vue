@@ -22,6 +22,7 @@ const toggleShowDialog = (): void => {
       :src="$urlFor(artist.image).url()"
       alt="artist image"
       class="artist-image"
+      @click="toggleShowDialog"
     />
     <div :class="['artist-info', !reverse ? 'reverse' : '']">
       <p class="artist-name">{{ artist.name }}</p>

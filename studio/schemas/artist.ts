@@ -24,8 +24,18 @@ export default defineType({
       rows: 8,
     }),
     defineField({
-      name: 'link',
-      title: 'Link',
+      name: 'linkSocial',
+      title: 'Link Social',
+      type: 'url',
+      validation: (Rule) =>
+        Rule.uri({
+          allowRelative: false,
+          scheme: ['http', 'https'],
+        }),
+    }),
+    defineField({
+      name: 'linkMusic',
+      title: 'Link Music',
       type: 'url',
       validation: (Rule) =>
         Rule.uri({

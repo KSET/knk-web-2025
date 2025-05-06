@@ -1,4 +1,5 @@
 import type { ImageAsset } from '@sanity/types'
+import type { Url } from 'url'
 
 export interface Artist {
   _id: string
@@ -8,4 +9,6 @@ export interface Artist {
   description?: string
   bio?: string
   image?: ImageAsset
+  linkSocial?: Url
+  linkMusic?: Url
 }

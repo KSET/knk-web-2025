@@ -20,6 +20,31 @@
       <p>Sva prava pridržana © 2025</p>
       <p>Savez studenata FER-a</p>
       <div class="footer-links">
+        <div>
+          <a
+            href="https://web.facebook.com/events/1161949535664367"
+            target="_blank"
+            rel="noopener noreferrer"
+            >facebook</a
+          >
+        </div>
+        <div>
+          <a
+            href="https://www.instagram.com/klubkset"
+            target="_blank"
+            rel="noopener noreferrer"
+            >instagram</a
+          >
+        </div>
+        <div>
+          <a href="mailto:knk@kset.org">knk@kset.org</a>
+        </div>
+        <div>
+          <a href="mailto:info@kset.org">info@kset.org</a>
+        </div>
+      </div>
+
+      <div class="footer-links">
         <NuxtLink to="/opca-pravila" class="" style="color: white"
           >Opća Pravila</NuxtLink
         >
@@ -64,7 +89,14 @@
 .footer-links {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 1rem 0;
+  gap: 1rem;
+
+  color: white;
+}
+
+.footer-links a {
+  color: white;
 }
 </style>
