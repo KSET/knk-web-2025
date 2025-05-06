@@ -42,7 +42,7 @@ const toggleVisibleRight = (): void => {
 
   <Drawer v-model:visible="visibleRight" hedaer=" " position="right">
     <div class="drawer-wrapper">
-      <div class="drawer-container">
+      <div class="drawer-container" @click="toggleVisibleRight">
         <div>
           <NuxtLink
             to="/"
@@ -65,6 +65,22 @@ const toggleVisibleRight = (): void => {
             class="hover:underline drawer-text"
             style="color: #e55a8e"
             >GALERIJA</NuxtLink
+          >
+        </div>
+        <div>
+          <NuxtLink
+            to="/info"
+            class="hover:underline drawer-text"
+            style="color: #5c9c9c"
+            >INFO</NuxtLink
+          >
+        </div>
+        <div>
+          <NuxtLink
+            to="/tickets"
+            class="hover:underline drawer-text"
+            style="color: #264f6c"
+            >KARTE</NuxtLink
           >
         </div>
       </div>

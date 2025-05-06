@@ -19,6 +19,14 @@
 
       <p>Sva prava pridržana © 2025</p>
       <p>Savez studenata FER-a</p>
+      <div class="footer-links">
+        <NuxtLink to="/opca-pravila" class="" style="color: white"
+          >Opća Pravila</NuxtLink
+        >
+        <NuxtLink to="/politika-privatnosti" class="" style="color: white"
+          >Politika Privatnosti</NuxtLink
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -40,6 +48,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 2rem 3rem 2rem;
 }
 
 .logo {
@@ -50,5 +59,12 @@
 .logos {
   display: flex;
   align-items: center;
+}
+
+.footer-links {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
 }
 </style>

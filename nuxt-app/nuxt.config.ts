@@ -13,11 +13,33 @@ export default defineNuxtConfig({
             'KSET na Krku četverodnevni je festival, organiziran od strane Saveza studenata Fakulteta elektrotehnike i računarstva (poznatijeg kao KSET), koji promiče kulturu i neformalnu edukaciju te aktivno druženje uz razmjenu znanja i suradnju mladih.',
         },
       ],
+      link: [
+        {
+          rel: 'stylesheet',
+          type: 'text/css',
+          href: 'https://karte.kset.org/kset/kset-na-krku/widget/v1.css',
+          crossorigin: '',
+        },
+      ],
+      script: [
+        {
+          src: 'https://karte.kset.org/widget/v1.en.js',
+          async: true,
+          crossorigin: '',
+        },
+      ],
     },
   },
   css: ['@/assets/fonts/fonts.css'],
   vite: {
     plugins: [tsconfigPaths()],
+    vue: {
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag === 'pretix-widget',
+        },
+      },
+    },
   },
   modules: [
     '@nuxtjs/sanity',

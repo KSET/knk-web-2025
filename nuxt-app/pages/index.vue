@@ -5,9 +5,17 @@ import { type GallerySection } from '~/types/GallerySection'
 import { ref } from 'vue'
 
 import Footer from '~/components/Footer.vue'
+import type { Translation } from '~/types/Translation'
 
 const query = groq`*[ _type == "artist"] | order(_createdAt desc)`
 const { data: artists } = await useSanityQuery<Artist[]>(query)
+
+const query2 = groq`*[ _type == "translation"]`
+const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
+
+const translations = Object.fromEntries(
+  translationsRaw.value?.map((entry) => [entry.key, entry.text]) || [],
+)
 
 const visibleRight = ref(false)
 
@@ -69,15 +77,10 @@ const responsiveOptionsGalleryCarousel = [
       <div class="wall-text-container">
         <p class="title-text">O KNK-u</p>
         <p class="wall-text">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed odio
-          in nunc sodales iaculis. Quisque scelerisque fermentum turpis cursus
-          venenatis. Vestibulum semper sem in laoreet mattis. Nulla et
-          vestibulum sem, sed sollicitudin arcu. Cras nunc dolor, pretium eu
-          porttitor pretium, semper ut magna. Praesent euismod mauris non justo
-          fringilla accumsan. In malesuada rutrum rhoncus. Sed quis lacinia
-          erat. Mauris interdum gravida nibh a pharetra. Quisque in rutrum nunc.
-          Donec vulputate sit amet velit pretium molestie. Integer vitae magna
-          quis risus luctus iaculis.
+          <BlockContent
+            :blocks="translations?.landingPageText"
+            class="wall-text"
+          />
         </p>
       </div>
 
@@ -211,7 +214,7 @@ const responsiveOptionsGalleryCarousel = [
 
   <Drawer v-model:visible="visibleRight" hedaer=" " position="right">
     <div class="drawer-wrapper">
-      <div class="drawer-container">
+      <div class="drawer-container" @click="toggleVisibleRight">
         <div>
           <NuxtLink
             to="/"
@@ -234,6 +237,22 @@ const responsiveOptionsGalleryCarousel = [
             class="hover:underline drawer-text"
             style="color: #e55a8e"
             >Galerija</NuxtLink
+          >
+        </div>
+        <div>
+          <NuxtLink
+            to="/info"
+            class="hover:underline drawer-text"
+            style="color: #5c9c9c"
+            >Info</NuxtLink
+          >
+        </div>
+        <div>
+          <NuxtLink
+            to="/tickets"
+            class="hover:underline drawer-text"
+            style="color: #264f6c"
+            >Karte</NuxtLink
           >
         </div>
       </div>
@@ -402,7 +421,7 @@ img {
   justify-content: center;
   flex-direction: column;
 
-  background-image: url('/assets/icons/zid-tekstura.svg');
+  background-image: url('/assets/zid-teksture/zid-tekstura-landing.svg');
   background-repeat: repeat;
   background-size: contain;
 

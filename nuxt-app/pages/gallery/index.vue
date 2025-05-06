@@ -168,7 +168,7 @@ gallerySections.value?.forEach((section) => {
   justify-content: center;
   gap: 1rem;
 
-  background-image: url('/assets/icons/zid-tekstura-gallery.svg');
+  background-image: url('/assets/zid-teksture/zid-tekstura-gallery.svg');
   background-repeat: repeat;
   background-size: contain;
 

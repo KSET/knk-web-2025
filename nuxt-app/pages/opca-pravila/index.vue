@@ -1,29 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import Header from '~/components/Header.vue'
-import ArtistCard from '~/components/ArtistCard.vue'
 import Footer from '~/components/Footer.vue'
 
-import { type Artist } from '~/types/Artist'
-import { Button } from 'primevue'
+import type { Translation } from '~/types/Translation'
 
-const query = groq`*[ _type == "artist"] | order(_createdAt desc)`
-const { data: artists } = await useSanityQuery<Artist[]>(query)
+const query2 = groq`*[ _type == "translation"]`
+const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
 
-console.log(artists)
+const translations = Object.fromEntries(
+  translationsRaw.value?.map((entry) => [entry.key, entry.text]) || [],
+)
 </script>
 
 <template>
   <Header />
 
-  <div class="artists-wrapper">
-    <div class="artists-container">
-      <ArtistCard
-        v-for="(artist, index) in artists"
-        :key="artist._id"
-        :artist="artist"
-        :reverse="index % 2 !== 0"
-      />
+  <div class="page-wrapper">
+    <div class="page-container">
+      <BlockContent :blocks="translations?.opcaPravilaText" class="info-text" />
     </div>
   </div>
 
@@ -39,27 +33,24 @@ console.log(artists)
 </template>
 
 <style scoped>
-.artists-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.artists-container {
+.page-container {
   max-width: 50rem;
   width: 100%;
+  padding: 1rem;
+
+  color: white;
 }
 
-.artists-wrapper {
+.page-wrapper {
+  min-height: 70vh;
+
   background-color: #844d99;
   height: fit-content;
   width: 100%;
 
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
   gap: 1rem;
 
   background-image: url('/assets/zid-teksture/zid-tekstura-lineup.svg');
