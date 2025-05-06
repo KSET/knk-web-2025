@@ -132,7 +132,7 @@ const toggleVisibleRight = (): void => {
 
 .header-text {
   position: relative;
-  text-shadow: 3px 4px 0 #e4c9b3;
+  text-shadow: 3px 4px 0 #d46558;
 
   font-size: 4rem;
   margin: 0;
