@@ -2,6 +2,7 @@
 import { Button } from 'primevue'
 import { type Artist } from '~/types/Artist'
 import { type GallerySection } from '~/types/GallerySection'
+import { type Ticket } from '~/types/Ticket'
 import { ref } from 'vue'
 
 import Footer from '~/components/Footer.vue'
@@ -16,6 +17,9 @@ const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
 const translations = Object.fromEntries(
   translationsRaw.value?.map((entry) => [entry.key, entry.text]) || [],
 )
+
+const query3 = groq`*[ _type == "ticket"] | order(_createdAt desc)`
+const { data: tickets } = await useSanityQuery<Ticket[]>(query3)
 
 const visibleRight = ref(false)
 
@@ -60,7 +64,7 @@ const responsiveOptionsGalleryCarousel = [
         <img
           src="/assets/icons/2025.svg"
           alt="2025"
-          class="2025-icon"
+          class="year-icon"
           style="align-self: flex-end"
         />
       </div>
@@ -68,7 +72,7 @@ const responsiveOptionsGalleryCarousel = [
       <img src="/assets/icons/sunce.svg" alt="Sunce" class="sunce-icon" />
       <img src="/assets/icons/oblaci.svg" alt="oblaci" class="oblaci-icon" />
     </div>
-    <p class="header-date">14.-16.8.2025.</p>
+    <p class="header-date">14. - 16.8.</p>
   </div>
 
   <div class="wall-divider" />
@@ -85,39 +89,17 @@ const responsiveOptionsGalleryCarousel = [
       </div>
 
       <div class="title-text-container">
-        <p class="title-text">O Kampu</p>
-
-        <NuxtLink to="/info" style="text-decoration: none">
-          <div class="title-button">
-            Više informacija
-            <img
-              src="/assets/icons/arrow-right.svg"
-              alt="arrow-right"
-              class="arrow-icon"
-            />
-          </div>
-        </NuxtLink>
-      </div>
-
-      <p class="wall-text">
-        <BlockContent
-          :blocks="translations?.landingKampText"
-          class="wall-text"
-        />
-      </p>
-
-      <div class="title-text-container">
         <p class="title-text">Izvođači</p>
 
         <NuxtLink to="/lineup" style="text-decoration: none">
-          <div class="title-button">
+          <span class="title-button">
             Pogledaj više
             <img
               src="/assets/icons/arrow-right.svg"
               alt="arrow-right"
               class="arrow-icon"
             />
-          </div>
+          </span>
         </NuxtLink>
       </div>
 
@@ -160,10 +142,12 @@ const responsiveOptionsGalleryCarousel = [
         </template>
       </Carousel>
 
+      <p class="soon-text">+ još uskoro...</p>
+
       <div class="title-text-container">
         <p class="title-text">Ulaznice</p>
 
-        <NuxtLink to="/lineup" style="text-decoration: none">
+        <NuxtLink to="/tickets" style="text-decoration: none">
           <div class="title-button">
             Kupi ulaznice
             <img
@@ -175,9 +159,44 @@ const responsiveOptionsGalleryCarousel = [
         </NuxtLink>
       </div>
 
+      <div class="tickets-container">
+        <div
+          v-for="ticket in tickets"
+          :key="ticket._id"
+          class="ticket-card"
+          :style="{ backgroundColor: ticket.backgroundColor }"
+        >
+          <div class="ticket-name">{{ ticket.name }}</div>
+          <div class="ticket-price">{{ ticket.price }}€</div>
+          <NuxtLink to="/tickets" style="text-decoration: none">
+            <button
+              class="ticket-cta-button"
+              :style="{ backgroundColor: ticket.ctaColor }"
+            >
+              KUPI ODMAH
+            </button>
+          </NuxtLink>
+        </div>
+      </div>
+
+      <div class="title-text-container">
+        <p class="title-text">O Kampu</p>
+
+        <NuxtLink to="/info" style="text-decoration: none">
+          <div class="title-button">
+            Više informacija
+            <img
+              src="/assets/icons/arrow-right.svg"
+              alt="arrow-right"
+              class="arrow-icon"
+            />
+          </div>
+        </NuxtLink>
+      </div>
+
       <p class="wall-text">
         <BlockContent
-          :blocks="translations?.landingTicketsText"
+          :blocks="translations?.landingKampText"
           class="wall-text"
         />
       </p>
@@ -382,7 +401,6 @@ img {
 .title-button {
   font-family: 'Montserrat';
   /* background-color: #dd7d91; */
-  border-bottom: 1px solid white;
   color: #fff;
   padding: 0 0 0.2rem 0;
   border-radius: 0;
@@ -392,6 +410,12 @@ img {
 
   display: flex;
   align-items: center;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.title-button:hover {
+  border-bottom: 1px solid white;
 }
 
 .arrow-icon {
@@ -425,7 +449,7 @@ img {
 
 .header-text {
   position: relative;
-  text-shadow: 3px 4px 0 #d46558;
+  text-shadow: 0.5px 4px 0 #dd7d91;
 
   font-size: 6rem;
   margin: 0;
@@ -433,6 +457,10 @@ img {
   font-family: 'Bright';
   color: #efe5dd;
   z-index: 10;
+}
+
+.year-icon {
+  height: 3rem;
 }
 
 .sunce-icon {
@@ -455,7 +483,7 @@ img {
   margin: 0;
   padding: 0 0 0.5rem 0;
 
-  text-shadow: 2px 2px 0 #d46558;
+  text-shadow: 0.5px 4px 0 #dd7d91;
 }
 
 .burger-icon {
@@ -492,6 +520,13 @@ img {
 }
 
 .prijelaz-zid-plaza {
+}
+.soon-text {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 1rem;
 }
 
 .wall-container {
@@ -535,6 +570,47 @@ img {
 
 .artist-carousel {
   display: flex;
+}
+
+.tickets-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 40px;
+}
+
+.ticket-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 14rem;
+  padding: 20px;
+  border-radius: 10px;
+  color: #000;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ticket-name {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.ticket-price {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.ticket-cta-button {
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 /*  --------------- BEACH --------------- */
@@ -586,6 +662,8 @@ img {
   height: auto;
   max-height: 15rem;
   border-radius: 8px;
+
+  padding: 0 0.5rem;
 }
 
 /*  --------------- DRAWER --------------- */
@@ -638,6 +716,14 @@ img {
   right: 0;
 }
 
+.cta-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0 2rem 0;
+  width: 100%;
+}
+
 /*  --------------- RESPONNZIVNOST --------------- */
 
 .wall-wrapper,
@@ -673,6 +759,10 @@ img {
 
   .header-text {
     font-size: 4rem;
+  }
+
+  .year-icon {
+    height: 2.5rem;
   }
 }
 </style>

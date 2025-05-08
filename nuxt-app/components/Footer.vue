@@ -2,18 +2,23 @@
   <div class="footer-wrapper">
     <div class="footer-container">
       <div class="logos">
-        <img src="/assets/icons/SC-logo.svg" alt="logo" class="logo" />
+        <img
+          src="/assets/icons/SC-logo.svg"
+          alt="logo"
+          class="logo"
+          style="height: 1.5rem"
+        />
         <img
           src="/assets/icons/KSET-logo.svg"
           alt="logo"
           class="logo"
-          style="height: 5rem"
+          style="height: 3rem"
         />
         <img
           src="/assets/icons/krk-logo.svg"
           alt="logo"
           class="logo"
-          style="height: 4rem"
+          style="height: 3rem"
         />
       </div>
 
@@ -25,19 +30,27 @@
             href="https://web.facebook.com/events/1161949535664367"
             target="_blank"
             rel="noopener noreferrer"
-            >facebook</a
-          >
+            ><img
+              src="/assets/icons/facebook.png"
+              alt="logo"
+              class="logo"
+              style="height: 1.5rem"
+          /></a>
         </div>
         <div>
           <a
             href="https://www.instagram.com/klubkset"
             target="_blank"
             rel="noopener noreferrer"
-            >instagram</a
-          >
+            ><img
+              src="/assets/icons/instagram.png"
+              alt="logo"
+              class="logo"
+              style="height: 1.5rem"
+          /></a>
         </div>
         <div>
-          <a href="mailto:knk@kset.org">knk@kset.org</a>
+          <a href="mailto:press@kset.org">press@kset.org</a>
         </div>
         <div>
           <a href="mailto:info@kset.org">info@kset.org</a>
@@ -74,6 +87,7 @@
   flex-direction: column;
   align-items: center;
   padding: 0 2rem 3rem 2rem;
+  color: white;
 }
 
 .logo {
@@ -84,12 +98,14 @@
 .logos {
   display: flex;
   align-items: center;
+  gap: 1rem;
 }
 
 .footer-links {
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
   padding: 1rem 0;
   gap: 1rem;
 

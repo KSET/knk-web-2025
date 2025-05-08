@@ -91,7 +91,7 @@ const toggleShowDialog = (): void => {
   align-items: flex-start;
   justify-content: space-between;
   width: 90%;
-  height: 15rem;
+  height: 16rem;
   margin: 1rem auto;
 
   background-color: rgba(255, 255, 255, 0.1);

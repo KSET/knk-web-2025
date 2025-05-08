@@ -30,7 +30,7 @@ const toggleVisibleRight = (): void => {
         <img
           src="/assets/icons/2025.svg"
           alt="2025"
-          class="2025-icon"
+          class="year-icon"
           style="align-self: flex-end"
         />
       </div>
@@ -140,6 +140,7 @@ const toggleVisibleRight = (): void => {
   font-family: 'Bright';
   color: #efe5dd;
   z-index: 10;
+  font-weight: 500;
 }
 
 .sunce-icon {
@@ -223,6 +224,10 @@ const toggleVisibleRight = (): void => {
   right: 0;
 }
 
+.year-icon {
+  height: 2.5rem;
+}
+
 @media (max-width: 900px) {
   .header-text {
     font-size: 3rem;
@@ -236,6 +241,10 @@ const toggleVisibleRight = (): void => {
 
   .burger-icon {
     right: 5%;
+  }
+
+  .year-icon {
+    height: 2rem;
   }
 }
 </style>
