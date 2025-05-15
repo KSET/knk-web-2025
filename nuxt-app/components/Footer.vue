@@ -58,9 +58,7 @@
       </div>
 
       <div class="footer-links">
-        <NuxtLink to="/pravila" class="" style="color: white"
-          >Pravila</NuxtLink
-        >
+        <NuxtLink to="/pravila" class="" style="color: white">Pravila</NuxtLink>
         <NuxtLink to="/politika-privatnosti" class="" style="color: white"
           >Politika Privatnosti</NuxtLink
         >

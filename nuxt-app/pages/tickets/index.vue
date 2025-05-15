@@ -1,16 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import Header from '~/components/Header.vue'
-import ArtistCard from '~/components/ArtistCard.vue'
 import Footer from '~/components/Footer.vue'
-
-import { type Artist } from '~/types/Artist'
-import { Button } from 'primevue'
-
-const query = groq`*[ _type == "artist"] | order(_createdAt desc)`
-const { data: artists } = await useSanityQuery<Artist[]>(query)
-
-console.log(artists)
 
 // loading pretix script
 import { onMounted } from 'vue'

@@ -52,6 +52,12 @@ export default defineType({
         hotspot: true,
       },
     }),
+    defineField({
+      name: 'orderRank',
+      title: 'orderRank',
+      type: 'string',
+      hidden: true,
+    }),
   ],
   preview: {
     select: {

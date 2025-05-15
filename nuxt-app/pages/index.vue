@@ -8,7 +8,7 @@ import { ref } from 'vue'
 import Footer from '~/components/Footer.vue'
 import type { Translation } from '~/types/Translation'
 
-const query = groq`*[ _type == "artist"] | order(_createdAt desc)`
+const query = groq`*[ _type == "artist"] | order(orderRank asc)`
 const { data: artists } = await useSanityQuery<Artist[]>(query)
 
 const query2 = groq`*[ _type == "translation"]`

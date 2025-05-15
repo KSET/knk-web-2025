@@ -7,7 +7,7 @@ import Footer from '~/components/Footer.vue'
 import { type Artist } from '~/types/Artist'
 import { Button } from 'primevue'
 
-const query = groq`*[ _type == "artist"] | order(_createdAt desc)`
+const query = groq`*[ _type == "artist"] | order(orderRank asc)`
 const { data: artists } = await useSanityQuery<Artist[]>(query)
 
 console.log(artists)
