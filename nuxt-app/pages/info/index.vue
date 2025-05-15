@@ -23,7 +23,7 @@ const translations = Object.fromEntries(
           class="info-text"
         />
       </div>
-      <h1 style="color: white">Informacije o Kampu</h1>
+      <h1 style="color: white">Informacije o kampu</h1>
       <div class="info-text">
         <BlockContent :blocks="translations?.infoKampText" class="info-text" />
       </div>

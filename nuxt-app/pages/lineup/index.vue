@@ -43,7 +43,6 @@ console.log(artists)
 .artists-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
@@ -58,14 +57,15 @@ console.log(artists)
   width: 100%;
 
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  justify-content: center;
   gap: 1rem;
 
   background-image: url('/assets/zid-teksture/zid-tekstura-lineup.svg');
   background-repeat: repeat;
   background-size: contain;
+
+  min-height: 60rem;
+
 
   padding-top: 2rem;
 }
