@@ -24,7 +24,6 @@ console.log(artists)
         :artist="artist"
         :reverse="index % 2 !== 0"
       />
-      <p class="soon-text">+ još uskoro...</p>
     </div>
   </div>
 

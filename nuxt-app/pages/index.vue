@@ -142,8 +142,6 @@ const responsiveOptionsGalleryCarousel = [
         </template>
       </Carousel>
 
-      <p class="soon-text">+ još uskoro...</p>
-
       <div class="title-text-container">
         <p class="title-text">Ulaznice</p>
 
