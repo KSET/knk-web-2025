@@ -189,7 +189,6 @@ a {
 }
 
 .workshop-image {
-  height: 100%;
   object-fit: cover;
   border-radius: 12px;
   max-width: 100%;

@@ -75,7 +75,8 @@ const toggleShowDialog = (): void => {
 }
 
 .artist-dialog {
-  width: 30rem;
+  width: 95%;
+  max-width: 30rem;
   height: fit-content;
   margin: auto;
 
