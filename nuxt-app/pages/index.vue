@@ -7,12 +7,16 @@ import { ref } from 'vue'
 
 import Footer from '~/components/Footer.vue'
 import type { Translation } from '~/types/Translation'
+import type { Workshop } from '~/types/Workshop'
 
 const query = groq`*[ _type == "artist"] | order(orderRank asc)`
 const { data: artists } = await useSanityQuery<Artist[]>(query)
 
 const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
+
+const query4 = groq`*[_type == "workshop"] | order(location asc, orderRank asc)`
+const { data: workshops } = await useSanityQuery<Workshop[]>(query4)
 
 const translations = Object.fromEntries(
   translationsRaw.value?.map((entry) => [entry.key, entry.text]) || [],
@@ -210,15 +214,64 @@ const responsiveOptionsGalleryCarousel = [
   </div>
 
   <div class="beach-wrapper">
-    <!-- <div class="beach-container">
-      <p class="title-text">Raspored</p>
+    <div class="wall-container">
+      <div class="title-text-container">
+        <p class="title-text" style="color: #264f6c">Radionice</p>
+
+        <NuxtLink to="/workshops" style="text-decoration: none">
+          <span class="title-button-blue" style="color: #264f6c">
+            Pogledaj više
+            <img
+              src="/assets/icons/arrow-right-blue.svg"
+              alt="arrow-right-blue"
+              class="arrow-icon"
+              style="color: #264f6c"
+            />
+          </span>
+        </NuxtLink>
+      </div>
 
       <div class="artist-container">
-        <div v-for="artist in artists">
-          <img v-if="artist.image" :src="$urlFor(artist.image).url()" alt="artist image" class="artist-image" />
+        <div v-for="workshop in workshops">
+          <NuxtLink to="/workshops" style="text-decoration: none">
+            <img
+              v-if="workshop.imageSmall"
+              :src="$urlFor(workshop.imageSmall).url()"
+              alt="artist image"
+              class="artist-image"
+            />
+            <p style="color: #264f6c">{{ workshop.name }}</p>
+          </NuxtLink>
         </div>
       </div>
-    </div> -->
+
+      <Carousel
+        :value="workshops"
+        :numVisible="2"
+        :numScroll="1"
+        :responsiveOptions="responsiveOptionsGalleryCarousel"
+        :circular="true"
+        :autoplayInterval="10000"
+        :autoplay="true"
+        class="workshops-carousel"
+      >
+        <template #item="slotProps">
+          <div class="artist-carousel-container">
+            <NuxtLink to="/workshops" style="text-decoration: none">
+              <img
+                v-if="slotProps.data.imageSmall"
+                :src="$urlFor(slotProps.data.imageSmall).url()"
+                alt="artist image"
+                class="gallery-image"
+              />
+              <p style="color: #264f6c">{{ slotProps.data.name }}</p>
+            </NuxtLink>
+          </div>
+        </template>
+      </Carousel>
+    </div>
+
+    <p class="soon-text">+ još uskoro...</p>
 
     <div class="prijelaz-container">
       <img
@@ -300,6 +353,14 @@ const responsiveOptionsGalleryCarousel = [
         </div>
         <div>
           <NuxtLink
+            to="/workshops"
+            class="hover:underline drawer-text"
+            style="color: #d46558"
+            >Radionice</NuxtLink
+          >
+        </div>
+        <div>
+          <NuxtLink
             to="/gallery"
             class="hover:underline drawer-text"
             style="color: #e55a8e"
@@ -337,8 +398,19 @@ const responsiveOptionsGalleryCarousel = [
 </template>
 
 <style>
+* {
+  white-space: pre-line;
+}
 .artist-carousel .p-carousel-indicator-active .p-carousel-indicator-button {
   background-color: #5c9c9c !important;
+}
+.workshops-carousel .p-button-icon,
+.workshops-carousel .p-icon {
+  color: #264f6c !important;
+}
+
+.workshops-carousel .p-carousel-indicator-active .p-carousel-indicator-button {
+  background-color: #264f6c !important;
 }
 
 .gallery-carousel .p-carousel-indicator-active .p-carousel-indicator-button {
@@ -396,6 +468,7 @@ img {
   padding-right: 1rem;
 }
 
+.title-button-blue,
 .title-button {
   font-family: 'Montserrat';
   /* background-color: #dd7d91; */
@@ -414,6 +487,10 @@ img {
 
 .title-button:hover {
   border-bottom: 1px solid white;
+}
+
+.title-button-blue:hover {
+  border-bottom: 1px solid #264f6c;
 }
 
 .arrow-icon {
@@ -520,7 +597,7 @@ img {
 .prijelaz-zid-plaza {
 }
 .soon-text {
-  color: white;
+  color: #264f6c;
   font-size: 1.5rem;
   font-weight: 600;
   text-align: center;
@@ -533,8 +610,12 @@ img {
 }
 
 .wall-text {
-  width: 100%;
-  padding-right: 1rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  font-size: 1.25rem;
+  padding: 1.25rem;
+  margin-right: 1rem;
+  backdrop-filter: blur(6px);
 }
 
 .title-text {
@@ -566,6 +647,7 @@ img {
   gap: 1rem;
 }
 
+.workshops-carousel,
 .artist-carousel {
   display: flex;
 }
@@ -743,6 +825,7 @@ img {
 }
 
 @media (max-width: 900px) {
+  .workshops-carousel,
   .artist-carousel {
     display: none;
   }

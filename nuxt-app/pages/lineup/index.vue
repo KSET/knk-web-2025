@@ -65,7 +65,6 @@ console.log(artists)
 
   min-height: 60rem;
 
-
   padding-top: 2rem;
 }
 

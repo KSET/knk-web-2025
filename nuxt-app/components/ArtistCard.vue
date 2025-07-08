@@ -68,6 +68,12 @@ const toggleShowDialog = (): void => {
 .p-dialog-close-button:not(:disabled):hover {
   color: black !important;
 }
+
+.p-dialog-header {
+  padding-top: 16rem;
+  padding-bottom: 0rem;
+}
+
 .artist-dialog {
   width: 30rem;
   height: fit-content;
@@ -75,7 +81,7 @@ const toggleShowDialog = (): void => {
 
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 0rem;
 
   background-color: rgba(165, 101, 189, 0.7);
   border-radius: 12px;
@@ -165,10 +171,16 @@ const toggleShowDialog = (): void => {
 }
 
 .artist-dialog-image {
-  max-height: 12rem;
+  max-height: 15rem;
   width: 100%;
   object-fit: cover;
   max-width: 100%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
   border-radius: 12px;
 }

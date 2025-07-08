@@ -26,7 +26,16 @@ export default defineConfig({
               S,
               context,
             }),
-            ...S.documentTypeListItems().filter((listItem) => listItem.getId() !== 'artist'),
+            orderableDocumentListDeskItem({
+              type: 'workshop',
+              title: 'Workshops',
+              S,
+              context,
+            }),
+            ...S.documentTypeListItems().filter((listItem) => {
+              const id = listItem.getId()
+              return id !== undefined && !['artist', 'workshop'].includes(id)
+            }),
           ]),
     }),
     presentationTool({
