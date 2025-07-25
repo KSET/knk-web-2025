@@ -38,8 +38,6 @@ const getPlainTextLink = (blocks: any[]): string | undefined => {
 
 const formLink = computed(() => getPlainTextLink(workshopsFormLink))
 
-console.log(workshopsFormLink)
-console.log(workshops)
 </script>
 
 <template>

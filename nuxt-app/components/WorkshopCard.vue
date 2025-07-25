@@ -37,7 +37,6 @@ const getPlainTextLink = (blocks: any[]): string | undefined => {
 
 const formLink = computed(() => getPlainTextLink(workshopsFormLink))
 
-console.log(workshopsFormLink)
 </script>
 
 <template>
@@ -92,7 +91,7 @@ console.log(workshopsFormLink)
         class="workshop-dialog-image"
       />
       <p v-if="workshop.datetime" style="opacity: 0.7">
-        Datum i vrijeme: {{ formatDate(workshop.datetime) }}
+        Datum i vrijeme: {{ formatDate(workshop.datetime?.toString()) }}
       </p>
       <p
         v-if="workshop.location"

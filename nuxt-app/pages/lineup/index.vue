@@ -9,8 +9,6 @@ import { Button } from 'primevue'
 
 const query = groq`*[ _type == "artist"] | order(orderRank asc)`
 const { data: artists } = await useSanityQuery<Artist[]>(query)
-
-console.log(artists)
 </script>
 
 <template>

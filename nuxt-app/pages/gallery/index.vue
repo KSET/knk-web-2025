@@ -8,8 +8,6 @@ import { type GallerySection } from '~/types/GallerySection'
 const query = groq`*[_type == "gallerySection"] | order(_createdAt desc)`
 const { data: gallerySections } = await useSanityQuery<GallerySection[]>(query)
 
-console.log(gallerySections)
-
 type GalleryInstance = {
   id: string
   year: number

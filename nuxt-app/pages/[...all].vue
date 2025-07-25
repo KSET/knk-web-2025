@@ -2,7 +2,7 @@
 const router = useRouter()
 
 onMounted(() => {
-  router.replace('/') 
+  router.replace('/')
 })
 </script>
 

@@ -32,9 +32,15 @@ export default defineConfig({
               S,
               context,
             }),
+            orderableDocumentListDeskItem({
+              type: 'sponsor',
+              title: 'Sponsor',
+              S,
+              context,
+            }),
             ...S.documentTypeListItems().filter((listItem) => {
               const id = listItem.getId()
-              return id !== undefined && !['artist', 'workshop'].includes(id)
+              return id !== undefined && !['artist', 'workshop', 'sponsor'].includes(id)
             }),
           ]),
     }),

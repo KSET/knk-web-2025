@@ -9,6 +9,7 @@
     "start": "sanity start",
     "build": "sanity build",
     "deploy": "sanity deploy",
+    "login": "sanity login",
     "deploy-graphql": "sanity graphql deploy"
   },
   "keywords": [
@@ -16,11 +17,11 @@
   ],
   "dependencies": {
     "@sanity/orderable-document-list": "^1.3.4",
-    "@sanity/vision": "^3.98.0",
+    "@sanity/vision": "^3.99.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-is": "^18.3.1",
-    "sanity": "^3.98.0",
+    "sanity": "^3.99.0",
     "styled-components": "^6.1.13"
   },
   "devDependencies": {
