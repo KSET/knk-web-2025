@@ -36,7 +36,6 @@ const getPlainTextLink = (blocks: any[]): string | undefined => {
 }
 
 const formLink = computed(() => getPlainTextLink(workshopsFormLink))
-
 </script>
 
 <template>

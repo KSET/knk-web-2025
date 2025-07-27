@@ -3,37 +3,46 @@ import { type Sponsor } from '~/types/Sponsor'
 
 const query = groq`*[ _type == "sponsor"] | order(orderRank asc)`
 const { data: sponsors } = await useSanityQuery<Sponsor[]>(query)
+
+console.log(sponsors)
 </script>
 
 <template>
   <div class="footer-wrapper">
     <div class="footer-container">
       <div class="logos">
-        <img
-          src="/assets/icons/SC-logo.svg"
-          alt="logo"
-          class="logo"
-          style="height: 1.5rem"
-        />
-        <img
-          src="/assets/icons/KSET-logo.svg"
-          alt="logo"
-          class="logo"
-          style="height: 3rem"
-        />
-        <img
-          src="/assets/icons/krk-logo.svg"
-          alt="logo"
-          class="logo"
-          style="height: 3rem"
-        />
+        <div
+          v-for="sponsor in (sponsors || []).filter(
+            (s) => s.location === 'top-bar',
+          )"
+          :key="sponsor._id"
+          class="sponsor-item"
+        >
+          <a
+            v-if="sponsor.link"
+            :href="sponsor.link.toString()"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              v-if="sponsor.image"
+              :src="$urlFor(sponsor.image).url()"
+              :alt="sponsor.name"
+            />
+          </a>
+          <img
+            v-else-if="sponsor.image"
+            :src="$urlFor(sponsor.image).url()"
+            :alt="sponsor.name"
+          />
+        </div>
       </div>
-
-      <p class="title-text">Sponzori događaja</p>
 
       <div class="sponsors-container">
         <div
-          v-for="sponsor in sponsors"
+          v-for="sponsor in (sponsors || []).filter(
+            (s) => s.location === 'bottom-bar',
+          )"
           :key="sponsor._id"
           class="sponsor-item"
         >
@@ -119,7 +128,7 @@ const { data: sponsors } = await useSanityQuery<Sponsor[]>(query)
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 2rem 3rem 2rem;
+  padding: 0 1rem 3rem 1rem;
   color: white;
 }
 
@@ -132,6 +141,7 @@ const { data: sponsors } = await useSanityQuery<Sponsor[]>(query)
   display: flex;
   align-items: center;
   gap: 1rem;
+  padding-bottom: 4rem;
 }
 
 .footer-links {
@@ -157,7 +167,7 @@ const { data: sponsors } = await useSanityQuery<Sponsor[]>(query)
 
 .sponsors-container {
   display: flex;
-  gap: 0.65rem;
+  gap: 1rem;
   flex-wrap: wrap;
   justify-content: center;
 }
