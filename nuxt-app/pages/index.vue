@@ -657,7 +657,7 @@ img {
   justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
-  padding: 40px;
+  padding: 40px 0px;
 }
 
 .ticket-card {
