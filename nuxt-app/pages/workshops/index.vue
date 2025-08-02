@@ -72,7 +72,7 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
       </div>
     </div>
 
-    <p class="soon-text">+ još uskoro...</p>
+    <!-- <p class="soon-text">+ još uskoro...</p> -->
   </div>
 
   <div class="prijelaz-container">

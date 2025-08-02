@@ -271,7 +271,7 @@ const responsiveOptionsGalleryCarousel = [
       </Carousel>
     </div>
 
-    <p class="soon-text">+ još uskoro...</p>
+    <!-- <p class="soon-text">+ još uskoro...</p> -->
 
     <div class="prijelaz-container">
       <img
