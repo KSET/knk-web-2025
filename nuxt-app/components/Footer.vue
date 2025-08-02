@@ -140,7 +140,7 @@ console.log(sponsors)
 .logos {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 3rem;
   padding-bottom: 4rem;
 }
 
@@ -167,7 +167,7 @@ console.log(sponsors)
 
 .sponsors-container {
   display: flex;
-  gap: 1rem;
+  gap: 3rem;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -184,5 +184,15 @@ console.log(sponsors)
   max-height: 100%;
 
   object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .sponsors-container {
+    gap: 1rem;
+  }
+
+  .logos {
+    gap: 1rem;
+  }
 }
 </style>

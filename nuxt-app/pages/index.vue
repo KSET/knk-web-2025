@@ -444,6 +444,9 @@ img {
 .p-carousel-prev-button:not(:disabled):hover {
   color: black !important;
 }
+body {
+  background-color: #264f6c;
+}
 </style>
 
 <style scoped>
