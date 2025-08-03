@@ -16,6 +16,9 @@ const uniqueLocations = computed(() => [
 const groupedByLocation = (location: string) =>
   (workshops.value ?? []).filter((w) => w.location === location)
 
+const displayLocation = (location: string) =>
+  location === 'vanjska' ? 'vanjske' : location
+
 const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
 
@@ -45,7 +48,7 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
   <div class="workshops-wrapper">
     <div v-for="location in uniqueLocations" :key="location">
       <div class="title-container">
-        <h3 style="color: white; text-transform: capitalize">{{ location }}</h3>
+        <h3 style="color: white; text-transform: capitalize">{{ displayLocation(location) }}</h3>
         <a
           v-if="workshopsFormLink"
           :href="formLink"

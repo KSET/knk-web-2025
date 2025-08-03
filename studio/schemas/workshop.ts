@@ -27,8 +27,7 @@ export default defineType({
         list: [
           {title: 'Škola', value: 'škola'},
           {title: 'Kamp', value: 'kamp'},
-          {title: 'Višednevne', value: 'višednevne'},
-          {title: 'Cjelodnevne', value: 'cjelodnevne'},
+          {title: 'Vanjske', value: 'vanjska'},
         ],
         layout: 'dropdown',
       },

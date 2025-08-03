@@ -6,7 +6,7 @@ export interface Workshop {
   _createdAt: string
   name: string
   datetime: Date
-  location: 'škola' | 'kamp' | 'višednevne' | 'cjelodnevne'
+  location: 'škola' | 'kamp' | 'vanjske'
   imageLarge?: ImageAsset
   imageSmall?: ImageAsset
   descriptionShort?: string
