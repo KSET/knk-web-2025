@@ -5,7 +5,10 @@ export interface Workshop {
   _type: 'workshop'
   _createdAt: string
   name: string
-  datetime: Date
+  timeline?: {
+    start: string
+    end: string
+  },
   location: 'škola' | 'kamp' | 'vanjske'
   imageLarge?: ImageAsset
   imageSmall?: ImageAsset

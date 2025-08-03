@@ -35,6 +35,37 @@ const getPlainTextLink = (blocks: any[]): string | undefined => {
   return isLink ? text : undefined
 }
 
+function formatFullTimeline(start?: string | Date, end?: string | Date) {
+  if (!start) return '-'
+
+  const startDate = new Date(start)
+  const endDate = end ? new Date(end) : null
+
+  const rawDate = startDate.toLocaleDateString('hr-HR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })
+
+  const cleanDate = rawDate.replace(/\s/g, '')
+
+  const startTime = startDate.toLocaleTimeString('hr-HR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  }) + 'h'
+
+  const endTime = endDate
+    ? endDate.toLocaleTimeString('hr-HR', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }) + 'h'
+    : '?'
+
+  return `${cleanDate} ${startTime} - ${endTime}`
+}
+
+
+
 const formLink = computed(() => getPlainTextLink(workshopsFormLink))
 </script>
 
@@ -89,9 +120,13 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
         alt="workshop image"
         class="workshop-dialog-image"
       />
-      <p v-if="workshop.datetime" style="opacity: 0.7">
-        Datum i vrijeme: {{ formatDate(workshop.datetime?.toString()) }}
-      </p>
+      <p v-if="workshop.timeline?.start" style="opacity: 0.7">
+  Datum i vrijeme:
+  {{
+    formatFullTimeline(workshop.timeline.start, workshop.timeline.end)
+  }}
+</p>
+
       <p
         v-if="workshop.location"
         style="opacity: 0.7; text-transform: capitalize"
