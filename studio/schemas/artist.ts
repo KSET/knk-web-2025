@@ -12,6 +12,15 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      validation: (Rule) => Rule.required(),
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
       name: 'description',
       title: 'Description-short',
       type: 'text',
@@ -22,6 +31,25 @@ export default defineType({
       title: 'Bio-long',
       type: 'text',
       rows: 8,
+    }),
+    defineField({
+      name: 'timeline',
+      title: 'Timeline',
+      type: 'object',
+      fields: [
+        {
+          name: 'start',
+          title: 'Start Time',
+          type: 'datetime',
+        },
+        {
+          name: 'end',
+          title: 'End Time',
+          type: 'datetime',
+          validation: (Rule) =>
+            Rule.min(Rule.valueOfField('start')).error('End must be after start'),
+        },
+      ],
     }),
     defineField({
       name: 'linkSocial',
@@ -42,15 +70,6 @@ export default defineType({
           allowRelative: false,
           scheme: ['http', 'https'],
         }),
-    }),
-    defineField({
-      name: 'image',
-      title: 'Image',
-      type: 'image',
-      validation: (Rule) => Rule.required(),
-      options: {
-        hotspot: true,
-      },
     }),
     defineField({
       name: 'orderRank',

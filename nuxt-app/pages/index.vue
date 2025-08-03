@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { Button } from 'primevue'
 import { type Artist } from '~/types/Artist'
 import { type GallerySection } from '~/types/GallerySection'
 import { type Ticket } from '~/types/Ticket'
 import { ref } from 'vue'
+import { useArtistsStore } from '../stores/artists'
 
 import Footer from '~/components/Footer.vue'
 import type { Translation } from '~/types/Translation'
 import type { Workshop } from '~/types/Workshop'
 
-const query = groq`*[ _type == "artist"] | order(orderRank asc)`
-const { data: artists } = await useSanityQuery<Artist[]>(query)
+const artistsStore = useArtistsStore()
+
+onMounted(async () => {
+  await artistsStore.fetchArtists()
+})
 
 const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
@@ -29,6 +32,13 @@ const visibleRight = ref(false)
 
 const toggleVisibleRight = (): void => {
   visibleRight.value = !visibleRight.value
+}
+
+function formatShowDate(date: string | Date): string {
+  const d = new Date(date)
+  const month = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${day}.${month}.`
 }
 
 const queryGallerySections = groq`*[_type == "gallerySection"] | order(_createdAt desc)`
@@ -107,44 +117,38 @@ const responsiveOptionsGalleryCarousel = [
         </NuxtLink>
       </div>
 
-      <div class="artist-container">
-        <div v-for="artist in artists">
-          <NuxtLink to="/lineup" style="text-decoration: none">
-            <img
-              v-if="artist.image"
-              :src="$urlFor(artist.image).url()"
-              alt="artist image"
-              class="artist-image"
-            />
-            <p>{{ artist.name }}</p>
-          </NuxtLink>
-        </div>
-      </div>
+      <Tabs value="0">
+        <TabList style="flex-wrap: wrap">
+          <Tab value="0" class="artist-tab">Svi</Tab>
+          <Tab value="1" class="artist-tab" style=""
+            >Dan 1 - {{ formatShowDate(artistsStore.day1.date) }}</Tab
+          >
+          <Tab value="2" class="artist-tab"
+            >Dan 2 - {{ formatShowDate(artistsStore.day2.date) }}</Tab
+          >
+          <Tab value="3" class="artist-tab"
+            >Dan 3 - {{ formatShowDate(artistsStore.day3.date) }}</Tab
+          >
+        </TabList>
 
-      <Carousel
-        :value="artists"
-        :numVisible="2"
-        :numScroll="1"
-        :responsiveOptions="responsiveOptionsGalleryCarousel"
-        :circular="true"
-        :autoplayInterval="10000"
-        :autoplay="true"
-        class="artist-carousel"
-      >
-        <template #item="slotProps">
-          <div class="artist-carousel-container">
-            <NuxtLink to="/lineup" style="text-decoration: none">
-              <img
-                v-if="slotProps.data.image"
-                :src="$urlFor(slotProps.data.image).url()"
-                alt="artist image"
-                class="gallery-image"
-              />
-              <p>{{ slotProps.data.name }}</p>
-            </NuxtLink>
-          </div>
-        </template>
-      </Carousel>
+        <TabPanels>
+          <TabPanel value="0">
+            <HomeArtistsContainer :artists="artistsStore.all" />
+          </TabPanel>
+
+          <TabPanel value="1">
+            <HomeArtistsContainer :artists="artistsStore.day1.artists" />
+          </TabPanel>
+
+          <TabPanel value="2">
+            <HomeArtistsContainer :artists="artistsStore.day2.artists" />
+          </TabPanel>
+
+          <TabPanel value="3">
+            <HomeArtistsContainer :artists="artistsStore.day3.artists" />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
 
       <div class="title-text-container">
         <p class="title-text">Ulaznice</p>
@@ -401,9 +405,31 @@ const responsiveOptionsGalleryCarousel = [
 * {
   white-space: pre-line;
 }
+
+.p-tablist-tab-list {
+  flex-wrap: wrap !important;
+  border: none !important;
+}
+
+.p-tab {
+  border: 0;
+  border: 3px solid transparent;
+  background-color: #5c9c9c;
+}
+
+.p-tablist-active-bar {
+  display: none !important;
+}
+
+.p-tab-active {
+  border: 3px solid white;
+  background-color: #76c6d2;
+}
+
 .artist-carousel .p-carousel-indicator-active .p-carousel-indicator-button {
   background-color: #5c9c9c !important;
 }
+
 .workshops-carousel .p-button-icon,
 .workshops-carousel .p-icon {
   color: #264f6c !important;
@@ -444,6 +470,7 @@ img {
 .p-carousel-prev-button:not(:disabled):hover {
   color: black !important;
 }
+
 body {
   background-color: #264f6c;
 }
@@ -599,6 +626,7 @@ body {
 
 .prijelaz-zid-plaza {
 }
+
 .soon-text {
   color: #264f6c;
   font-size: 1.5rem;
@@ -640,6 +668,13 @@ body {
   height: auto;
   max-height: 10rem;
   object-fit: contain;
+}
+
+.artist-tab {
+  border-radius: 12px;
+  padding: 0.25rem 1rem;
+  height: fit-content;
+  margin: 0.25rem;
 }
 
 .artist-carousel-container {
