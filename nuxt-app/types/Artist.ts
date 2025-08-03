@@ -11,4 +11,8 @@ export interface Artist {
   image?: ImageAsset
   linkSocial?: Url
   linkMusic?: Url
+  timeline?: {
+    start: string
+    end: string
+  }
 }

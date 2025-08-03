@@ -4,25 +4,86 @@ import Header from '~/components/Header.vue'
 import ArtistCard from '~/components/ArtistCard.vue'
 import Footer from '~/components/Footer.vue'
 
-import { type Artist } from '~/types/Artist'
-import { Button } from 'primevue'
+import { useArtistsStore } from '../../stores/artists'
 
-const query = groq`*[ _type == "artist"] | order(orderRank asc)`
-const { data: artists } = await useSanityQuery<Artist[]>(query)
+const artistsStore = useArtistsStore()
+
+onMounted(async () => {
+  await artistsStore.fetchArtists()
+})
+
+function formatShowDate(date: string | Date): string {
+  const d = new Date(date)
+  const month = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${day}.${month}.`
+}
 </script>
 
 <template>
   <Header />
 
   <div class="artists-wrapper">
-    <div class="artists-container">
-      <ArtistCard
-        v-for="(artist, index) in artists"
-        :key="artist._id"
-        :artist="artist"
-        :reverse="index % 2 !== 0"
-      />
-    </div>
+    <Tabs value="0">
+      <TabList style="flex-wrap: wrap; margin: auto 1rem">
+        <Tab value="0" class="artist-tab">Svi</Tab>
+        <Tab value="1" class="artist-tab"
+          >Dan 1 – {{ formatShowDate(artistsStore.day1.date) }}</Tab
+        >
+        <Tab value="2" class="artist-tab"
+          >Dan 2 – {{ formatShowDate(artistsStore.day2.date) }}</Tab
+        >
+        <Tab value="3" class="artist-tab"
+          >Dan 3 – {{ formatShowDate(artistsStore.day3.date) }}</Tab
+        >
+      </TabList>
+
+      <TabPanels>
+        <TabPanel value="0">
+          <div class="artists-container">
+            <ArtistCard
+              v-for="(artist, index) in artistsStore.all"
+              :key="artist._id"
+              :artist="artist"
+              :reverse="index % 2 !== 0"
+            />
+          </div>
+        </TabPanel>
+
+        <TabPanel value="1">
+          <div class="artists-container">
+            <ArtistCard
+              v-for="(artist, index) in artistsStore.day1.artists"
+              :key="artist._id"
+              :artist="artist"
+              :reverse="index % 2 !== 0"
+            />
+          </div>
+        </TabPanel>
+
+        <TabPanel value="2">
+          <div class="artists-container">
+            <ArtistCard
+              v-for="(artist, index) in artistsStore.day2.artists"
+              :key="artist._id"
+              :artist="artist"
+              :reverse="index % 2 !== 0"
+            />
+          </div>
+        </TabPanel>
+
+        <TabPanel value="3">
+          <div class="artists-container">
+            <ArtistCard
+              v-for="(artist, index) in artistsStore.day3.artists"
+              :key="artist._id"
+              :artist="artist"
+              :reverse="index % 2 !== 0"
+            />
+          </div>
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
   </div>
 
   <div class="prijelaz-container">
@@ -37,6 +98,13 @@ const { data: artists } = await useSanityQuery<Artist[]>(query)
 </template>
 
 <style scoped>
+.artist-tab {
+  border-radius: 12px;
+  padding: 0.25rem 1rem;
+  height: fit-content;
+  margin: 0.25rem;
+}
+
 .artists-wrapper {
   display: flex;
   flex-direction: column;
