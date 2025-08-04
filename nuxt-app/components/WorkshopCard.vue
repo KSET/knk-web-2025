@@ -49,10 +49,11 @@ function formatFullTimeline(start?: string | Date, end?: string | Date) {
 
   const cleanDate = rawDate.replace(/\s/g, '')
 
-  const startTime = startDate.toLocaleTimeString('hr-HR', {
-    hour: '2-digit',
-    minute: '2-digit',
-  }) + 'h'
+  const startTime =
+    startDate.toLocaleTimeString('hr-HR', {
+      hour: '2-digit',
+      minute: '2-digit',
+    }) + 'h'
 
   const endTime = endDate
     ? endDate.toLocaleTimeString('hr-HR', {
@@ -63,8 +64,6 @@ function formatFullTimeline(start?: string | Date, end?: string | Date) {
 
   return `${cleanDate} ${startTime} - ${endTime}`
 }
-
-
 
 const formLink = computed(() => getPlainTextLink(workshopsFormLink))
 </script>
@@ -121,11 +120,9 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
         class="workshop-dialog-image"
       />
       <p v-if="workshop.timeline?.start" style="opacity: 0.7">
-  Datum i vrijeme:
-  {{
-    formatFullTimeline(workshop.timeline.start, workshop.timeline.end)
-  }}
-</p>
+        Datum i vrijeme:
+        {{ formatFullTimeline(workshop.timeline.start, workshop.timeline.end) }}
+      </p>
 
       <p
         v-if="workshop.location"

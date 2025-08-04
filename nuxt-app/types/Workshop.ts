@@ -8,8 +8,8 @@ export interface Workshop {
   timeline?: {
     start: string
     end: string
-  },
-  location: 'škola' | 'kamp' | 'vanjske'
+  }
+  location: 'škola' | 'kamp' | 'vanjska'
   imageLarge?: ImageAsset
   imageSmall?: ImageAsset
   descriptionShort?: string
