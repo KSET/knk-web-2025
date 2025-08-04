@@ -48,7 +48,9 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
   <div class="workshops-wrapper">
     <div v-for="location in uniqueLocations" :key="location">
       <div class="title-container">
-        <h3 style="color: white; text-transform: capitalize">{{ displayLocation(location) }}</h3>
+        <h3 style="color: white; text-transform: capitalize">
+          {{ displayLocation(location) }}
+        </h3>
         <a
           v-if="workshopsFormLink"
           :href="formLink"

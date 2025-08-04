@@ -1,51 +1,30 @@
 <script setup lang="ts">
 import { type Sponsor } from '~/types/Sponsor'
 
-const query = groq`*[ _type == "sponsor"] | order(orderRank asc)`
+const query = groq`*[_type == "sponsor"] | order(barIndex asc, orderRank asc)`
 const { data: sponsors } = await useSanityQuery<Sponsor[]>(query)
 
-console.log(sponsors)
+const groupedByBarIndex = computed(() => {
+  const map = new Map<number, Sponsor[]>()
+  for (const sponsor of sponsors.value || []) {
+    const key = sponsor.barIndex ?? 0
+    if (!map.has(key)) map.set(key, [])
+    map.get(key)?.push(sponsor)
+  }
+
+  return Array.from(map.entries()).sort(([a], [b]) => a - b)
+})
 </script>
 
 <template>
   <div class="footer-wrapper">
     <div class="footer-container">
-      <div class="logos">
-        <div
-          v-for="sponsor in (sponsors || []).filter(
-            (s) => s.location === 'top-bar',
-          )"
-          :key="sponsor._id"
-          class="sponsor-item"
-        >
-          <a
-            v-if="sponsor.link"
-            :href="sponsor.link.toString()"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              v-if="sponsor.image"
-              :src="$urlFor(sponsor.image).url()"
-              :alt="sponsor.name"
-            />
-          </a>
-          <img
-            v-else-if="sponsor.image"
-            :src="$urlFor(sponsor.image).url()"
-            :alt="sponsor.name"
-          />
-        </div>
-      </div>
-
-      <div class="sponsors-container">
-        <div
-          v-for="sponsor in (sponsors || []).filter(
-            (s) => s.location === 'bottom-bar',
-          )"
-          :key="sponsor._id"
-          class="sponsor-item"
-        >
+      <div
+        v-for="[barIndex, group] in groupedByBarIndex"
+        :key="barIndex"
+        class="sponsors-container"
+      >
+        <div v-for="sponsor in group" :key="sponsor._id" class="sponsor-item">
           <a
             v-if="sponsor.link"
             :href="sponsor.link.toString()"
@@ -128,7 +107,7 @@ console.log(sponsors)
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 1rem 3rem 1rem;
+  padding: 0 1rem;
   color: white;
 }
 
@@ -141,7 +120,6 @@ console.log(sponsors)
   display: flex;
   align-items: center;
   gap: 3rem;
-  padding-bottom: 4rem;
 }
 
 .footer-links {
@@ -167,9 +145,11 @@ console.log(sponsors)
 
 .sponsors-container {
   display: flex;
-  gap: 3rem;
+  row-gap: 1rem;
+  column-gap: 3rem;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 1rem;
 }
 
 .sponsor-item {
