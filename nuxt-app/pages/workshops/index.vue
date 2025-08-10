@@ -10,7 +10,11 @@ const query = groq`*[_type == "workshop"] | order(location asc, orderRank asc)`
 const { data: workshops } = await useSanityQuery<Workshop[]>(query)
 
 const uniqueLocations = computed(() => [
-  ...new Set((workshops.value ?? []).map((w) => w.location)),
+  ...new Set(
+    (workshops.value ?? [])
+      .filter((w) => w.location !== 'kamp')
+      .map((w) => w.location),
+  ),
 ])
 
 const groupedByLocation = (location: string) =>
@@ -40,12 +44,49 @@ const getPlainTextLink = (blocks: any[]): string | undefined => {
 }
 
 const formLink = computed(() => getPlainTextLink(workshopsFormLink))
+
+// loading pretix script
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  const script = document.createElement('script')
+  script.src = 'https://karte.kset.org/widget/v1.en.js'
+  script.async = true
+  script.crossOrigin = 'anonymous'
+  document.head.appendChild(script)
+})
 </script>
 
 <template>
   <Header />
 
   <div class="workshops-wrapper">
+    <div class="page-container">
+      <h1 style="color: white">Radionice</h1>
+
+      <p>Detaljan popis radionica nalazi se na dnu stranice</p>
+
+      <div
+        class="pretix-widget-compat"
+        event="https://karte.kset.org/kset/kset-na-krku-radionice/"
+        single-item-select="button"
+      ></div>
+      <noscript>
+        <div class="pretix-widget">
+          <div class="pretix-widget-info-message">
+            JavaScript is disabled in your browser. To access our ticket shop
+            without JavaScript, please
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://karte.kset.org/kset/kset-na-krku-radionice/"
+              >click here</a
+            >.
+          </div>
+        </div>
+      </noscript>
+    </div>
+
     <div v-for="location in uniqueLocations" :key="location">
       <div class="title-container">
         <h3 style="color: white; text-transform: capitalize">
@@ -91,6 +132,17 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
   <Footer />
 </template>
 
+<style>
+.pretix-widget {
+  background-color: white !important;
+}
+
+.pretix-widget-category-description p,
+.pretix-widget-item-description p {
+  color: gray !important;
+}
+</style>
+
 <style scoped>
 .workshops-wrapper {
   display: flex;
@@ -121,8 +173,6 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
   background-size: contain;
 
   min-height: 60rem;
-
-  padding-top: 2rem;
 }
 
 .prijelaz-container {
@@ -179,6 +229,12 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
   align-items: center;
   width: 100%;
   padding: 0 0.5rem;
+}
+
+.page-container {
+  max-width: 50rem;
+  width: 100%;
+  padding: 1rem;
 }
 
 @media (max-width: 900px) {
