@@ -53,6 +53,14 @@ const toggleVisibleRight = (): void => {
         </div>
         <div>
           <NuxtLink
+            to="/schedule"
+            class="hover:underline drawer-text"
+            style="color: #e55a8e"
+            >RASPORED I SATNICA</NuxtLink
+          >
+        </div>
+        <div>
+          <NuxtLink
             to="/lineup"
             class="hover:underline drawer-text"
             style="color: #dd7d91"
