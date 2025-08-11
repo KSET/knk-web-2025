@@ -9,6 +9,8 @@ import Footer from '~/components/Footer.vue'
 import type { Translation } from '~/types/Translation'
 import type { Workshop } from '~/types/Workshop'
 
+import Schedule from '~/components/Schedule.vue'
+
 const artistsStore = useArtistsStore()
 
 onMounted(async () => {
@@ -18,7 +20,8 @@ onMounted(async () => {
 const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
 
-const query4 = groq`*[_type == "workshop"] | order(location asc, orderRank asc)`
+const query4 = groq`*[
+  _type == "workshop" && (!defined(location) || lower(location) != "kamp")] | order(location asc, orderRank asc)`
 const { data: workshops } = await useSanityQuery<Workshop[]>(query4)
 
 const translations = Object.fromEntries(
@@ -185,27 +188,9 @@ const responsiveOptionsGalleryCarousel = [
         </div>
       </div>
 
-      <div class="title-text-container">
-        <p class="title-text">O Kampu</p>
-
-        <NuxtLink to="/info" style="text-decoration: none">
-          <div class="title-button">
-            Više informacija
-            <img
-              src="/assets/icons/arrow-right.svg"
-              alt="arrow-right"
-              class="arrow-icon"
-            />
-          </div>
-        </NuxtLink>
+      <div style="margin-bottom: 1rem">
+        <Schedule />
       </div>
-
-      <p class="wall-text">
-        <BlockContent
-          :blocks="translations?.landingKampText"
-          class="wall-text"
-        />
-      </p>
     </div>
 
     <div class="prijelaz-container">
@@ -219,6 +204,29 @@ const responsiveOptionsGalleryCarousel = [
 
   <div class="beach-wrapper">
     <div class="wall-container">
+      <div class="title-text-container">
+        <p class="title-text" style="color: #264f6c">O Kampu</p>
+
+        <NuxtLink to="/info" style="text-decoration: none">
+          <div class="title-button" style="color: #264f6c">
+            Više informacija
+            <img
+              src="/assets/icons/arrow-right-blue.svg"
+              alt="arrow-right"
+              class="arrow-icon"
+            />
+          </div>
+        </NuxtLink>
+      </div>
+
+      <p class="wall-text" style="color: #264f6c">
+        <BlockContent
+          :blocks="translations?.landingKampText"
+          class="wall-text"
+          style="color: #264f6c"
+        />
+      </p>
+
       <div class="title-text-container">
         <p class="title-text" style="color: #264f6c">Radionice</p>
 
@@ -346,6 +354,14 @@ const responsiveOptionsGalleryCarousel = [
             style="color: #844d99"
             >Naslovnica</NuxtLink
           >
+        </div>
+        <div>
+          <NuxtLink
+            to="/schedule"
+            class="hover:underline drawer-text"
+            style="color: #e55a8e"
+            >RASPORED I SATNICA
+          </NuxtLink>
         </div>
         <div>
           <NuxtLink
@@ -647,6 +663,10 @@ body {
   padding: 1.25rem;
   margin-right: 1rem;
   backdrop-filter: blur(6px);
+}
+
+.wall-text :deep(p) {
+  color: inherit;
 }
 
 .title-text {

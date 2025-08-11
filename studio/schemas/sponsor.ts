@@ -1,11 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 
-const locationOptions = [
-  {title: 'Top Bar', value: 'top-bar'},
-  {title: 'Bottom Bar', value: 'bottom-bar'},
-]
-
 export default defineType({
   name: 'sponsor',
   title: 'Sponsor',
@@ -38,13 +33,9 @@ export default defineType({
       },
     }),
     defineField({
-      name: 'location',
-      title: 'Location',
-      type: 'string',
-      options: {
-        list: locationOptions,
-        layout: 'dropdown',
-      },
+      name: 'barIndex',
+      title: 'Bar Index',
+      type: 'number',
       validation: (Rule) => Rule.required(),
     }),
     orderRankField({type: 'sponsor'}),
@@ -53,17 +44,15 @@ export default defineType({
     select: {
       title: 'name',
       media: 'image',
-      location: 'location',
+      barIndex: 'barIndex',
       link: 'link',
     },
     prepare(selection) {
-      const {title, media, location, link} = selection
-      const locationTitle =
-        locationOptions.find((opt) => opt.value === location)?.title || location || ''
+      const {title, media, barIndex, link} = selection
       return {
         title,
         media,
-        subtitle: `${locationTitle}${locationTitle && link ? ' - ' : ''}${link || ''}`,
+        subtitle: `${barIndex != null ? barIndex : ''}${barIndex != null && link ? ' - ' : ''}${link || ''}`,
       }
     },
   },

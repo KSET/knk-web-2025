@@ -8,5 +8,6 @@ export interface Sponsor {
   name: string
   image?: ImageAsset
   link?: Url
+  barIndex: number
   location: 'top-bar' | 'bottom-bar'
 }

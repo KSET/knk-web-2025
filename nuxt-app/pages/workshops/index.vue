@@ -6,7 +6,8 @@ import Footer from '~/components/Footer.vue'
 import type { Workshop } from '~/types/Workshop'
 import type { Translation } from '~/types/Translation'
 
-const query = groq`*[_type == "workshop"] | order(location asc, orderRank asc)`
+const query = groq`*[
+  _type == "workshop" && (!defined(location) || lower(location) != "kamp")] | order(location asc, orderRank asc)`
 const { data: workshops } = await useSanityQuery<Workshop[]>(query)
 
 const uniqueLocations = computed(() => [
@@ -65,17 +66,28 @@ onMounted(() => {
       <h1 style="color: white">Radionice</h1>
 
       <p class="wall-text">
-        <BlockContent :blocks="translations?.workshopsHeaderText" class="wall-text" />
+        <BlockContent
+          :blocks="translations?.workshopsHeaderText"
+          class="wall-text"
+        />
       </p>
 
-      <div class="pretix-widget-compat" event="https://karte.kset.org/kset/kset-na-krku-radionice/"
-        single-item-select="button"></div>
+      <div
+        class="pretix-widget-compat"
+        event="https://karte.kset.org/kset/kset-na-krku-radionice/"
+        single-item-select="button"
+      ></div>
       <noscript>
         <div class="pretix-widget">
           <div class="pretix-widget-info-message">
             JavaScript is disabled in your browser. To access our ticket shop
             without JavaScript, please
-            <a target="_blank" rel="noopener" href="https://karte.kset.org/kset/kset-na-krku-radionice/">click here</a>.
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://karte.kset.org/kset/kset-na-krku-radionice/"
+              >click here</a
+            >.
           </div>
         </div>
       </noscript>
@@ -86,15 +98,29 @@ onMounted(() => {
         <h3 style="color: white; text-transform: capitalize">
           {{ displayLocation(location) }}
         </h3>
-        <a v-if="workshopsFormLink" :href="formLink" target="_blank" rel="noopener noreferrer" class="title-button">
+        <a
+          v-if="workshopsFormLink"
+          :href="formLink"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="title-button"
+        >
           Prijavi se
-          <img src="/assets/icons/arrow-right.svg" alt="arrow-right" class="arrow-icon" />
+          <img
+            src="/assets/icons/arrow-right.svg"
+            alt="arrow-right"
+            class="arrow-icon"
+          />
         </a>
       </div>
 
       <div class="workshops-container">
-        <WorkshopCard v-for="(workshop, index) in groupedByLocation(location)" :key="workshop._id" :workshop="workshop"
-          :reverse="index % 2 !== 0" />
+        <WorkshopCard
+          v-for="(workshop, index) in groupedByLocation(location)"
+          :key="workshop._id"
+          :workshop="workshop"
+          :reverse="index % 2 !== 0"
+        />
       </div>
     </div>
 
@@ -102,7 +128,11 @@ onMounted(() => {
   </div>
 
   <div class="prijelaz-container">
-    <img src="/assets/prijelazi/prijelaz-more-dm.svg" alt="prijelaz-zid-plaza" style="background-color: #d46558" />
+    <img
+      src="/assets/prijelazi/prijelaz-more-dm.svg"
+      alt="prijelaz-zid-plaza"
+      style="background-color: #d46558"
+    />
   </div>
 
   <Footer />
