@@ -3,14 +3,23 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 import { ref, watch, onMounted } from 'vue'
 import { useScheduleStore } from '~/stores/schedule'
-
 import FullCalendar from '@fullcalendar/vue3'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
 const scheduleStore = useScheduleStore()
-
 const dates = ['2025-08-14', '2025-08-15', '2025-08-16']
+
+const getTodayString = () => {
+  const today = new Date()
+  return today.toISOString().split('T')[0]
+}
+
+const getInitialTab = () => {
+  const today = getTodayString()
+  const index = dates.indexOf(today)
+  return index >= 0 ? index.toString() : '0'
+}
 
 const vrataEvents = dates.map((d) => ({
   title: 'Vrata',
@@ -22,10 +31,9 @@ const vrataEvents = dates.map((d) => ({
   classNames: ['event-vrata'],
 }))
 
-const selectedTab = ref('0')
+const selectedTab = ref(getInitialTab())
 const calendarRef = ref(null)
-
-const artistSelectedTab = ref('0')
+const artistSelectedTab = ref(getInitialTab())
 const artistCalendarRef = ref(null)
 
 const dayHeaderContent = (arg) => {
@@ -51,7 +59,7 @@ const goLineup = (info) => {
 const workshopCalendarOptions = ref({
   plugins: [timeGridPlugin, interactionPlugin],
   initialView: 'timeGridDay',
-  initialDate: dates[0],
+  initialDate: dates[parseInt(getInitialTab())],
   height: '100%',
   contentHeight: 'auto',
   headerToolbar: false,
@@ -59,8 +67,16 @@ const workshopCalendarOptions = ref({
   slotMinTime: '09:00:00',
   slotMaxTime: '26:00:00',
   eventClick: goWorkshops,
-  slotLabelFormat: { hour: '2-digit', minute: '2-digit', hour12: false },
-  eventTimeFormat: { hour: '2-digit', minute: '2-digit', hour12: false },
+  slotLabelFormat: {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  },
+  eventTimeFormat: {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  },
   eventTextColor: '#000',
   eventDidMount: (info) => {
     const title = info.event.title?.toLowerCase?.() ?? ''
@@ -73,7 +89,7 @@ const workshopCalendarOptions = ref({
 const artistCalendarOptions = ref({
   plugins: [timeGridPlugin, interactionPlugin],
   initialView: 'timeGridDay',
-  initialDate: dates[0],
+  initialDate: dates[parseInt(getInitialTab())],
   height: 500,
   expandRows: true,
   headerToolbar: false,
@@ -82,8 +98,16 @@ const artistCalendarOptions = ref({
   slotMaxTime: '23:40:00',
   eventClick: goLineup,
   displayEventEnd: false,
-  slotLabelFormat: { hour: '2-digit', minute: '2-digit', hour12: false },
-  eventTimeFormat: { hour: '2-digit', minute: '2-digit', hour12: false },
+  slotLabelFormat: {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  },
+  eventTimeFormat: {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  },
   eventTextColor: '#000',
   dayHeaderContent,
   events: [],
@@ -120,7 +144,6 @@ const formatShowDate = (iso) =>
 <template>
   <div class="schedule-container">
     <h1 style="color: white">Raspored</h1>
-
     <Tabs v-model:value="selectedTab">
       <TabList style="flex-wrap: wrap">
         <Tab value="0" class="artist-tab"
@@ -154,7 +177,6 @@ const formatShowDate = (iso) =>
 
   <div class="schedule-container" style="margin-top: 3rem">
     <h1 style="color: white">Program</h1>
-
     <Tabs v-model:value="artistSelectedTab">
       <TabList style="flex-wrap: wrap">
         <Tab value="0" class="artist-tab"
