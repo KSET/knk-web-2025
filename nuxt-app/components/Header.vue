@@ -25,14 +25,7 @@ const toggleVisibleRight = (): void => {
         >
           <p class="header-text">kset na krku</p></NuxtLink
         >
-        <p class="header-text" style="text-align: center"></p>
-        <!-- <p class="header-text" style="text-align: end">2025</p> -->
-        <img
-          src="/assets/icons/2025.svg"
-          alt="2025"
-          class="year-icon"
-          style="align-self: flex-end"
-        />
+        <p class="header-text year-text" style="text-align: end">2026.</p>
       </div>
 
       <img src="/assets/icons/sunce.svg" alt="Sunce" class="sunce-icon" />
@@ -51,7 +44,7 @@ const toggleVisibleRight = (): void => {
             >NASLOVNICA</NuxtLink
           >
         </div>
-        <div>
+        <!-- <div>
           <NuxtLink
             to="/schedule"
             class="hover:underline drawer-text"
@@ -74,7 +67,7 @@ const toggleVisibleRight = (): void => {
             style="color: #d46558"
             >RADIONICE</NuxtLink
           >
-        </div>
+        </div> -->
         <div>
           <NuxtLink
             to="/gallery"
@@ -91,14 +84,14 @@ const toggleVisibleRight = (): void => {
             >INFO</NuxtLink
           >
         </div>
-        <div>
+        <!-- <div>
           <NuxtLink
             to="/tickets"
             class="hover:underline drawer-text"
             style="color: #264f6c"
             >KARTE</NuxtLink
           >
-        </div>
+        </div> -->
       </div>
 
       <div class="drawer-footer">
@@ -144,6 +137,7 @@ const toggleVisibleRight = (): void => {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  align-items: center;
 }
 
 .header-text {
@@ -157,6 +151,12 @@ const toggleVisibleRight = (): void => {
   color: #efe5dd;
   z-index: 10;
   font-weight: 500;
+  line-height: 3.5rem;
+}
+
+.year-text {
+  font-family: 'LondrinaSolid';
+  font-size: 3rem;
 }
 
 .sunce-icon {
@@ -247,6 +247,10 @@ const toggleVisibleRight = (): void => {
 @media (max-width: 900px) {
   .header-text {
     font-size: 3rem;
+  }
+
+  .year-text {
+    font-size: 2.5rem;
   }
 
   .sunce-icon {

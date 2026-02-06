@@ -46,7 +46,7 @@ const groupedByBarIndex = computed(() => {
       </div>
     </div>
 
-    <p>Sva prava pridržana © 2025</p>
+    <p>Sva prava pridržana © 2026</p>
     <p>Savez studenata FER-a</p>
     <div class="footer-links">
       <div>

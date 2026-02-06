@@ -5,3 +5,19 @@
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'LondrinaSolid';
+  src: url('@/assets/fonts/Londrina Family/Tipos Pereira - LondrinaSolid-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LondrinaBlack';
+  src: url('@/assets/fonts/Londrina Family/Tipos Pereira - LondrinaBlack-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

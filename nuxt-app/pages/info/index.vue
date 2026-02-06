@@ -42,7 +42,7 @@ const translations = Object.fromEntries(
         <BlockContent :blocks="translations?.infoKampText" class="info-text" />
       </div>
 
-      <div style="display: flex">
+      <!-- <div style="display: flex">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m13!1m8!1m3!1d3230.7207613447326!2d14.557621187211181!3d45.026320259352104!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDXCsDAxJzMzLjQiTiAxNMKwMzMnMTguMyJF!5e1!3m2!1sen!2shr!4v1754159904806!5m2!1sen!2shr"
           width="900  "
@@ -52,7 +52,7 @@ const translations = Object.fromEntries(
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
         ></iframe>
-      </div>
+      </div> -->
     </div>
   </div>
 

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+navigateTo('/', { redirectCode: 301 })
+
 import Header from '~/components/Header.vue'
 import WorkshopCard from '~/components/WorkshopCard.vue'
 import Footer from '~/components/Footer.vue'

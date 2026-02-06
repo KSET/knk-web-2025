@@ -68,22 +68,11 @@ const responsiveOptionsGalleryCarousel = [
 <template>
   <div class="header-wrapper">
     <div class="header-container">
-      <img
-        src="/assets/icons/burger.svg"
-        alt="burger"
-        @click="toggleVisibleRight"
-        class="burger-icon"
-      />
+      <img src="/assets/icons/burger.svg" alt="burger" @click="toggleVisibleRight" class="burger-icon" />
       <div class="header-text-container">
         <p class="header-text">kset</p>
         <p class="header-text" style="text-align: center">na krku</p>
-        <!-- <p class="header-text" style="text-align: end">2025</p> -->
-        <img
-          src="/assets/icons/2025.svg"
-          alt="2025"
-          class="year-icon"
-          style="align-self: flex-end"
-        />
+        <p class="header-text year-text" style="text-align: end">2026.</p>
       </div>
 
       <img src="/assets/icons/sunce.svg" alt="Sunce" class="sunce-icon" />
@@ -98,17 +87,16 @@ const responsiveOptionsGalleryCarousel = [
       <div class="wall-text-container">
         <p class="title-text">O KNK-u</p>
         <p class="wall-text">
-          <BlockContent
-            :blocks="translations?.landingPageText"
-            class="wall-text"
-          />
+          <BlockContent :blocks="translations?.landingPageText" class="wall-text" />
         </p>
       </div>
 
       <div class="title-text-container">
         <p class="title-text">Izvođači</p>
 
-        <NuxtLink to="/lineup" style="text-decoration: none">
+
+
+        <!-- <NuxtLink to="/lineup" style="text-decoration: none">
           <span class="title-button">
             Pogledaj više
             <img
@@ -116,11 +104,13 @@ const responsiveOptionsGalleryCarousel = [
               alt="arrow-right"
               class="arrow-icon"
             />
-          </span>
-        </NuxtLink>
+          </span> 
+        </NuxtLink>-->
       </div>
 
-      <Tabs value="0">
+      <p class="soon-text" style="color: #efe5dd;">više informacija uskoro...</p>
+
+      <!-- <Tabs value="0">
         <TabList style="flex-wrap: wrap">
           <Tab value="0" class="artist-tab">Svi</Tab>
           <Tab value="1" class="artist-tab" style=""
@@ -151,9 +141,9 @@ const responsiveOptionsGalleryCarousel = [
             <HomeArtistsContainer :artists="artistsStore.day3.artists" />
           </TabPanel>
         </TabPanels>
-      </Tabs>
+      </Tabs> -->
 
-      <div class="title-text-container">
+      <!-- <div class="title-text-container">
         <p class="title-text">Ulaznice</p>
 
         <NuxtLink to="/tickets" style="text-decoration: none">
@@ -186,19 +176,15 @@ const responsiveOptionsGalleryCarousel = [
             </button>
           </NuxtLink>
         </div>
-      </div>
+      </div> -->
 
-      <div style="margin-bottom: 1rem">
+      <!-- <div style="margin-bottom: 1rem">
         <Schedule />
-      </div>
+      </div> -->
     </div>
 
     <div class="prijelaz-container">
-      <img
-        src="/assets/prijelazi/prijelaz-zid-plaza.svg"
-        alt="prijelaz-zid-plaza"
-        class="prijelaz-zid-plaza"
-      />
+      <img src="/assets/prijelazi/prijelaz-zid-plaza.svg" alt="prijelaz-zid-plaza" class="prijelaz-zid-plaza" />
     </div>
   </div>
 
@@ -210,25 +196,17 @@ const responsiveOptionsGalleryCarousel = [
         <NuxtLink to="/info" style="text-decoration: none">
           <div class="title-button" style="color: #264f6c">
             Više informacija
-            <img
-              src="/assets/icons/arrow-right-blue.svg"
-              alt="arrow-right"
-              class="arrow-icon"
-            />
+            <img src="/assets/icons/arrow-right-blue.svg" alt="arrow-right" class="arrow-icon" />
           </div>
         </NuxtLink>
       </div>
 
       <p class="wall-text" style="color: #264f6c">
-        <BlockContent
-          :blocks="translations?.landingKampText"
-          class="wall-text"
-          style="color: #264f6c"
-        />
+        <BlockContent :blocks="translations?.landingKampText" class="wall-text" style="color: #264f6c" />
       </p>
 
       <div class="title-text-container">
-        <p class="title-text" style="color: #264f6c">Radionice</p>
+        <!-- <p class="title-text" style="color: #264f6c">Radionice</p>
 
         <NuxtLink to="/workshops" style="text-decoration: none">
           <span class="title-button-blue" style="color: #264f6c">
@@ -240,10 +218,10 @@ const responsiveOptionsGalleryCarousel = [
               style="color: #264f6c"
             />
           </span>
-        </NuxtLink>
+        </NuxtLink> -->
       </div>
 
-      <div class="artist-container">
+      <!-- <div class="artist-container">
         <div v-for="workshop in workshops">
           <NuxtLink to="/workshops" style="text-decoration: none">
             <img
@@ -255,9 +233,9 @@ const responsiveOptionsGalleryCarousel = [
             <p style="color: #264f6c">{{ workshop.name }}</p>
           </NuxtLink>
         </div>
-      </div>
+      </div> -->
 
-      <Carousel
+      <!-- <Carousel
         :value="workshops"
         :numVisible="2"
         :numScroll="1"
@@ -280,16 +258,13 @@ const responsiveOptionsGalleryCarousel = [
             </NuxtLink>
           </div>
         </template>
-      </Carousel>
+</Carousel> -->
     </div>
 
     <!-- <p class="soon-text">+ još uskoro...</p> -->
 
     <div class="prijelaz-container">
-      <img
-        src="/assets/prijelazi/prijelaz-plaza-more.svg"
-        alt="prijelaz-zid-plaza"
-      />
+      <img src="/assets/prijelazi/prijelaz-plaza-more.svg" alt="prijelaz-zid-plaza" />
     </div>
   </div>
 
@@ -301,33 +276,17 @@ const responsiveOptionsGalleryCarousel = [
         <NuxtLink to="/gallery" style="text-decoration: none">
           <span class="title-button">
             Pogledaj više
-            <img
-              src="/assets/icons/arrow-right.svg"
-              alt="arrow-right"
-              class="arrow-icon"
-            />
+            <img src="/assets/icons/arrow-right.svg" alt="arrow-right" class="arrow-icon" />
           </span>
         </NuxtLink>
       </div>
 
-      <Carousel
-        :value="galleryImages"
-        :numVisible="2"
-        :numScroll="1"
-        :responsiveOptions="responsiveOptionsGalleryCarousel"
-        :circular="true"
-        :autoplayInterval="10000"
-        :autoplay="true"
-        class="gallery-carousel"
-      >
+      <Carousel :value="galleryImages" :numVisible="2" :numScroll="1"
+        :responsiveOptions="responsiveOptionsGalleryCarousel" :circular="true" :autoplayInterval="10000"
+        :autoplay="true" class="gallery-carousel">
         <template #item="slotProps">
           <div class="gallery-container">
-            <img
-              v-if="slotProps.data.image"
-              :src="slotProps.data.image"
-              alt="artist image"
-              class="gallery-image"
-            />
+            <img v-if="slotProps.data.image" :src="slotProps.data.image" alt="artist image" class="gallery-image" />
           </div>
         </template>
       </Carousel>
@@ -335,11 +294,7 @@ const responsiveOptionsGalleryCarousel = [
   </div>
 
   <div class="prijelaz-container">
-    <img
-      src="/assets/prijelazi/prijelaz-more-dm.svg"
-      alt="prijelaz-zid-plaza"
-      style="background-color: #5c9c9c"
-    />
+    <img src="/assets/prijelazi/prijelaz-more-dm.svg" alt="prijelaz-zid-plaza" style="background-color: #5c9c9c" />
   </div>
 
   <Footer />
@@ -348,14 +303,9 @@ const responsiveOptionsGalleryCarousel = [
     <div class="drawer-wrapper">
       <div class="drawer-container" @click="toggleVisibleRight">
         <div>
-          <NuxtLink
-            to="/"
-            class="hover:underline drawer-text"
-            style="color: #844d99"
-            >Naslovnica</NuxtLink
-          >
+          <NuxtLink to="/" class="hover:underline drawer-text" style="color: #844d99">Naslovnica</NuxtLink>
         </div>
-        <div>
+        <!-- <div>
           <NuxtLink
             to="/schedule"
             class="hover:underline drawer-text"
@@ -378,39 +328,25 @@ const responsiveOptionsGalleryCarousel = [
             style="color: #d46558"
             >Radionice</NuxtLink
           >
+        </div> -->
+        <div>
+          <NuxtLink to="/gallery" class="hover:underline drawer-text" style="color: #e55a8e">Galerija</NuxtLink>
         </div>
         <div>
-          <NuxtLink
-            to="/gallery"
-            class="hover:underline drawer-text"
-            style="color: #e55a8e"
-            >Galerija</NuxtLink
-          >
+          <NuxtLink to="/info" class="hover:underline drawer-text" style="color: #5c9c9c">Info</NuxtLink>
         </div>
-        <div>
-          <NuxtLink
-            to="/info"
-            class="hover:underline drawer-text"
-            style="color: #5c9c9c"
-            >Info</NuxtLink
-          >
-        </div>
-        <div>
+        <!-- <div>
           <NuxtLink
             to="/tickets"
             class="hover:underline drawer-text"
             style="color: #264f6c"
             >Karte</NuxtLink
           >
-        </div>
+        </div> -->
       </div>
 
       <div class="drawer-footer">
-        <img
-          src="/assets/icons/stolica.svg"
-          alt="stolica"
-          class="stolica-icon"
-        />
+        <img src="/assets/icons/stolica.svg" alt="stolica" class="stolica-icon" />
         <div class="zuta-podloga"></div>
       </div>
     </div>
@@ -578,6 +514,12 @@ body {
   font-family: 'Bright';
   color: #efe5dd;
   z-index: 10;
+  line-height: 3.5rem;
+}
+
+.year-text {
+  font-family: 'LondrinaSolid';
+  font-size: 3.5rem;
 }
 
 .year-icon {
@@ -640,8 +582,7 @@ body {
   margin-bottom: -1px;
 }
 
-.prijelaz-zid-plaza {
-}
+.prijelaz-zid-plaza {}
 
 .soon-text {
   color: #264f6c;
@@ -883,6 +824,7 @@ body {
 }
 
 @media (max-width: 900px) {
+
   .workshops-carousel,
   .artist-carousel {
     display: none;
@@ -900,8 +842,8 @@ body {
     font-size: 4rem;
   }
 
-  .year-icon {
-    height: 2.5rem;
+  .year-text {
+    font-size: 2.5rem;
   }
 }
 </style>
