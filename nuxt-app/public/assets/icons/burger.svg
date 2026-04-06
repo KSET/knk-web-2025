@@ -1,5 +1,31 @@
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M2 2H22" stroke="#183F66" stroke-width="3" stroke-linecap="round"/>
-<path d="M2 12H22" stroke="#183F66" stroke-width="3" stroke-linecap="round"/>
-<path d="M2 22H22" stroke="#183F66" stroke-width="3" stroke-linecap="round"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 99.5 64.2">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #ff6c1f;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1" data-name="Layer 1"/>
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="Layer_1-2" data-name="Layer 1">
+      <g>
+        <g>
+          <path class="cls-2" d="M94.8,15.8H2.7c-1.5,0-2.7-1.2-2.7-2.7V6.7c0-1.5,1.2-2.7,2.7-2.7H94.8c1.5,0,2.7,1.2,2.7,2.7v6.4c0,1.5-1.2,2.7-2.7,2.7Z"/>
+          <path class="cls-2" d="M94.8,40H2.7c-1.5,0-2.7-1.2-2.7-2.7v-6.4c0-1.5,1.2-2.7,2.7-2.7H94.8c1.5,0,2.7,1.2,2.7,2.7v6.4c0,1.5-1.2,2.7-2.7,2.7Z"/>
+          <path class="cls-2" d="M94.8,64.2H2.7c-1.5,0-2.7-1.2-2.7-2.7v-6.4c0-1.5,1.2-2.7,2.7-2.7H94.8c1.5,0,2.7,1.2,2.7,2.7v6.4c0,1.5-1.2,2.7-2.7,2.7Z"/>
+        </g>
+        <g>
+          <path class="cls-1" d="M96.8,11.8H4.7c-1.5,0-2.7-1.2-2.7-2.7V2.7C2,1.2,3.2,0,4.7,0H96.8c1.5,0,2.7,1.2,2.7,2.7v6.4c0,1.5-1.2,2.7-2.7,2.7Z"/>
+          <path class="cls-1" d="M96.8,36H4.7c-1.5,0-2.7-1.2-2.7-2.7v-6.4c0-1.5,1.2-2.7,2.7-2.7H96.8c1.5,0,2.7,1.2,2.7,2.7v6.4c0,1.5-1.2,2.7-2.7,2.7Z"/>
+          <path class="cls-1" d="M96.8,60.2H4.7c-1.5,0-2.7-1.2-2.7-2.7v-6.4c0-1.5,1.2-2.7,2.7-2.7H96.8c1.5,0,2.7,1.2,2.7,2.7v6.4c0,1.5-1.2,2.7-2.7,2.7Z"/>
+        </g>
+      </g>
+    </g>
+  </g>
 </svg>

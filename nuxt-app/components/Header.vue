@@ -35,44 +35,29 @@ const toggleVisibleRight = (): void => {
 
   <Drawer v-model:visible="visibleRight" hedaer=" " position="right">
     <div class="drawer-wrapper">
+      <img src="/assets/icons/sunceko.svg" alt="sunceko" class="drawer-sunceko" />
       <div class="drawer-container" @click="toggleVisibleRight">
         <div>
           <NuxtLink
             to="/"
             class="hover:underline drawer-text"
-            style="color: #844d99"
+            :style="{ color: $route.path === '/' ? 'var(--knk-orange)' : 'white' }"
             >NASLOVNICA</NuxtLink
-          >
-        </div>
-        <!-- <div>
-          <NuxtLink
-            to="/schedule"
-            class="hover:underline drawer-text"
-            style="color: #e55a8e"
-            >RASPORED I SATNICA</NuxtLink
           >
         </div>
         <div>
           <NuxtLink
             to="/lineup"
             class="hover:underline drawer-text"
-            style="color: #dd7d91"
+            :style="{ color: $route.path === '/lineup' ? 'var(--knk-orange)' : 'white' }"
             >IZVOĐAČI</NuxtLink
           >
         </div>
         <div>
           <NuxtLink
-            to="/workshops"
-            class="hover:underline drawer-text"
-            style="color: #d46558"
-            >RADIONICE</NuxtLink
-          >
-        </div> -->
-        <div>
-          <NuxtLink
             to="/gallery"
             class="hover:underline drawer-text"
-            style="color: #e55a8e"
+            :style="{ color: $route.path === '/gallery' ? 'var(--knk-orange)' : 'white' }"
             >GALERIJA</NuxtLink
           >
         </div>
@@ -80,7 +65,7 @@ const toggleVisibleRight = (): void => {
           <NuxtLink
             to="/info"
             class="hover:underline drawer-text"
-            style="color: #5c9c9c"
+            :style="{ color: $route.path === '/info' ? 'var(--knk-orange)' : 'white' }"
             >INFO</NuxtLink
           >
         </div>
@@ -88,7 +73,7 @@ const toggleVisibleRight = (): void => {
           <NuxtLink
             to="/tickets"
             class="hover:underline drawer-text"
-            style="color: #264f6c"
+            :style="{ color: $route.path === '/tickets' ? 'var(--knk-orange)' : 'white' }"
             >KARTE</NuxtLink
           >
         </div> -->
@@ -96,11 +81,10 @@ const toggleVisibleRight = (): void => {
 
       <div class="drawer-footer">
         <img
-          src="/assets/icons/stolica.svg"
-          alt="stolica"
+          src="/assets/icons/KRK.svg"
+          alt="KRK"
           class="stolica-icon"
         />
-        <div class="zuta-podloga"></div>
       </div>
     </div>
   </Drawer>
@@ -108,7 +92,7 @@ const toggleVisibleRight = (): void => {
 
 <style>
 .p-drawer {
-  background-color: #f7dec0 !important;
+  background-color: var(--knk-lightblue) !important;
 }
 
 .p-drawer-content {
@@ -198,6 +182,17 @@ const toggleVisibleRight = (): void => {
   height: 100%;
   display: grid;
   grid-template-rows: 60% 40%;
+  position: relative;
+}
+
+.drawer-sunceko {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6rem;
+  height: auto;
+  z-index: 10;
+  border-radius: 0;
 }
 
 .drawer-container {
@@ -210,7 +205,7 @@ const toggleVisibleRight = (): void => {
 }
 
 .drawer-text {
-  font-family: 'Montserrat';
+  font-family: 'Rockwell', serif;
   font-size: 1.5rem;
   text-align: center;
   margin: 0;
@@ -222,23 +217,18 @@ const toggleVisibleRight = (): void => {
 .drawer-footer {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   position: relative;
+  overflow: hidden;
 }
 
 .stolica-icon {
-  height: 80%;
+  max-height: 80%;
+  max-width: 100%;
+  object-fit: contain;
   z-index: 10;
 }
 
-.zuta-podloga {
-  background: #f3bb64;
-  position: absolute;
-  top: 70%;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
 
 .year-icon {
   height: 2.5rem;

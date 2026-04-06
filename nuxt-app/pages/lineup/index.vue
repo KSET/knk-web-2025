@@ -1,6 +1,4 @@
 <script setup lang="ts">
-navigateTo('/', { redirectCode: 301 })
-
 import { ref } from 'vue'
 import Header from '~/components/Header.vue'
 import ArtistCard from '~/components/ArtistCard.vue'

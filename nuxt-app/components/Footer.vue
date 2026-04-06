@@ -87,17 +87,25 @@ const groupedByBarIndex = computed(() => {
         >Politika Privatnosti</NuxtLink
       >
     </div>
+
+    <img
+      src="/assets/icons/teta.svg"
+      alt="teta"
+      class="footer-teta"
+    />
   </div>
 </template>
 
 <style scoped>
 .footer-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 
-  background-color: #264f6c;
+  background-color: var(--knk-blue);
 }
 
 .footer-container {
@@ -164,6 +172,21 @@ const groupedByBarIndex = computed(() => {
   max-height: 100%;
 
   object-fit: contain;
+}
+
+.footer-teta {
+  position: absolute;
+  bottom: -6%;
+  right: -8%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.8;
+  z-index: 0;
+}
+
+.footer-wrapper > *:not(.footer-teta) {
+  position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 900px) {

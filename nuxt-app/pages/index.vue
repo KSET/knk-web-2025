@@ -44,7 +44,7 @@ function formatShowDate(date: string | Date): string {
   return `${day}.${month}.`
 }
 
-const queryGallerySections = groq`*[_type == "gallerySection"] | order(_createdAt desc)`
+const queryGallerySections = groq`*[_type == "gallerySection" && year == 2025] | order(_createdAt desc)`
 const { data: gallerySections } =
   await useSanityQuery<GallerySection[]>(queryGallerySections)
 
@@ -56,47 +56,33 @@ const galleryImages =
     })),
   ) || []
 
-const responsiveOptionsGalleryCarousel = [
-  {
-    breakpoint: '650px',
-    numVisible: 1,
-    numScroll: 1,
-  },
-]
+const galleryRow1 = galleryImages.filter((_, i) => i % 2 === 0)
+const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
 </script>
 
 <template>
-  <div class="header-wrapper">
-    <div class="header-container">
-      <img src="/assets/icons/burger.svg" alt="burger" @click="toggleVisibleRight" class="burger-icon" />
-      <div class="header-text-container">
-        <p class="header-text">kset</p>
-        <p class="header-text" style="text-align: center">na krku</p>
-        <p class="header-text year-text" style="text-align: end">2026.</p>
-      </div>
-
-      <img src="/assets/icons/sunce.svg" alt="Sunce" class="sunce-icon" />
-      <img src="/assets/icons/oblaci.svg" alt="oblaci" class="oblaci-icon" />
+  <div class="marquee-wrapper">
+    <div class="marquee-track">
+      <span class="marquee-text" v-for="i in 20" :key="i">knk&nbsp;</span>
     </div>
-    <p class="header-date">14. - 16.8.</p>
   </div>
 
-  <div class="wall-divider" />
-  <div class="wall-wrapper">
-    <div class="wall-container">
-      <div class="wall-text-container">
-        <p class="title-text">O KNK-u</p>
-        <p class="wall-text">
-          <BlockContent :blocks="translations?.landingPageText" class="wall-text" />
-        </p>
-      </div>
+  <div class="header-wrapper">
+    <div class="header-top-row">
+      <span class="header-date-text">14. 8.- 16. 8.</span>
+      <img src="/assets/icons/burger.svg" alt="burger" @click="toggleVisibleRight" class="burger-icon-top" />
+    </div>
+    <div class="header-container">
+      <img src="/assets/icons/knk-i-tete.svg" alt="knk i tete" class="hero-image" />
+    </div>
+  </div>
 
+  <div class="izvodjaci-wrapper">
+    <div class="wall-container">
       <div class="title-text-container">
         <p class="title-text">Izvođači</p>
 
-
-
-        <!-- <NuxtLink to="/lineup" style="text-decoration: none">
+        <NuxtLink to="/lineup" style="text-decoration: none">
           <span class="title-button">
             Pogledaj više
             <img
@@ -104,46 +90,46 @@ const responsiveOptionsGalleryCarousel = [
               alt="arrow-right"
               class="arrow-icon"
             />
-          </span> 
-        </NuxtLink>-->
+          </span>
+        </NuxtLink>
       </div>
 
-      <p class="soon-text" style="color: #efe5dd;">više informacija uskoro...</p>
+      <HomeArtistsContainer :artists="artistsStore.all" />
 
       <!-- <Tabs value="0">
         <TabList style="flex-wrap: wrap">
           <Tab value="0" class="artist-tab">Svi</Tab>
-          <Tab value="1" class="artist-tab" style=""
-            >Dan 1 - {{ formatShowDate(artistsStore.day1.date) }}</Tab
-          >
-          <Tab value="2" class="artist-tab"
-            >Dan 2 - {{ formatShowDate(artistsStore.day2.date) }}</Tab
-          >
-          <Tab value="3" class="artist-tab"
-            >Dan 3 - {{ formatShowDate(artistsStore.day3.date) }}</Tab
-          >
+          <Tab value="1" class="artist-tab">Dan 1 - {{ formatShowDate(artistsStore.day1.date) }}</Tab>
+          <Tab value="2" class="artist-tab">Dan 2 - {{ formatShowDate(artistsStore.day2.date) }}</Tab>
+          <Tab value="3" class="artist-tab">Dan 3 - {{ formatShowDate(artistsStore.day3.date) }}</Tab>
         </TabList>
 
         <TabPanels>
           <TabPanel value="0">
             <HomeArtistsContainer :artists="artistsStore.all" />
           </TabPanel>
-
           <TabPanel value="1">
             <HomeArtistsContainer :artists="artistsStore.day1.artists" />
           </TabPanel>
-
           <TabPanel value="2">
             <HomeArtistsContainer :artists="artistsStore.day2.artists" />
           </TabPanel>
-
           <TabPanel value="3">
             <HomeArtistsContainer :artists="artistsStore.day3.artists" />
           </TabPanel>
         </TabPanels>
       </Tabs> -->
+    </div>
 
-      <!-- <div class="title-text-container">
+  </div>
+
+  <div class="prijelaz-hero">
+    <img src="/assets/prijelazi/ulaynice-gore.svg" alt="prijelaz-ulaznice" />
+  </div>
+
+  <div class="ulaznice-wrapper">
+    <div class="wall-container">
+      <div class="title-text-container">
         <p class="title-text">Ulaznice</p>
 
         <NuxtLink to="/tickets" style="text-decoration: none">
@@ -160,50 +146,55 @@ const responsiveOptionsGalleryCarousel = [
 
       <div class="tickets-container">
         <div
-          v-for="ticket in tickets"
+          v-for="(ticket, index) in tickets"
           :key="ticket._id"
           class="ticket-card"
           :style="{ backgroundColor: ticket.backgroundColor }"
         >
-          <div class="ticket-name">{{ ticket.name }}</div>
-          <div class="ticket-price">{{ ticket.price }}€</div>
-          <NuxtLink to="/tickets" style="text-decoration: none">
-            <button
-              class="ticket-cta-button"
-              :style="{ backgroundColor: ticket.ctaColor }"
-            >
-              KUPI ODMAH
-            </button>
-          </NuxtLink>
+          <img
+            :src="index % 2 === 0 ? '/assets/icons/blob-1.svg' : '/assets/icons/blob-2.svg'"
+            alt=""
+            class="ticket-blob"
+          />
+          <div class="ticket-content">
+            <div class="ticket-name" :style="{ color: ticket.backgroundColor }">{{ ticket.name }}</div>
+            <div class="ticket-price" :style="{ color: ticket.backgroundColor }">{{ ticket.price }}€</div>
+          </div>
         </div>
-      </div> -->
+      </div>
 
-      <!-- <div style="margin-bottom: 1rem">
-        <Schedule />
-      </div> -->
+      <div class="ticket-buy-container">
+        <NuxtLink to="/tickets" style="text-decoration: none">
+          <button class="ticket-buy-button">
+            KUPI ULAZNICE
+          </button>
+        </NuxtLink>
+      </div>
     </div>
+  </div>
 
-    <div class="prijelaz-container">
-      <img src="/assets/prijelazi/prijelaz-zid-plaza.svg" alt="prijelaz-zid-plaza" class="prijelaz-zid-plaza" />
-    </div>
+  <div class="prijelaz-hero">
+    <img src="/assets/prijelazi/ulaynice-dole.svg" alt="prijelaz-ulaznice-dole" />
   </div>
 
   <div class="beach-wrapper">
     <div class="wall-container">
       <div class="title-text-container">
-        <p class="title-text" style="color: #264f6c">O Kampu</p>
+        <p class="title-text">Kampiranje</p>
 
         <NuxtLink to="/info" style="text-decoration: none">
-          <div class="title-button" style="color: #264f6c">
+          <div class="title-button">
             Više informacija
-            <img src="/assets/icons/arrow-right-blue.svg" alt="arrow-right" class="arrow-icon" />
+            <img src="/assets/icons/arrow-right.svg" alt="arrow-right" class="arrow-icon" />
           </div>
         </NuxtLink>
       </div>
 
-      <p class="wall-text" style="color: #264f6c">
-        <BlockContent :blocks="translations?.landingKampText" class="wall-text" style="color: #264f6c" />
-      </p>
+      <div class="kamp-image-wrapper">
+        <img src="/assets/icons/krug-zuti.svg" alt="krug zuti" class="krug-zuti" />
+        <img src="/assets/icons/krug-narancasti.svg" alt="krug narancasti" class="krug-narancasti" />
+        <img src="/assets/icons/kamp.jpeg" alt="kamp" class="kamp-image" />
+      </div>
 
       <div class="title-text-container">
         <!-- <p class="title-text" style="color: #264f6c">Radionice</p>
@@ -263,9 +254,10 @@ const responsiveOptionsGalleryCarousel = [
 
     <!-- <p class="soon-text">+ još uskoro...</p> -->
 
-    <div class="prijelaz-container">
-      <img src="/assets/prijelazi/prijelaz-plaza-more.svg" alt="prijelaz-zid-plaza" />
-    </div>
+  </div>
+
+  <div class="prijelaz-hero">
+    <img src="/assets/prijelazi/prijelaz-plaza-more.svg" alt="prijelaz-plaza-more" />
   </div>
 
   <div class="sea-wrapper">
@@ -281,35 +273,44 @@ const responsiveOptionsGalleryCarousel = [
         </NuxtLink>
       </div>
 
-      <Carousel :value="galleryImages" :numVisible="2" :numScroll="1"
-        :responsiveOptions="responsiveOptionsGalleryCarousel" :circular="true" :autoplayInterval="10000"
-        :autoplay="true" class="gallery-carousel">
-        <template #item="slotProps">
-          <div class="gallery-container">
-            <img v-if="slotProps.data.image" :src="slotProps.data.image" alt="artist image" class="gallery-image" />
-          </div>
-        </template>
-      </Carousel>
+    </div>
+
+    <div class="gallery-marquee-wrapper">
+      <div class="gallery-marquee-track gallery-marquee-left">
+        <img v-for="(img, i) in [...galleryRow1, ...galleryRow1]" :key="'r1-' + i" :src="img.image" :alt="img.alt" class="gallery-marquee-image" />
+      </div>
+    </div>
+    <div class="gallery-marquee-wrapper">
+      <div class="gallery-marquee-track gallery-marquee-right">
+        <img v-for="(img, i) in [...galleryRow2, ...galleryRow2]" :key="'r2-' + i" :src="img.image" :alt="img.alt" class="gallery-marquee-image" />
+      </div>
     </div>
   </div>
 
-  <div class="prijelaz-container">
-    <img src="/assets/prijelazi/prijelaz-more-dm.svg" alt="prijelaz-zid-plaza" style="background-color: #5c9c9c" />
+  <div class="prijelaz-hero">
+    <img src="/assets/prijelazi/prvi-dole.svg" alt="prijelaz-galerija" />
   </div>
 
   <Footer />
 
+  <div class="marquee-wrapper">
+    <div class="marquee-track">
+      <span class="marquee-text" v-for="i in 20" :key="'bottom-' + i">knk&nbsp;</span>
+    </div>
+  </div>
+
   <Drawer v-model:visible="visibleRight" hedaer=" " position="right">
     <div class="drawer-wrapper">
+      <img src="/assets/icons/sunceko.svg" alt="sunceko" class="drawer-sunceko" />
       <div class="drawer-container" @click="toggleVisibleRight">
         <div>
-          <NuxtLink to="/" class="hover:underline drawer-text" style="color: #844d99">Naslovnica</NuxtLink>
+          <NuxtLink to="/" class="hover:underline drawer-text" :style="{ color: $route.path === '/' ? 'var(--knk-orange)' : 'white' }">Naslovnica</NuxtLink>
         </div>
         <!-- <div>
           <NuxtLink
             to="/schedule"
             class="hover:underline drawer-text"
-            style="color: #e55a8e"
+            :style="{ color: $route.path === '/schedule' ? 'var(--knk-orange)' : 'white' }"
             >RASPORED I SATNICA
           </NuxtLink>
         </div>
@@ -317,7 +318,7 @@ const responsiveOptionsGalleryCarousel = [
           <NuxtLink
             to="/lineup"
             class="hover:underline drawer-text"
-            style="color: #dd7d91"
+            :style="{ color: $route.path === '/lineup' ? 'var(--knk-orange)' : 'white' }"
             >Izvođači</NuxtLink
           >
         </div>
@@ -325,29 +326,28 @@ const responsiveOptionsGalleryCarousel = [
           <NuxtLink
             to="/workshops"
             class="hover:underline drawer-text"
-            style="color: #d46558"
+            :style="{ color: $route.path === '/workshops' ? 'var(--knk-orange)' : 'white' }"
             >Radionice</NuxtLink
           >
         </div> -->
         <div>
-          <NuxtLink to="/gallery" class="hover:underline drawer-text" style="color: #e55a8e">Galerija</NuxtLink>
+          <NuxtLink to="/gallery" class="hover:underline drawer-text" :style="{ color: $route.path === '/gallery' ? 'var(--knk-orange)' : 'white' }">Galerija</NuxtLink>
         </div>
         <div>
-          <NuxtLink to="/info" class="hover:underline drawer-text" style="color: #5c9c9c">Info</NuxtLink>
+          <NuxtLink to="/info" class="hover:underline drawer-text" :style="{ color: $route.path === '/info' ? 'var(--knk-orange)' : 'white' }">Info</NuxtLink>
         </div>
         <!-- <div>
           <NuxtLink
             to="/tickets"
             class="hover:underline drawer-text"
-            style="color: #264f6c"
+            :style="{ color: $route.path === '/tickets' ? 'var(--knk-orange)' : 'white' }"
             >Karte</NuxtLink
           >
         </div> -->
       </div>
 
       <div class="drawer-footer">
-        <img src="/assets/icons/stolica.svg" alt="stolica" class="stolica-icon" />
-        <div class="zuta-podloga"></div>
+        <img src="/assets/icons/KRK.svg" alt="KRK" class="stolica-icon" />
       </div>
     </div>
   </Drawer>
@@ -396,7 +396,7 @@ const responsiveOptionsGalleryCarousel = [
 }
 
 .p-drawer {
-  background-color: #f7dec0 !important;
+  background-color: var(--knk-lightblue) !important;
 }
 
 .p-drawer-content {
@@ -424,11 +424,27 @@ img {
 }
 
 body {
-  background-color: #264f6c;
+  background-color: var(--knk-lightblue);
 }
 </style>
 
 <style scoped>
+.prijelaz-hero {
+  height: 200px;
+  width: 100%;
+}
+
+.prijelaz-hero img {
+  object-fit: fill;
+  width: 100%;
+  height: 200px;
+  border-radius: 0px;
+}
+
+.prijelaz-flipped img {
+  transform: scaleY(-1);
+}
+
 .prijelaz-container {
   height: 4.5rem;
   width: 100%;
@@ -481,21 +497,71 @@ body {
   margin-left: 0.5rem;
 }
 
+/*  --------------- MARQUEE --------------- */
+
+.marquee-wrapper {
+  background-color: var(--knk-lightblue);
+  width: 100%;
+  height: 6.5rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee-scroll 30s linear infinite;
+}
+
+.marquee-text {
+  font-family: 'Rockwell', serif;
+  font-weight: bold;
+  font-size: 6.5rem;
+  line-height: 1;
+  color: #efe5dd;
+  text-shadow: 3px 4px 0 var(--knk-orange);
+  padding: 0 1rem;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 /*  --------------- HEADER --------------- */
 
 .header-wrapper {
-  background-color: #76c6d2;
+  background-color: var(--knk-blue);
   width: 100%;
-  height: 16rem;
+  height: calc(100vh - 6.5rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .header-container {
   position: relative;
-
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90%;
+  overflow: hidden;
+}
+
+.hero-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 0;
 }
 
 .header-text-container {
@@ -549,13 +615,30 @@ body {
   text-shadow: 0.5px 4px 0 #dd7d91;
 }
 
-.burger-icon {
-  position: absolute;
-  right: 0%;
-  top: 15%;
-  cursor: pointer;
+.header-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  padding: 1rem 1.5rem;
+}
 
+.header-date-text {
+  font-family: 'Rockwell', serif;
+  font-size: 4rem;
+  font-weight: bold;
+  color: #efe5dd;
+  text-align: center;
+}
+
+.burger-icon-top {
+  position: absolute;
+  right: 1.5rem;
+  cursor: pointer;
   border-radius: 0px;
+  height: 2rem;
+  width: auto;
 }
 
 /*  --------------- WALL --------------- */
@@ -567,7 +650,7 @@ body {
 }
 
 .wall-wrapper {
-  background-color: #dd7d91;
+  background-color: var(--knk-orange);
   height: fit-content;
   width: 100%;
 
@@ -575,11 +658,30 @@ body {
   justify-content: center;
   flex-direction: column;
 
-  background-image: url('/assets/zid-teksture/zid-tekstura-landing.svg');
-  background-repeat: repeat;
-  background-size: contain;
+  margin-bottom: -1px;
+}
+
+.izvodjaci-wrapper {
+  background-color: var(--knk-blue);
+  height: fit-content;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 
   margin-bottom: -1px;
+}
+
+.ulaznice-wrapper {
+  background-color: var(--knk-orange);
+  height: fit-content;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-bottom: 2rem;
 }
 
 .prijelaz-zid-plaza {}
@@ -611,25 +713,21 @@ body {
 }
 
 .title-text {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-family: 'Rokkitt', serif;
+  font-size: 5rem;
+  font-weight: 900;
+  color: white;
+  text-shadow: 3px 4px 0 var(--knk-orange);
+  margin: 0;
+  padding: 0 0 0.5rem 0;
 }
 
-.artist-container {
-  display: none;
-  flex-direction: row;
-  gap: 1rem;
-  overflow: auto;
-  padding-right: 1rem;
-  margin-bottom: 2rem;
+.ulaznice-wrapper .title-text,
+.wall-wrapper .title-text,
+.sea-wrapper .title-text {
+  text-shadow: 3px 4px 0 var(--knk-blue);
 }
 
-.artist-image {
-  width: auto;
-  height: auto;
-  max-height: 10rem;
-  object-fit: contain;
-}
 
 .artist-tab {
   border-radius: 12px;
@@ -654,48 +752,87 @@ body {
 .tickets-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 20px;
   flex-wrap: wrap;
-  padding: 40px 0px;
+  padding: 40px 1rem;
 }
 
 .ticket-card {
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 
-  width: 14rem;
-  padding: 20px;
-  border-radius: 10px;
-  color: #000;
+  width: 22rem;
+  height: 24rem;
+  padding: 2rem;
+  border-radius: 20px;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.ticket-blob {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+  object-fit: fill;
+  border-radius: 0;
+  pointer-events: none;
+}
+
+.ticket-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .ticket-name {
-  font-weight: bold;
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+  font-weight: 900;
+  font-size: 1.8rem;
+  margin-bottom: 0.25rem;
+  min-height: 4.4rem;
+  display: flex;
+  align-items: flex-start;
+  text-align: center;
 }
 
 .ticket-price {
-  font-size: 1rem;
-  margin-bottom: 20px;
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
 }
 
-.ticket-cta-button {
-  color: white;
-  padding: 10px 15px;
+.ticket-buy-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 1rem 1rem 1rem;
+}
+
+.ticket-buy-button {
+  background-color: white;
+  color: var(--knk-orange);
+  padding: 20px 80px;
   border: none;
-  border-radius: 5px;
+  border-radius: 12px;
+  font-family: 'Rockwell', serif;
   font-weight: bold;
+  font-size: 2.5rem;
   cursor: pointer;
+  text-transform: uppercase;
 }
 
 /*  --------------- BEACH --------------- */
 
 .beach-wrapper {
-  background-color: #f3d864;
+  background-color: var(--knk-blue);
   height: fit-content;
   width: 100%;
 
@@ -709,10 +846,47 @@ body {
   padding-left: 1rem;
 }
 
+.kamp-image-wrapper {
+  position: relative;
+  margin-right: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 4rem;
+}
+
+.kamp-image {
+  width: 80%;
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+.krug-zuti {
+  position: absolute;
+  top: 5%;
+  left: 0;
+  width: 25%;
+  height: auto;
+  aspect-ratio: 1;
+  z-index: 10;
+  border-radius: 0;
+}
+
+.krug-narancasti {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 25%;
+  height: auto;
+  aspect-ratio: 1;
+  z-index: 10;
+  border-radius: 0;
+}
+
 /*  --------------- SEA --------------- */
 
 .sea-wrapper {
-  background-color: #5c9c9c;
+  background-color: var(--knk-orange);
   height: fit-content;
   width: 100%;
 
@@ -727,22 +901,51 @@ body {
   padding-left: 1rem;
 }
 
-.gallery-container {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  overflow: auto;
-  padding-right: 1rem;
-  justify-content: center;
+.gallery-marquee-wrapper {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 1rem;
 }
 
-.gallery-image {
-  max-width: 100%;
-  height: auto;
-  max-height: 15rem;
-  border-radius: 8px;
+.gallery-marquee-track {
+  display: flex;
+  gap: 1rem;
+  white-space: nowrap;
+  width: max-content;
+}
 
-  padding: 0 0.5rem;
+.gallery-marquee-left {
+  animation: gallery-scroll-left 40s linear infinite;
+}
+
+.gallery-marquee-right {
+  animation: gallery-scroll-right 40s linear infinite;
+}
+
+.gallery-marquee-image {
+  height: 50vh;
+  width: auto;
+  object-fit: cover;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+@keyframes gallery-scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes gallery-scroll-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 /*  --------------- DRAWER --------------- */
@@ -752,6 +955,17 @@ body {
   height: 100%;
   display: grid;
   grid-template-rows: 60% 40%;
+  position: relative;
+}
+
+.drawer-sunceko {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6rem;
+  height: auto;
+  z-index: 10;
+  border-radius: 0;
 }
 
 .drawer-container {
@@ -764,36 +978,30 @@ body {
 }
 
 .drawer-text {
-  font-family: 'Montserrat';
+  font-family: 'Rockwell', serif;
   font-size: 1.5rem;
   text-align: center;
   margin: 0;
   padding: 0;
   text-decoration: none;
-  text-transform: uppercase;
   font-weight: bold;
 }
 
 .drawer-footer {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   position: relative;
+  overflow: hidden;
 }
 
 .stolica-icon {
-  height: 80%;
+  max-height: 80%;
+  max-width: 100%;
+  object-fit: contain;
   z-index: 10;
 }
 
-.zuta-podloga {
-  background: #f3bb64;
-  position: absolute;
-  top: 70%;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
 
 .cta-container {
   display: flex;
@@ -806,6 +1014,8 @@ body {
 /*  --------------- RESPONNZIVNOST --------------- */
 
 .wall-wrapper,
+.izvodjaci-wrapper,
+.ulaznice-wrapper,
 .beach-wrapper,
 .sea-wrapper,
 .header-wrapper {
@@ -819,7 +1029,6 @@ body {
 .beach-container,
 .sea-container,
 .header-container {
-  max-width: 50rem;
   width: 100%;
 }
 
@@ -830,12 +1039,8 @@ body {
     display: none;
   }
 
-  .artist-container {
-    display: flex;
-  }
-
-  .burger-icon {
-    right: 7%;
+  .burger-icon-top {
+    right: 1rem;
   }
 
   .header-text {
