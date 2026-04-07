@@ -33,87 +33,28 @@ const toggleVisibleRight = (): void => {
     </div>
   </div>
 
-  <Drawer v-model:visible="visibleRight" hedaer=" " position="right">
-    <div class="drawer-wrapper">
-      <img src="/assets/icons/sunceko.svg" alt="sunceko" class="drawer-sunceko" />
-      <div class="drawer-container" @click="toggleVisibleRight">
-        <div>
-          <NuxtLink
-            to="/"
-            class="hover:underline drawer-text"
-            :style="{ color: $route.path === '/' ? 'var(--knk-orange)' : 'white' }"
-            >NASLOVNICA</NuxtLink
-          >
-        </div>
-        <div>
-          <NuxtLink
-            to="/lineup"
-            class="hover:underline drawer-text"
-            :style="{ color: $route.path === '/lineup' ? 'var(--knk-orange)' : 'white' }"
-            >IZVOĐAČI</NuxtLink
-          >
-        </div>
-        <div>
-          <NuxtLink
-            to="/gallery"
-            class="hover:underline drawer-text"
-            :style="{ color: $route.path === '/gallery' ? 'var(--knk-orange)' : 'white' }"
-            >GALERIJA</NuxtLink
-          >
-        </div>
-        <div>
-          <NuxtLink
-            to="/info"
-            class="hover:underline drawer-text"
-            :style="{ color: $route.path === '/info' ? 'var(--knk-orange)' : 'white' }"
-            >INFO</NuxtLink
-          >
-        </div>
-        <!-- <div>
-          <NuxtLink
-            to="/tickets"
-            class="hover:underline drawer-text"
-            :style="{ color: $route.path === '/tickets' ? 'var(--knk-orange)' : 'white' }"
-            >KARTE</NuxtLink
-          >
-        </div> -->
-      </div>
-
-      <div class="drawer-footer">
-        <img
-          src="/assets/icons/KRK.svg"
-          alt="KRK"
-          class="stolica-icon"
-        />
-      </div>
-    </div>
-  </Drawer>
+  <NavDrawer v-model="visibleRight" />
 </template>
-
-<style>
-.p-drawer {
-  background-color: var(--knk-lightblue) !important;
-}
-
-.p-drawer-content {
-  padding: 0 !important;
-}
-</style>
 
 <style scoped>
 .header-wrapper {
   background-color: #76c6d2;
   width: 100%;
   height: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-container {
   position: relative;
-
   display: flex;
   justify-content: center;
   align-items: center;
   height: 90%;
+  max-width: 50rem;
+  width: 100%;
 }
 
 .header-text-container {
@@ -127,7 +68,6 @@ const toggleVisibleRight = (): void => {
 .header-text {
   position: relative;
   text-shadow: 3px 4px 0 #d46558;
-
   font-size: 4rem;
   margin: 0;
   padding: 0;
@@ -162,73 +102,9 @@ const toggleVisibleRight = (): void => {
   top: 15%;
   cursor: pointer;
   z-index: 20;
-
+  width: 2.5rem;
   border-radius: 0;
 }
-
-.header-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.header-container {
-  max-width: 50rem;
-  width: 100%;
-}
-.drawer-wrapper {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-rows: 60% 40%;
-  position: relative;
-}
-
-.drawer-sunceko {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 6rem;
-  height: auto;
-  z-index: 10;
-  border-radius: 0;
-}
-
-.drawer-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  height: 100%;
-}
-
-.drawer-text {
-  font-family: 'Rockwell', serif;
-  font-size: 1.5rem;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.drawer-footer {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  position: relative;
-  overflow: hidden;
-}
-
-.stolica-icon {
-  max-height: 80%;
-  max-width: 100%;
-  object-fit: contain;
-  z-index: 10;
-}
-
 
 .year-icon {
   height: 2.5rem;

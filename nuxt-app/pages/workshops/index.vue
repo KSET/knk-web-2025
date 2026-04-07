@@ -1,9 +1,12 @@
 <script setup lang="ts">
 navigateTo('/', { redirectCode: 301 })
 
+import { ref } from 'vue'
 import Header from '~/components/Header.vue'
 import WorkshopCard from '~/components/WorkshopCard.vue'
 import Footer from '~/components/Footer.vue'
+
+const visibleRight = ref(false)
 
 import type { Workshop } from '~/types/Workshop'
 import type { Translation } from '~/types/Translation'
@@ -61,11 +64,13 @@ onMounted(() => {
 </script>
 
 <template>
+  <StickyHeader v-model:drawer-visible="visibleRight" />
+  <Marquee />
   <Header />
 
   <div class="workshops-wrapper">
     <div class="page-container">
-      <h1 style="color: white">Radionice</h1>
+      <h1 style="color: white">radionice</h1>
 
       <p class="wall-text">
         <BlockContent
@@ -107,7 +112,7 @@ onMounted(() => {
           rel="noopener noreferrer"
           class="title-button"
         >
-          Prijavi se
+          prijavi se
           <img
             src="/assets/icons/arrow-right.svg"
             alt="arrow-right"
@@ -138,6 +143,8 @@ onMounted(() => {
   </div>
 
   <Footer />
+  <Marquee />
+  <NavDrawer v-model="visibleRight" />
 </template>
 
 <style>

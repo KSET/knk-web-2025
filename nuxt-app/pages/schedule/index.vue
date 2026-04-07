@@ -1,12 +1,17 @@
 <script setup>
 navigateTo('/', { redirectCode: 301 })
 
+import { ref } from 'vue'
 import Header from '~/components/Header.vue'
 import Footer from '~/components/Footer.vue'
 import Schedule from '~/components/Schedule.vue'
+
+const visibleRight = ref(false)
 </script>
 
 <template>
+  <StickyHeader v-model:drawer-visible="visibleRight" />
+  <Marquee />
   <Header />
 
   <div class="schedule-wrapper">
@@ -22,6 +27,8 @@ import Schedule from '~/components/Schedule.vue'
   </div>
 
   <Footer />
+  <Marquee />
+  <NavDrawer v-model="visibleRight" />
 </template>
 
 <style scoped>

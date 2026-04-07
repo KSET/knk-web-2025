@@ -61,11 +61,8 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
 </script>
 
 <template>
-  <div class="marquee-wrapper">
-    <div class="marquee-track">
-      <span class="marquee-text" v-for="i in 20" :key="i">knk&nbsp;</span>
-    </div>
-  </div>
+  <StickyHeader v-model:drawer-visible="visibleRight" />
+  <Marquee />
 
   <div class="header-wrapper">
     <div class="header-top-row">
@@ -80,11 +77,11 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
   <div class="izvodjaci-wrapper">
     <div class="wall-container">
       <div class="title-text-container">
-        <p class="title-text">Izvođači</p>
+        <p class="title-text">izvođači</p>
 
         <NuxtLink to="/lineup" style="text-decoration: none">
           <span class="title-button">
-            Pogledaj više
+            pogledaj više
             <img
               src="/assets/icons/arrow-right.svg"
               alt="arrow-right"
@@ -95,6 +92,8 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
       </div>
 
       <HomeArtistsContainer :artists="artistsStore.all" />
+
+      <p class="coming-soon-text">+ još uskoro...</p>
 
       <!-- <Tabs value="0">
         <TabList style="flex-wrap: wrap">
@@ -130,11 +129,11 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
   <div class="ulaznice-wrapper">
     <div class="wall-container">
       <div class="title-text-container">
-        <p class="title-text">Ulaznice</p>
+        <p class="title-text">ulaznice</p>
 
         <NuxtLink to="/tickets" style="text-decoration: none">
           <div class="title-button">
-            Kupi ulaznice
+            kupi ulaznice
             <img
               src="/assets/icons/arrow-right.svg"
               alt="arrow-right"
@@ -166,7 +165,7 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
       <div class="ticket-buy-container">
         <NuxtLink to="/tickets" style="text-decoration: none">
           <button class="ticket-buy-button">
-            KUPI ULAZNICE
+            kupi ulaznice
           </button>
         </NuxtLink>
       </div>
@@ -180,20 +179,21 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
   <div class="beach-wrapper">
     <div class="wall-container">
       <div class="title-text-container">
-        <p class="title-text">Kampiranje</p>
-
-        <NuxtLink to="/info" style="text-decoration: none">
-          <div class="title-button">
-            Više informacija
-            <img src="/assets/icons/arrow-right.svg" alt="arrow-right" class="arrow-icon" />
-          </div>
-        </NuxtLink>
+        <p class="title-text">kampiranje</p>
       </div>
 
       <div class="kamp-image-wrapper">
         <img src="/assets/icons/krug-zuti.svg" alt="krug zuti" class="krug-zuti" />
         <img src="/assets/icons/krug-narancasti.svg" alt="krug narancasti" class="krug-narancasti" />
         <img src="/assets/icons/kamp.jpeg" alt="kamp" class="kamp-image" />
+      </div>
+
+      <div class="kamp-buy-container">
+        <NuxtLink to="/kampiranje" style="text-decoration: none">
+          <button class="kamp-buy-button">
+            saznaj više
+          </button>
+        </NuxtLink>
       </div>
 
       <div class="title-text-container">
@@ -261,20 +261,6 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
   </div>
 
   <div class="sea-wrapper">
-    <div class="sea-container">
-      <div class="title-text-container">
-        <p class="title-text">Galerija</p>
-
-        <NuxtLink to="/gallery" style="text-decoration: none">
-          <span class="title-button">
-            Pogledaj više
-            <img src="/assets/icons/arrow-right.svg" alt="arrow-right" class="arrow-icon" />
-          </span>
-        </NuxtLink>
-      </div>
-
-    </div>
-
     <div class="gallery-marquee-wrapper">
       <div class="gallery-marquee-track gallery-marquee-left">
         <img v-for="(img, i) in [...galleryRow1, ...galleryRow1]" :key="'r1-' + i" :src="img.image" :alt="img.alt" class="gallery-marquee-image" />
@@ -293,64 +279,9 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
 
   <Footer />
 
-  <div class="marquee-wrapper">
-    <div class="marquee-track">
-      <span class="marquee-text" v-for="i in 20" :key="'bottom-' + i">knk&nbsp;</span>
-    </div>
-  </div>
+  <Marquee />
 
-  <Drawer v-model:visible="visibleRight" hedaer=" " position="right">
-    <div class="drawer-wrapper">
-      <img src="/assets/icons/sunceko.svg" alt="sunceko" class="drawer-sunceko" />
-      <div class="drawer-container" @click="toggleVisibleRight">
-        <div>
-          <NuxtLink to="/" class="hover:underline drawer-text" :style="{ color: $route.path === '/' ? 'var(--knk-orange)' : 'white' }">Naslovnica</NuxtLink>
-        </div>
-        <!-- <div>
-          <NuxtLink
-            to="/schedule"
-            class="hover:underline drawer-text"
-            :style="{ color: $route.path === '/schedule' ? 'var(--knk-orange)' : 'white' }"
-            >RASPORED I SATNICA
-          </NuxtLink>
-        </div>
-        <div>
-          <NuxtLink
-            to="/lineup"
-            class="hover:underline drawer-text"
-            :style="{ color: $route.path === '/lineup' ? 'var(--knk-orange)' : 'white' }"
-            >Izvođači</NuxtLink
-          >
-        </div>
-        <div>
-          <NuxtLink
-            to="/workshops"
-            class="hover:underline drawer-text"
-            :style="{ color: $route.path === '/workshops' ? 'var(--knk-orange)' : 'white' }"
-            >Radionice</NuxtLink
-          >
-        </div> -->
-        <div>
-          <NuxtLink to="/gallery" class="hover:underline drawer-text" :style="{ color: $route.path === '/gallery' ? 'var(--knk-orange)' : 'white' }">Galerija</NuxtLink>
-        </div>
-        <div>
-          <NuxtLink to="/info" class="hover:underline drawer-text" :style="{ color: $route.path === '/info' ? 'var(--knk-orange)' : 'white' }">Info</NuxtLink>
-        </div>
-        <!-- <div>
-          <NuxtLink
-            to="/tickets"
-            class="hover:underline drawer-text"
-            :style="{ color: $route.path === '/tickets' ? 'var(--knk-orange)' : 'white' }"
-            >Karte</NuxtLink
-          >
-        </div> -->
-      </div>
-
-      <div class="drawer-footer">
-        <img src="/assets/icons/KRK.svg" alt="KRK" class="stolica-icon" />
-      </div>
-    </div>
-  </Drawer>
+  <NavDrawer v-model="visibleRight" />
 </template>
 
 <style>
@@ -395,14 +326,6 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
   background-color: #e55a8e !important;
 }
 
-.p-drawer {
-  background-color: var(--knk-lightblue) !important;
-}
-
-.p-drawer-content {
-  padding: 0 !important;
-}
-
 .p-carousel-item {
   display: flex;
   align-items: center;
@@ -423,9 +346,6 @@ img {
   color: black !important;
 }
 
-body {
-  background-color: var(--knk-lightblue);
-}
 </style>
 
 <style scoped>
@@ -495,44 +415,6 @@ body {
   width: 1rem;
   height: 1rem;
   margin-left: 0.5rem;
-}
-
-/*  --------------- MARQUEE --------------- */
-
-.marquee-wrapper {
-  background-color: var(--knk-lightblue);
-  width: 100%;
-  height: 6.5rem;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-}
-
-.marquee-track {
-  display: flex;
-  white-space: nowrap;
-  animation: marquee-scroll 30s linear infinite;
-}
-
-.marquee-text {
-  font-family: 'Rockwell', serif;
-  font-weight: bold;
-  font-size: 6.5rem;
-  line-height: 1;
-  color: #efe5dd;
-  text-shadow: 3px 4px 0 var(--knk-orange);
-  padding: 0 1rem;
-}
-
-@keyframes marquee-scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
 }
 
 /*  --------------- HEADER --------------- */
@@ -819,14 +701,18 @@ body {
 .ticket-buy-button {
   background-color: white;
   color: var(--knk-orange);
-  padding: 20px 80px;
+  padding: 12px 40px;
   border: none;
   border-radius: 12px;
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-weight: bold;
-  font-size: 2.5rem;
+  font-size: 4rem;
   cursor: pointer;
   text-transform: uppercase;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /*  --------------- BEACH --------------- */
@@ -855,7 +741,8 @@ body {
 
 .kamp-image {
   width: 80%;
-  border-radius: 12px;
+  height: auto;
+  border-radius: 0;
   display: block;
   margin: 0 auto;
   padding-bottom: 2rem;
@@ -883,6 +770,30 @@ body {
   border-radius: 0;
 }
 
+.kamp-buy-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 1rem 2rem 1rem;
+}
+
+.kamp-buy-button {
+  background-color: white;
+  color: var(--knk-blue);
+  padding: 12px 40px;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Rokkitt', serif;
+  font-weight: bold;
+  font-size: 4rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /*  --------------- SEA --------------- */
 
 .sea-wrapper {
@@ -893,6 +804,7 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  padding-top: 2rem;
   padding-bottom: 2rem;
 }
 
@@ -948,61 +860,6 @@ body {
   }
 }
 
-/*  --------------- DRAWER --------------- */
-
-.drawer-wrapper {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-rows: 60% 40%;
-  position: relative;
-}
-
-.drawer-sunceko {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 6rem;
-  height: auto;
-  z-index: 10;
-  border-radius: 0;
-}
-
-.drawer-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  height: 100%;
-}
-
-.drawer-text {
-  font-family: 'Rockwell', serif;
-  font-size: 1.5rem;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.drawer-footer {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  position: relative;
-  overflow: hidden;
-}
-
-.stolica-icon {
-  max-height: 80%;
-  max-width: 100%;
-  object-fit: contain;
-  z-index: 10;
-}
-
-
 .cta-container {
   display: flex;
   justify-content: center;
@@ -1030,6 +887,17 @@ body {
 .sea-container,
 .header-container {
   width: 100%;
+}
+
+.coming-soon-text {
+  font-family: 'Rockwell', serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  width: 100%;
+  padding: 2rem 0;
+  margin: 0;
 }
 
 @media (max-width: 900px) {

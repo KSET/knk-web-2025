@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Header from '~/components/Header.vue'
 import ArtistCard from '~/components/ArtistCard.vue'
 import Footer from '~/components/Footer.vue'
 
@@ -8,23 +7,32 @@ import { useArtistsStore } from '../../stores/artists'
 
 const artistsStore = useArtistsStore()
 
+const visibleRight = ref(false)
+const toggleVisibleRight = (): void => {
+  visibleRight.value = !visibleRight.value
+}
+
 onMounted(async () => {
   await artistsStore.fetchArtists()
 })
-
-function formatShowDate(date: string | Date): string {
-  const d = new Date(date)
-  const month = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return `${day}.${month}.`
-}
 </script>
 
 <template>
-  <Header />
+  <StickyHeader v-model:drawer-visible="visibleRight" />
+  <Marquee backgroundColor="var(--knk-orange)" textShadowColor="var(--knk-lightblue)" />
+
+  <div class="page-header">
+    <p class="page-title">izvođači</p>
+    <img
+      src="/assets/icons/burger.svg"
+      alt="burger"
+      @click="toggleVisibleRight"
+      class="burger-icon"
+    />
+  </div>
 
   <div class="artists-wrapper">
-    <Tabs value="0">
+    <!-- <Tabs value="0">
       <TabList style="flex-wrap: wrap; margin: auto 1rem">
         <Tab value="0" class="artist-tab">Svi</Tab>
         <Tab value="1" class="artist-tab"
@@ -39,16 +47,27 @@ function formatShowDate(date: string | Date): string {
       </TabList>
 
       <TabPanels>
-        <TabPanel value="0">
+        <TabPanel value="0"> -->
           <div class="artists-container">
             <ArtistCard
               v-for="(artist, index) in artistsStore.all"
               :key="artist._id"
               :artist="artist"
               :reverse="index % 2 !== 0"
+              :index="index"
             />
           </div>
-        </TabPanel>
+
+          <p class="coming-soon-text">+ još uskoro...</p>
+
+          <div class="ticket-buy-container">
+            <NuxtLink to="/tickets" style="text-decoration: none">
+              <button class="ticket-buy-button">
+                kupi ulaznice
+              </button>
+            </NuxtLink>
+          </div>
+        <!-- </TabPanel>
 
         <TabPanel value="1">
           <div class="artists-container">
@@ -83,18 +102,13 @@ function formatShowDate(date: string | Date): string {
           </div>
         </TabPanel>
       </TabPanels>
-    </Tabs>
+    </Tabs> -->
   </div>
 
-  <div class="prijelaz-container">
-    <img
-      src="/assets/prijelazi/prijelaz-more-dm.svg"
-      alt="prijelaz-zid-plaza"
-      style="background-color: #844d99"
-    />
-  </div>
+  <Footer decor-image="/assets/icons/knjiga.svg" />
+  <Marquee backgroundColor="var(--knk-orange)" textShadowColor="var(--knk-lightblue)" />
 
-  <Footer />
+  <NavDrawer v-model="visibleRight" />
 </template>
 
 <style scoped>
@@ -112,22 +126,17 @@ function formatShowDate(date: string | Date): string {
 }
 
 .artists-container {
-  max-width: 50rem;
   width: 100%;
 }
 
 .artists-wrapper {
-  background-color: #844d99;
+  background-color: var(--knk-blue);
   height: fit-content;
   width: 100%;
 
   display: flex;
   flex-direction: column;
   gap: 1rem;
-
-  background-image: url('/assets/zid-teksture/zid-tekstura-lineup.svg');
-  background-repeat: repeat;
-  background-size: contain;
 
   min-height: 60rem;
 
@@ -147,6 +156,30 @@ function formatShowDate(date: string | Date): string {
   border-radius: 0px;
 }
 
+.ticket-buy-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem 1rem;
+}
+
+.ticket-buy-button {
+  background-color: white;
+  color: var(--knk-orange);
+  padding: 12px 40px;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Rokkitt', serif;
+  font-weight: bold;
+  font-size: 4rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .soon-text {
   color: white;
   font-size: 1.5rem;
@@ -154,4 +187,42 @@ function formatShowDate(date: string | Date): string {
   text-align: center;
   margin-top: 2rem;
 }
+
+.coming-soon-text {
+  font-family: 'Rockwell', serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  width: 100%;
+  padding: 2rem 0;
+  margin: 0;
+}
+
+.page-header {
+  background-color: var(--knk-blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 1.5rem 1rem;
+}
+
+.page-title {
+  font-family: 'Rokkitt', serif;
+  font-size: 5rem;
+  font-weight: 500;
+  color: #efe5dd;
+  text-shadow: 3px 4px 0 var(--knk-orange);
+  margin: 0;
+}
+
+.burger-icon {
+  position: absolute;
+  right: 1.5rem;
+  cursor: pointer;
+  width: 2.5rem;
+  border-radius: 0;
+}
+
 </style>

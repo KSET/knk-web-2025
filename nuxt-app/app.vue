@@ -70,14 +70,15 @@ const { enabled: previewEnabled, inFrame } = useSanityVisualEditingState()
   --max-width-1: 768px;
 }
 
-html {
-  background-color: var(--white);
+html,
+body {
+  background-color: var(--knk-lightblue);
   font-family: var(--font-family-sans), var(--font-family-serif), sans-serif;
   text-size-adjust: 100%;
+  margin: 0;
 }
 
 body {
-  margin: 0;
   font-family: Montserrat;
 }
 

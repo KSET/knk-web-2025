@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { type Sponsor } from '~/types/Sponsor'
 
+const props = withDefaults(defineProps<{
+  decorImage?: string
+}>(), {
+  decorImage: '/assets/icons/teta.svg'
+})
+
 const query = groq`*[_type == "sponsor"] | order(barIndex asc, orderRank asc)`
 const { data: sponsors } = await useSanityQuery<Sponsor[]>(query)
 
@@ -82,15 +88,15 @@ const groupedByBarIndex = computed(() => {
     </div>
 
     <div class="footer-links">
-      <NuxtLink to="/pravila" class="" style="color: white">Pravila</NuxtLink>
+      <NuxtLink to="/pravila" class="" style="color: white">pravila</NuxtLink>
       <NuxtLink to="/politika-privatnosti" class="" style="color: white"
-        >Politika Privatnosti</NuxtLink
+        >politika privatnosti</NuxtLink
       >
     </div>
 
     <img
-      src="/assets/icons/teta.svg"
-      alt="teta"
+      :src="props.decorImage"
+      alt="footer-decor"
       class="footer-teta"
     />
   </div>
@@ -106,6 +112,7 @@ const groupedByBarIndex = computed(() => {
   overflow: hidden;
 
   background-color: var(--knk-blue);
+  padding-top: 2rem;
 }
 
 .footer-container {
