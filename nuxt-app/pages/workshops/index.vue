@@ -2,7 +2,6 @@
 navigateTo('/', { redirectCode: 301 })
 
 import { ref } from 'vue'
-import Header from '~/components/Header.vue'
 import WorkshopCard from '~/components/WorkshopCard.vue'
 import Footer from '~/components/Footer.vue'
 
@@ -66,7 +65,6 @@ onMounted(() => {
 <template>
   <StickyHeader v-model:drawer-visible="visibleRight" />
   <Marquee />
-  <Header />
 
   <div class="workshops-wrapper">
     <div class="page-container">

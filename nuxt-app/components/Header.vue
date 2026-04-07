@@ -29,7 +29,10 @@ const toggleVisibleRight = (): void => {
       </div>
 
       <img src="/assets/icons/sunce.svg" alt="Sunce" class="sunce-icon" />
-      <img src="/assets/icons/oblaci.svg" alt="oblaci" class="oblaci-icon" />
+      <img src="/assets/icons/oblak-1.svg" alt="oblak" class="oblaci-icon oblak-1" />
+      <img src="/assets/icons/oblak-2.svg" alt="oblak" class="oblaci-icon oblak-2" />
+      <img src="/assets/icons/oblak-3.svg" alt="oblak" class="oblaci-icon oblak-3" />
+      <img src="/assets/icons/oblak-4.svg" alt="oblak" class="oblaci-icon oblak-4" />
     </div>
   </div>
 
