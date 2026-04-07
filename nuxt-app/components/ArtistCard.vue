@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { type Artist } from '~/types/Artist'
 
+const okvirs = ['/assets/icons/okvir-1.svg', '/assets/icons/okvir-2.svg', '/assets/icons/okvir-3.svg']
+
 const props = defineProps<{
   artist: Artist
   reverse?: boolean
+  index?: number
 }>()
 
 import { ref } from 'vue'
@@ -17,21 +20,26 @@ const toggleShowDialog = (): void => {
 
 <template>
   <div :class="['artist-card', reverse ? 'reverse' : '']">
-    <img
-      v-if="artist.image"
-      :src="$urlFor(artist.image).url()"
-      alt="artist image"
-      class="artist-image"
-      @click="toggleShowDialog"
-    />
+    <div class="artist-image-wrapper" @click="toggleShowDialog">
+      <img
+        v-if="artist.image"
+        :src="$urlFor(artist.image).url()"
+        alt="artist image"
+        class="artist-image"
+      />
+      <img :src="okvirs[(index ?? 0) % 3]" alt="" class="okvir-overlay" />
+    </div>
     <div :class="['artist-info', !reverse ? 'reverse' : '']">
-      <p class="artist-name">{{ artist.name }}</p>
+      <div class="artist-name-group">
+        <p class="artist-name">{{ artist.name }}</p>
+        <hr class="artist-divider" />
+      </div>
       <p class="artist-description">{{ artist.description }}</p>
 
       <div class="artist-button" @click="toggleShowDialog">
         Saznaj više
         <img
-          src="/assets/icons/arrow-right.svg"
+          src="/assets/icons/arrow-right-orange.svg"
           alt="arrow-right"
           class="arrow-icon"
         />
@@ -47,12 +55,15 @@ const toggleShowDialog = (): void => {
     style="max-width: 30rem"
   >
     <template #default>
-      <img
-        v-if="artist.image"
-        :src="$urlFor(artist.image).url()"
-        alt="artist image"
-        class="artist-dialog-image"
-      />
+      <div class="artist-dialog-image-wrapper">
+        <img
+          v-if="artist.image"
+          :src="$urlFor(artist.image).url()"
+          alt="artist image"
+          class="artist-dialog-image"
+        />
+        <img :src="okvirs[(index ?? 0) % 3]" alt="" class="okvir-overlay dialog-okvir" />
+      </div>
       <p v-if="artist.bio">{{ artist.bio }}</p>
       <p v-else>Nema dodatnih informacija.</p>
     </template>
@@ -72,6 +83,7 @@ const toggleShowDialog = (): void => {
 .p-dialog-header {
   padding-top: 16rem;
   padding-bottom: 0rem;
+  font-family: 'Rockwell', serif;
 }
 
 .artist-dialog {
@@ -84,10 +96,9 @@ const toggleShowDialog = (): void => {
   flex-direction: column;
   gap: 0rem;
 
-  background-color: rgba(165, 101, 189, 0.7);
-  border-radius: 12px;
+  background-color: var(--knk-orange);
+  border-radius: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(6px);
 }
 </style>
 
@@ -98,11 +109,11 @@ const toggleShowDialog = (): void => {
   align-items: flex-start;
   justify-content: space-between;
   width: 90%;
-  height: 16rem;
+  height: 24rem;
   margin: 1rem auto;
 
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  background-color: var(--knk-orange);
+  border-radius: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(6px);
 }
@@ -111,13 +122,29 @@ const toggleShowDialog = (): void => {
   flex-direction: row-reverse;
 }
 
+.artist-image-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+}
+
 .artist-image {
   height: 100%;
+  width: 100%;
   object-fit: cover;
   border-radius: 12px;
-  max-width: 50%;
+}
 
-  object-fit: contain;
+.okvir-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  border-radius: 0;
 }
 
 .artist-info {
@@ -140,21 +167,36 @@ const toggleShowDialog = (): void => {
 }
 
 .artist-name {
-  font-size: 1.5rem;
+  font-family: 'Rockwell', serif;
+  font-size: 2.5rem;
   font-weight: bold;
   margin: 0;
+  text-align: center;
+  width: 100%;
+  color: white;
+}
+
+.artist-name-group {
+  width: 100%;
+}
+
+.artist-divider {
+  width: 100%;
+  border: none;
+  border-top: 2px solid white;
+  margin: 0.25rem 0 0 0;
 }
 
 .artist-description {
   font-size: 1rem;
-  color: lightgray;
+  color: white;
   margin: 0;
 }
 
 .artist-button {
   font-family: 'Montserrat';
-  background-color: #dd7d91;
-  color: #fff;
+  background-color: white;
+  color: var(--knk-orange);
   padding: 0.5rem 1rem;
   border-radius: 8px;
   text-align: center;
@@ -171,19 +213,30 @@ const toggleShowDialog = (): void => {
   margin-left: 0.5rem;
 }
 
-.artist-dialog-image {
-  max-height: 15rem;
-  width: 100%;
-  object-fit: cover;
-  max-width: 100%;
-
+.artist-dialog-image-wrapper {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  height: 15rem;
+}
 
-  border-radius: 12px;
+.artist-dialog-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.dialog-okvir {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  border-radius: 0;
 }
 
 @media (max-width: 650px) {
@@ -195,7 +248,11 @@ const toggleShowDialog = (): void => {
     height: fit-content;
   }
 
-  .artist-image,
+  .artist-image-wrapper {
+    max-width: 100%;
+    max-height: 12rem;
+  }
+
   .artist-image {
     max-height: 12rem;
     width: 100%;

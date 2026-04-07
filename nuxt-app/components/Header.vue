@@ -33,103 +33,28 @@ const toggleVisibleRight = (): void => {
     </div>
   </div>
 
-  <Drawer v-model:visible="visibleRight" hedaer=" " position="right">
-    <div class="drawer-wrapper">
-      <div class="drawer-container" @click="toggleVisibleRight">
-        <div>
-          <NuxtLink
-            to="/"
-            class="hover:underline drawer-text"
-            style="color: #844d99"
-            >NASLOVNICA</NuxtLink
-          >
-        </div>
-        <!-- <div>
-          <NuxtLink
-            to="/schedule"
-            class="hover:underline drawer-text"
-            style="color: #e55a8e"
-            >RASPORED I SATNICA</NuxtLink
-          >
-        </div>
-        <div>
-          <NuxtLink
-            to="/lineup"
-            class="hover:underline drawer-text"
-            style="color: #dd7d91"
-            >IZVOĐAČI</NuxtLink
-          >
-        </div>
-        <div>
-          <NuxtLink
-            to="/workshops"
-            class="hover:underline drawer-text"
-            style="color: #d46558"
-            >RADIONICE</NuxtLink
-          >
-        </div> -->
-        <div>
-          <NuxtLink
-            to="/gallery"
-            class="hover:underline drawer-text"
-            style="color: #e55a8e"
-            >GALERIJA</NuxtLink
-          >
-        </div>
-        <div>
-          <NuxtLink
-            to="/info"
-            class="hover:underline drawer-text"
-            style="color: #5c9c9c"
-            >INFO</NuxtLink
-          >
-        </div>
-        <!-- <div>
-          <NuxtLink
-            to="/tickets"
-            class="hover:underline drawer-text"
-            style="color: #264f6c"
-            >KARTE</NuxtLink
-          >
-        </div> -->
-      </div>
-
-      <div class="drawer-footer">
-        <img
-          src="/assets/icons/stolica.svg"
-          alt="stolica"
-          class="stolica-icon"
-        />
-        <div class="zuta-podloga"></div>
-      </div>
-    </div>
-  </Drawer>
+  <NavDrawer v-model="visibleRight" />
 </template>
-
-<style>
-.p-drawer {
-  background-color: #f7dec0 !important;
-}
-
-.p-drawer-content {
-  padding: 0 !important;
-}
-</style>
 
 <style scoped>
 .header-wrapper {
   background-color: #76c6d2;
   width: 100%;
   height: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .header-container {
   position: relative;
-
   display: flex;
   justify-content: center;
   align-items: center;
   height: 90%;
+  max-width: 50rem;
+  width: 100%;
 }
 
 .header-text-container {
@@ -143,7 +68,6 @@ const toggleVisibleRight = (): void => {
 .header-text {
   position: relative;
   text-shadow: 3px 4px 0 #d46558;
-
   font-size: 4rem;
   margin: 0;
   padding: 0;
@@ -178,66 +102,8 @@ const toggleVisibleRight = (): void => {
   top: 15%;
   cursor: pointer;
   z-index: 20;
-
+  width: 2.5rem;
   border-radius: 0;
-}
-
-.header-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.header-container {
-  max-width: 50rem;
-  width: 100%;
-}
-.drawer-wrapper {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-rows: 60% 40%;
-}
-
-.drawer-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  height: 100%;
-}
-
-.drawer-text {
-  font-family: 'Montserrat';
-  font-size: 1.5rem;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.drawer-footer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.stolica-icon {
-  height: 80%;
-  z-index: 10;
-}
-
-.zuta-podloga {
-  background: #f3bb64;
-  position: absolute;
-  top: 70%;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 .year-icon {

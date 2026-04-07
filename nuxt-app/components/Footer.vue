@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { type Sponsor } from '~/types/Sponsor'
 
+const props = withDefaults(defineProps<{
+  decorImage?: string
+}>(), {
+  decorImage: '/assets/icons/teta.svg'
+})
+
 const query = groq`*[_type == "sponsor"] | order(barIndex asc, orderRank asc)`
 const { data: sponsors } = await useSanityQuery<Sponsor[]>(query)
 
@@ -82,22 +88,31 @@ const groupedByBarIndex = computed(() => {
     </div>
 
     <div class="footer-links">
-      <NuxtLink to="/pravila" class="" style="color: white">Pravila</NuxtLink>
+      <NuxtLink to="/pravila" class="" style="color: white">pravila</NuxtLink>
       <NuxtLink to="/politika-privatnosti" class="" style="color: white"
-        >Politika Privatnosti</NuxtLink
+        >politika privatnosti</NuxtLink
       >
     </div>
+
+    <img
+      :src="props.decorImage"
+      alt="footer-decor"
+      class="footer-teta"
+    />
   </div>
 </template>
 
 <style scoped>
 .footer-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 
-  background-color: #264f6c;
+  background-color: var(--knk-blue);
+  padding-top: 2rem;
 }
 
 .footer-container {
@@ -164,6 +179,21 @@ const groupedByBarIndex = computed(() => {
   max-height: 100%;
 
   object-fit: contain;
+}
+
+.footer-teta {
+  position: absolute;
+  bottom: -6%;
+  right: -8%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.8;
+  z-index: 0;
+}
+
+.footer-wrapper > *:not(.footer-teta) {
+  position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 900px) {

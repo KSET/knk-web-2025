@@ -61,19 +61,24 @@ const { enabled: previewEnabled, inFrame } = useSanityVisualEditingState()
   --gray-600: #6e7683;
   --blue-600: #1e61cd;
   --magenta-100: #f9d7eb;
+  --knk-blue: #3A4384;
+  --knk-lightblue: #76B3D0;
+  --knk-orange: #FF6C1F;
+  --knk-yellow: #EBAB32;
 
   --max-width-0: 320px;
   --max-width-1: 768px;
 }
 
-html {
-  background-color: var(--white);
+html,
+body {
+  background-color: var(--knk-lightblue);
   font-family: var(--font-family-sans), var(--font-family-serif), sans-serif;
   text-size-adjust: 100%;
+  margin: 0;
 }
 
 body {
-  margin: 0;
   font-family: Montserrat;
 }
 

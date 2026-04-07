@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import Header from '~/components/Header.vue'
+import { ref } from 'vue'
 import Footer from '~/components/Footer.vue'
+
+const visibleRight = ref(false)
 
 import type { Translation } from '~/types/Translation'
 
@@ -10,12 +12,28 @@ const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
 const translations = Object.fromEntries(
   translationsRaw.value?.map((entry) => [entry.key, entry.text]) || [],
 )
+
+useHead({
+  bodyAttrs: {
+    style: 'background-color: var(--knk-blue);',
+  },
+})
 </script>
 
 <template>
-  <Header />
+  <StickyHeader v-model:drawer-visible="visibleRight" />
+  <Marquee backgroundColor="var(--knk-blue)" />
 
   <div class="page-wrapper">
+    <img src="/assets/icons/oblak-1.svg" alt="oblak" class="oblak oblak-1" />
+    <img src="/assets/icons/oblak-2.svg" alt="oblak" class="oblak oblak-2" />
+    <img src="/assets/icons/oblak-3.svg" alt="oblak" class="oblak oblak-3" />
+    <img src="/assets/icons/oblak-4.svg" alt="oblak" class="oblak oblak-4" />
+    <img src="/assets/icons/oblak-1.svg" alt="oblak" class="oblak oblak-5" />
+    <img src="/assets/icons/oblak-3.svg" alt="oblak" class="oblak oblak-6" />
+    <img src="/assets/icons/oblak-2.svg" alt="oblak" class="oblak oblak-7" />
+    <img src="/assets/icons/oblak-4.svg" alt="oblak" class="oblak oblak-8" />
+
     <div class="page-container">
       <BlockContent
         :blocks="translations?.politikaPrivatnostiText"
@@ -24,15 +42,9 @@ const translations = Object.fromEntries(
     </div>
   </div>
 
-  <div class="prijelaz-container">
-    <img
-      src="/assets/prijelazi/prijelaz-more-dm.svg"
-      alt="prijelaz-zid-plaza"
-      style="background-color: #844d99"
-    />
-  </div>
-
   <Footer />
+  <Marquee backgroundColor="var(--knk-blue)" />
+  <NavDrawer v-model="visibleRight" />
 </template>
 
 <style scoped>
@@ -41,13 +53,21 @@ const translations = Object.fromEntries(
   width: 100%;
   padding: 1rem;
 
-  color: white;
+  color: black;
+}
+
+.page-container :deep(p),
+.page-container :deep(a),
+.page-container :deep(span),
+.page-container :deep(li) {
+  color: black;
 }
 
 .page-wrapper {
   min-height: 70vh;
+  position: relative;
 
-  background-color: #844d99;
+  background-color: #f5c518;
   height: fit-content;
   width: 100%;
 
@@ -56,23 +76,62 @@ const translations = Object.fromEntries(
   align-items: center;
   gap: 1rem;
 
-  background-image: url('/assets/zid-teksture/zid-tekstura-lineup.svg');
-  background-repeat: repeat;
-  background-size: contain;
-
   padding-top: 2rem;
+  overflow: hidden;
+  color: black;
 }
 
-.prijelaz-container {
-  height: 4.5rem;
-  width: 100%;
+.oblak {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.8;
 }
 
-.prijelaz-container img {
-  object-fit: fill;
-  width: 100%;
-  height: 4.5rem;
+.oblak-1 {
+  top: 1rem;
+  left: -2rem;
+  width: 12rem;
+}
 
-  border-radius: 0px;
+.oblak-2 {
+  top: 6rem;
+  right: -1rem;
+  width: 10rem;
+}
+
+.oblak-3 {
+  top: 18rem;
+  left: 1rem;
+  width: 9rem;
+}
+
+.oblak-4 {
+  top: 28rem;
+  right: 0;
+  width: 11rem;
+}
+
+.oblak-5 {
+  top: 38rem;
+  right: 3rem;
+  width: 8rem;
+}
+
+.oblak-6 {
+  top: 48rem;
+  left: -1rem;
+  width: 10rem;
+}
+
+.oblak-7 {
+  bottom: 10rem;
+  left: 4rem;
+  width: 11rem;
+}
+
+.oblak-8 {
+  bottom: 2rem;
+  right: -2rem;
+  width: 9rem;
 }
 </style>

@@ -7,6 +7,6 @@ export interface GallerySection {
   name: string
   year: Number
   description?: string
-  type: 'Festival' | 'Radionice' | 'Kamp'
+  type: 'Koncerti' | 'Radionice' | 'Kamp'
   images?: ImageAsset[]
 }

@@ -143,7 +143,7 @@ const formatShowDate = (iso) =>
 
 <template>
   <div class="schedule-container">
-    <h1 style="color: white">Raspored</h1>
+    <h1 style="color: white">raspored</h1>
     <Tabs v-model:value="selectedTab">
       <TabList style="flex-wrap: wrap">
         <Tab value="0" class="artist-tab"
@@ -176,7 +176,7 @@ const formatShowDate = (iso) =>
   </div>
 
   <div class="schedule-container" style="margin-top: 3rem">
-    <h1 style="color: white">Program</h1>
+    <h1 style="color: white">program</h1>
     <Tabs v-model:value="artistSelectedTab">
       <TabList style="flex-wrap: wrap">
         <Tab value="0" class="artist-tab"

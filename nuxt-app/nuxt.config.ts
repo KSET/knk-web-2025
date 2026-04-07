@@ -53,6 +53,7 @@ export default defineNuxtConfig({
           'IBM Plex Mono': [500, 700],
           Inter: [500, 700, 800],
           'PT Serif': [400, 700],
+          Rokkitt: [700, 800, 900],
           download: true,
           inject: true,
         },
