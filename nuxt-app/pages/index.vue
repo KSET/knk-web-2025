@@ -67,7 +67,7 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
   <div class="header-wrapper">
     <div class="header-top-row">
       <span class="header-date-text">14. 8.- 16. 8.</span>
-      <img src="/assets/icons/burger.svg" alt="burger" @click="toggleVisibleRight" class="burger-icon-top" />
+      <img src="/assets/icons/burger.svg?v=2" alt="burger" @click="toggleVisibleRight" class="burger-icon-top" />
     </div>
     <div class="header-container">
       <img src="/assets/icons/knk-i-tete.svg" alt="knk i tete" class="hero-image" />
@@ -257,7 +257,7 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
   </div>
 
   <div class="prijelaz-hero">
-    <img src="/assets/prijelazi/prijelaz-plaza-more.svg" alt="prijelaz-plaza-more" />
+    <img src="/assets/prijelazi/prijelaz-plaza-more.svg?v=2" alt="prijelaz-plaza-more" />
   </div>
 
   <div class="sea-wrapper">
