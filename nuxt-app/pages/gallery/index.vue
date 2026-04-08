@@ -61,7 +61,7 @@ const filteredGalleries = computed(() =>
   <div class="page-header">
     <p class="page-title">galerija</p>
     <img
-      src="/assets/icons/burger.svg"
+      src="/assets/icons/burger.svg?v=2"
       alt="burger"
       @click="visibleRight = !visibleRight"
       class="burger-icon"

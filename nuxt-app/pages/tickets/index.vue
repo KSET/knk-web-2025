@@ -26,7 +26,7 @@ onMounted(() => {
   <div class="page-header">
     <p class="page-title">ulaznice</p>
     <img
-      src="/assets/icons/burger.svg"
+      src="/assets/icons/burger.svg?v=2"
       alt="burger"
       @click="toggleVisibleRight"
       class="burger-icon"

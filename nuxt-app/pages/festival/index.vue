@@ -23,7 +23,7 @@ const toggleVisibleRight = (): void => {
   <div class="page-header">
     <p class="page-title">festival</p>
     <img
-      src="/assets/icons/burger.svg"
+      src="/assets/icons/burger.svg?v=2"
       alt="burger"
       @click="toggleVisibleRight"
       class="burger-icon"

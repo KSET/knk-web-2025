@@ -12,7 +12,7 @@ const toggleVisibleRight = (): void => {
   <div class="header-wrapper">
     <div class="header-container">
       <img
-        src="/assets/icons/burger.svg"
+        src="/assets/icons/burger.svg?v=2"
         alt="burger"
         @click="toggleVisibleRight"
         class="burger-icon"
