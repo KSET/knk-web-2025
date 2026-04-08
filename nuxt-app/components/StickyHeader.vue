@@ -39,7 +39,7 @@ onUnmounted(() => {
       </div>
 
       <img
-        src="/assets/icons/burger.svg"
+        src="/assets/icons/burger.svg?v=2"
         alt="menu"
         class="sticky-burger"
         @click="drawerVisible = !drawerVisible"
