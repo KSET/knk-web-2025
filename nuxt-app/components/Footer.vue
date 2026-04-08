@@ -57,7 +57,7 @@ const groupedByBarIndex = computed(() => {
     <div class="footer-links">
       <div>
         <a
-          href="https://web.facebook.com/events/1161949535664367"
+          href="https://fb.me/e/8hdGf5HBk"
           target="_blank"
           rel="noopener noreferrer"
           ><img
@@ -69,7 +69,7 @@ const groupedByBarIndex = computed(() => {
       </div>
       <div>
         <a
-          href="https://www.instagram.com/klubkset"
+          href="https://www.instagram.com/ksetnakrku/"
           target="_blank"
           rel="noopener noreferrer"
           ><img
