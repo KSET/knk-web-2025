@@ -185,4 +185,25 @@ onMounted(() => {
   right: -2rem;
   width: 9rem;
 }
+
+@media (max-width: 900px) {
+  .page-title {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 2.5rem;
+    text-shadow: 2px 3px 0 var(--knk-blue);
+  }
+
+  .burger-icon {
+    width: 1.8rem;
+  }
+
+  .page-header {
+    padding: 1rem 0.75rem;
+  }
+}
 </style>

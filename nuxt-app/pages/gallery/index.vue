@@ -254,7 +254,7 @@ const filteredGalleries = computed(() =>
 }
 
 .page-title {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-size: 5rem;
   font-weight: 500;
   color: #efe5dd;
@@ -270,9 +270,41 @@ const filteredGalleries = computed(() =>
   border-radius: 0;
 }
 
+@media (max-width: 900px) {
+  .page-title {
+    font-size: 3.5rem;
+  }
+
+  .gallery-title {
+    font-size: 2rem;
+  }
+}
+
 @media (max-width: 480px) {
   .gallery-thumbnails {
     column-count: 1;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    text-shadow: 2px 3px 0 var(--knk-orange);
+  }
+
+  .gallery-title {
+    font-size: 1.5rem;
+  }
+
+  .year-button {
+    font-size: 1.1rem;
+    padding: 0.4rem 1.2rem;
+  }
+
+  .burger-icon {
+    width: 1.8rem;
+  }
+
+  .page-header {
+    padding: 1rem 0.75rem;
   }
 }
 </style>

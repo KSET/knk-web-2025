@@ -38,7 +38,6 @@ const toggleVisibleRight = (): void => {
     </div>
 
     <div class="info-section">
-      <img src="/assets/icons/sunce.svg" alt="" class="sunce-bg" />
       <div class="info-content">
         <h1 class="info-title">info</h1>
         <div class="info-text">
@@ -50,7 +49,7 @@ const toggleVisibleRight = (): void => {
       </div>
     </div>
 
-    <div style="display: flex; width: 100%; padding: 0 1rem;">
+    <div style="display: flex; width: 100%; padding: 0 1rem; position: relative; z-index: 3;">
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d365.7898541572364!2d14.5753015!3d45.0281636!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476373bfab3c4067%3A0xa899598a56cfc788!2sFran%20Krsto%20Frankopan%20Elementary%20School!5e1!3m2!1sen!2shr!4v1754159994657!5m2!1sen!2shr"
         width="900"
@@ -108,19 +107,10 @@ const toggleVisibleRight = (): void => {
   overflow: visible;
 }
 
-.sunce-bg {
-  position: absolute;
-  height: 100%;
-  width: auto;
-  aspect-ratio: 1;
-  border-radius: 0;
-  z-index: 0;
-}
-
 .info-content {
   position: relative;
   z-index: 1;
-  max-width: 28rem;
+  width: 60%;
   text-align: center;
   padding: 3rem 2rem;
 }
@@ -193,5 +183,48 @@ const toggleVisibleRight = (): void => {
   color: white;
   font-size: 1.5rem;
   line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .page-title {
+    font-size: 3.5rem;
+  }
+
+  .info-title {
+    font-size: 2.2rem;
+  }
+
+  .info-text {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 2.5rem;
+    text-shadow: 2px 3px 0 var(--knk-orange);
+  }
+
+  .info-title {
+    font-size: 1.8rem;
+    padding: 0.2rem 1rem;
+  }
+
+  .info-text {
+    font-size: 1rem;
+  }
+
+  .info-content {
+    width: 80%;
+    padding: 2rem 0 0 0;
+  }
+
+  .burger-icon {
+    width: 1.8rem;
+  }
+
+  .page-header {
+    padding: 1rem 0.75rem;
+  }
 }
 </style>

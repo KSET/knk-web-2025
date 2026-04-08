@@ -150,4 +150,38 @@ onUnmounted(() => {
     width: 1.8rem;
   }
 }
+
+@media (max-width: 480px) {
+  .sticky-header {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .sticky-btn {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+    gap: 0.3rem;
+    border-radius: 6px;
+  }
+
+  .sticky-btn-arrow {
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+
+  .sticky-title {
+    font-size: 2.2rem;
+  }
+
+  .sticky-dates {
+    font-size: 0.7rem;
+  }
+
+  .sticky-center {
+    gap: 0.3rem;
+  }
+
+  .sticky-burger {
+    width: 1.4rem;
+  }
+}
 </style>

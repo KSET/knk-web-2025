@@ -225,4 +225,42 @@ onMounted(async () => {
   border-radius: 0;
 }
 
+@media (max-width: 900px) {
+  .page-title {
+    font-size: 3.5rem;
+  }
+
+  .ticket-buy-button {
+    font-size: 2.5rem;
+    padding: 10px 28px;
+  }
+
+  .coming-soon-text {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 2.5rem;
+    text-shadow: 2px 3px 0 var(--knk-orange);
+  }
+
+  .ticket-buy-button {
+    font-size: 1.8rem;
+    padding: 8px 20px;
+  }
+
+  .coming-soon-text {
+    font-size: 1.2rem;
+  }
+
+  .burger-icon {
+    width: 1.8rem;
+  }
+
+  .page-header {
+    padding: 1rem 0.75rem;
+  }
+}
 </style>

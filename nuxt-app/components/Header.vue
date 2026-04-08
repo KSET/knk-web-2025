@@ -136,4 +136,19 @@ const toggleVisibleRight = (): void => {
     height: 2rem;
   }
 }
+
+@media (max-width: 480px) {
+  .header-text {
+    font-size: 2.2rem;
+    line-height: 2rem;
+  }
+
+  .year-text {
+    font-size: 1.8rem;
+  }
+
+  .burger-icon {
+    width: 1.8rem;
+  }
+}
 </style>

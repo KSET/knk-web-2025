@@ -38,7 +38,6 @@ const toggleVisibleRight = (): void => {
     </div>
 
     <div class="info-section">
-      <img src="/assets/icons/sunce.svg" alt="" class="sunce-bg" />
       <div class="info-content">
         <h1 class="info-title">kamp</h1>
         <div class="info-text">
@@ -92,19 +91,10 @@ const toggleVisibleRight = (): void => {
   overflow: visible;
 }
 
-.sunce-bg {
-  position: absolute;
-  height: 100%;
-  width: auto;
-  aspect-ratio: 1;
-  border-radius: 0;
-  z-index: 0;
-}
-
 .info-content {
   position: relative;
   z-index: 1;
-  max-width: 28rem;
+  width: 60%;
   text-align: center;
   padding: 3rem 2rem;
 }
@@ -177,5 +167,48 @@ const toggleVisibleRight = (): void => {
   color: white;
   font-size: 1.5rem;
   line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .page-title {
+    font-size: 3.5rem;
+  }
+
+  .info-title {
+    font-size: 2.2rem;
+  }
+
+  .info-text {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 2.5rem;
+    text-shadow: 2px 3px 0 var(--knk-orange);
+  }
+
+  .info-title {
+    font-size: 1.8rem;
+    padding: 0.2rem 1rem;
+  }
+
+  .info-text {
+    font-size: 1rem;
+  }
+
+  .info-content {
+    width: 80%;
+    padding: 2rem 0 0 0;
+  }
+
+  .burger-icon {
+    width: 1.8rem;
+  }
+
+  .page-header {
+    padding: 1rem 0.75rem;
+  }
 }
 </style>

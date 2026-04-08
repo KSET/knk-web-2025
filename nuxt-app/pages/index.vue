@@ -285,7 +285,7 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
 </template>
 
 <style>
-* {
+.wall-text, .wall-text p {
   white-space: pre-line;
 }
 
@@ -673,6 +673,9 @@ img {
   flex-direction: column;
   align-items: center;
   gap: 0.25rem;
+  max-width: 80%;
+  padding: 1rem;
+  text-wrap: balance;
 }
 
 .ticket-name {
@@ -917,6 +920,137 @@ img {
 
   .year-text {
     font-size: 2.5rem;
+  }
+
+  .title-text {
+    font-size: 3.5rem;
+  }
+
+  .header-date-text {
+    font-size: 2.5rem;
+  }
+
+  .ticket-buy-button {
+    font-size: 2.5rem;
+    padding: 10px 28px;
+  }
+
+  .kamp-buy-button {
+    font-size: 2.5rem;
+    padding: 10px 28px;
+  }
+
+  .coming-soon-text {
+    font-size: 1.5rem;
+  }
+
+  .ticket-name {
+    font-size: 1.4rem;
+    min-height: 3.5rem;
+  }
+
+  .ticket-price {
+    font-size: 2.2rem;
+  }
+
+  .ticket-card {
+    width: 18rem;
+    height: 20rem;
+    padding: 1.5rem;
+  }
+
+  .header-wrapper {
+    height: calc(100vh - 4.5rem);
+  }
+
+  .gallery-marquee-image {
+    height: 35vh;
+  }
+
+  .prijelaz-hero {
+    height: 120px;
+  }
+
+  .prijelaz-hero img {
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title-text {
+    font-size: 2.5rem;
+    text-shadow: 2px 3px 0 var(--knk-orange);
+  }
+
+  .header-date-text {
+    font-size: 1.8rem;
+  }
+
+  .header-text {
+    font-size: 3rem;
+    line-height: 2.5rem;
+  }
+
+  .year-text {
+    font-size: 2rem;
+  }
+
+  .ticket-buy-button {
+    font-size: 1.8rem;
+    padding: 8px 20px;
+  }
+
+  .kamp-buy-button {
+    font-size: 1.8rem;
+    padding: 8px 20px;
+  }
+
+  .coming-soon-text {
+    font-size: 1.2rem;
+  }
+
+  .ticket-name {
+    font-size: 1.2rem;
+    min-height: 3rem;
+  }
+
+  .ticket-price {
+    font-size: 1.8rem;
+  }
+
+  .ticket-card {
+    width: 85vw;
+    max-width: 22rem;
+    aspect-ratio: 11 / 12;
+    padding: 1.2rem;
+  }
+
+  .gallery-marquee-image {
+    height: 25vh;
+  }
+
+  .prijelaz-hero {
+    height: 80px;
+  }
+
+  .prijelaz-hero img {
+    height: 80px;
+  }
+
+  .header-wrapper {
+    height: calc(100vh - 3rem);
+  }
+
+  .burger-icon-top {
+    height: 1.5rem;
+  }
+
+  .title-button {
+    font-size: 0.85rem;
+  }
+
+  .wall-text {
+    font-size: 1rem;
   }
 }
 </style>

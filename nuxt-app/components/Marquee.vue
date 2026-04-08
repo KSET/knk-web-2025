@@ -60,4 +60,25 @@ const props = withDefaults(defineProps<Props>(), {
     transform: translateX(-50%);
   }
 }
+
+@media (max-width: 900px) {
+  .marquee-wrapper {
+    height: 4.5rem;
+  }
+
+  .marquee-text {
+    font-size: 4.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .marquee-wrapper {
+    height: 3rem;
+  }
+
+  .marquee-text {
+    font-size: 3rem;
+    padding: 0 0.5rem;
+  }
+}
 </style>
