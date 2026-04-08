@@ -59,7 +59,7 @@ onMounted(() => {
             <a
               target="_blank"
               rel="noopener"
-              href="https://karte.kset.org/kset/kset-na-krku/"
+              href="https://karte.kset.org/kset/knk-26/"
               >click here</a
             >.
           </div>
