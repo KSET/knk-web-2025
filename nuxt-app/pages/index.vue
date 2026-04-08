@@ -28,7 +28,7 @@ const translations = Object.fromEntries(
   translationsRaw.value?.map((entry) => [entry.key, entry.text]) || [],
 )
 
-const query3 = groq`*[ _type == "ticket"] | order(_createdAt desc)`
+const query3 = groq`*[ _type == "ticket"] | order(orderRank)`
 const { data: tickets } = await useSanityQuery<Ticket[]>(query3)
 
 const visibleRight = ref(false)
