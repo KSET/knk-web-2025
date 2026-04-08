@@ -47,7 +47,7 @@ onMounted(() => {
       <client-only>
         <div
           class="pretix-widget-compat"
-          event="https://karte.kset.org/kset/kset-na-krku/"
+          event="https://karte.kset.org/kset/knk-26/"
           single-item-select="button"
         ></div>
       </client-only>
