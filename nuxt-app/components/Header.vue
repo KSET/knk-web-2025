@@ -11,12 +11,15 @@ const toggleVisibleRight = (): void => {
 <template>
   <div class="header-wrapper">
     <div class="header-container">
-      <img
-        src="/assets/icons/burger.svg?v=2"
-        alt="burger"
-        @click="toggleVisibleRight"
-        class="burger-icon"
-      />
+      <div class="header-right">
+        <LanguageSwitcher class="header-lang" />
+        <img
+          src="/assets/icons/burger.svg?v=2"
+          alt="burger"
+          @click="toggleVisibleRight"
+          class="burger-icon"
+        />
+      </div>
       <div class="header-text-container">
         <NuxtLink
           to="/"
@@ -99,12 +102,18 @@ const toggleVisibleRight = (): void => {
   width: 100%;
 }
 
-.burger-icon {
+.header-right {
   position: absolute;
   right: 0%;
   top: 15%;
-  cursor: pointer;
   z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.burger-icon {
+  cursor: pointer;
   width: 2.5rem;
   border-radius: 0;
 }
@@ -128,7 +137,7 @@ const toggleVisibleRight = (): void => {
     left: 5%;
   }
 
-  .burger-icon {
+  .header-right {
     right: 5%;
   }
 

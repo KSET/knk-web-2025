@@ -11,6 +11,8 @@ import type { Workshop } from '~/types/Workshop'
 
 import Schedule from '~/components/Schedule.vue'
 
+const localePath = useLocalePath()
+const { locale } = useI18n()
 const artistsStore = useArtistsStore()
 
 onMounted(async () => {
@@ -66,8 +68,11 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
 
   <div class="header-wrapper">
     <div class="header-top-row">
-      <span class="header-date-text">14. 8.- 16. 8.</span>
-      <img src="/assets/icons/burger.svg?v=2" alt="burger" @click="toggleVisibleRight" class="burger-icon-top" />
+      <span class="header-date-text">{{ $t('home.dates') }}</span>
+      <div class="header-right-top">
+        <LanguageSwitcher />
+        <img src="/assets/icons/burger.svg?v=2" alt="burger" @click="toggleVisibleRight" class="burger-icon-top" />
+      </div>
     </div>
     <div class="header-container">
       <img src="/assets/icons/knk-i-tete.svg" alt="knk i tete" class="hero-image" />
@@ -77,11 +82,11 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
   <div class="izvodjaci-wrapper">
     <div class="wall-container">
       <div class="title-text-container">
-        <p class="title-text">izvođači</p>
+        <p class="title-text">{{ $t('home.artists') }}</p>
 
-        <NuxtLink to="/lineup" style="text-decoration: none">
+        <NuxtLink :to="localePath('/lineup')" style="text-decoration: none">
           <span class="title-button">
-            pogledaj više
+            {{ $t('common.seeMore') }}
             <img
               src="/assets/icons/arrow-right.svg"
               alt="arrow-right"
@@ -93,7 +98,7 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
 
       <HomeArtistsContainer :artists="artistsStore.all" />
 
-      <p class="coming-soon-text">+ još uskoro...</p>
+      <p class="coming-soon-text">{{ $t('common.comingSoon') }}</p>
 
       <!-- <Tabs value="0">
         <TabList style="flex-wrap: wrap">
@@ -129,11 +134,11 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
   <div class="ulaznice-wrapper">
     <div class="wall-container">
       <div class="title-text-container">
-        <p class="title-text">ulaznice</p>
+        <p class="title-text">{{ $t('home.tickets') }}</p>
 
-        <NuxtLink to="/tickets" style="text-decoration: none">
+        <NuxtLink :to="localePath('/tickets')" style="text-decoration: none">
           <div class="title-button">
-            kupi ulaznice
+            {{ $t('common.buyTickets') }}
             <img
               src="/assets/icons/arrow-right.svg"
               alt="arrow-right"
@@ -156,16 +161,16 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
             class="ticket-blob"
           />
           <div class="ticket-content">
-            <div class="ticket-name" :style="{ color: ticket.backgroundColor }">{{ ticket.name }}</div>
+            <div class="ticket-name" :style="{ color: ticket.backgroundColor }">{{ (locale === 'en' && ticket.nameEn) ? ticket.nameEn : ticket.name }}</div>
             <div class="ticket-price" :style="{ color: ticket.backgroundColor }">{{ ticket.price }}€</div>
           </div>
         </div>
       </div>
 
       <div class="ticket-buy-container">
-        <NuxtLink to="/tickets" style="text-decoration: none">
+        <NuxtLink :to="localePath('/tickets')" style="text-decoration: none">
           <button class="ticket-buy-button">
-            kupi ulaznice
+            {{ $t('common.buyTickets') }}
           </button>
         </NuxtLink>
       </div>
@@ -179,19 +184,19 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
   <div class="beach-wrapper">
     <div class="wall-container">
       <div class="title-text-container">
-        <p class="title-text">kampiranje</p>
+        <p class="title-text">{{ $t('home.camping') }}</p>
       </div>
 
       <div class="kamp-image-wrapper">
         <img src="/assets/icons/krug-zuti.svg" alt="krug zuti" class="krug-zuti" />
         <img src="/assets/icons/krug-narancasti.svg" alt="krug narancasti" class="krug-narancasti" />
-        <img src="/assets/icons/kamp.jpeg" alt="kamp" class="kamp-image" />
+        <img src="/assets/icons/kamp.jpg" alt="kamp" class="kamp-image" />
       </div>
 
       <div class="kamp-buy-container">
-        <NuxtLink to="/kampiranje" style="text-decoration: none">
+        <NuxtLink :to="localePath('/kampiranje')" style="text-decoration: none">
           <button class="kamp-buy-button">
-            saznaj više
+            {{ $t('common.learnMore') }}
           </button>
         </NuxtLink>
       </div>
@@ -514,9 +519,15 @@ img {
   text-align: center;
 }
 
-.burger-icon-top {
+.header-right-top {
   position: absolute;
   right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.burger-icon-top {
   cursor: pointer;
   border-radius: 0px;
   height: 2rem;
@@ -910,9 +921,6 @@ img {
     display: none;
   }
 
-  .burger-icon-top {
-    right: 1rem;
-  }
 
   .header-text {
     font-size: 4rem;
@@ -983,7 +991,17 @@ img {
   }
 
   .header-date-text {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
+  }
+
+  .header-top-row {
+    justify-content: space-between;
+    position: static;
+  }
+
+  .header-right-top {
+    position: static;
+    flex-shrink: 0;
   }
 
   .header-text {

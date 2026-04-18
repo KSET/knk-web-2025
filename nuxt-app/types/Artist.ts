@@ -7,7 +7,9 @@ export interface Artist {
   _createdAt: string
   name: string
   description?: string
+  descriptionEn?: string
   bio?: string
+  bioEn?: string
   image?: ImageAsset
   linkSocial?: Url
   linkMusic?: Url

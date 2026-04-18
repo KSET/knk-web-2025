@@ -9,9 +9,14 @@ export default defineType({
   fields: [
     defineField({
       name: 'name',
-      title: 'Name',
+      title: 'Name (HR)',
       type: 'string',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'nameEn',
+      title: 'Name (EN)',
+      type: 'string',
     }),
     defineField({
       name: 'timeline',
@@ -58,8 +63,10 @@ export default defineType({
       type: 'image',
       options: {hotspot: true},
     }),
-    defineField({name: 'descriptionShort', title: 'Short Description', type: 'text', rows: 3}),
-    defineField({name: 'descriptionLong', title: 'Long Description', type: 'text', rows: 8}),
+    defineField({name: 'descriptionShort', title: 'Short Description (HR)', type: 'text', rows: 3}),
+    defineField({name: 'descriptionShortEn', title: 'Short Description (EN)', type: 'text', rows: 3}),
+    defineField({name: 'descriptionLong', title: 'Long Description (HR)', type: 'text', rows: 8}),
+    defineField({name: 'descriptionLongEn', title: 'Long Description (EN)', type: 'text', rows: 8}),
 
     orderRankField({type: 'workshop'}),
   ],

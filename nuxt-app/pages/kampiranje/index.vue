@@ -6,9 +6,16 @@ import { ref } from 'vue'
 const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
 
+const { locale } = useI18n()
+
 const translations = Object.fromEntries(
-  translationsRaw.value?.map((entry) => [entry.key, entry.text]) || [],
+  translationsRaw.value?.map((entry) => [entry.key, { hr: entry.text, en: entry.textEn }]) || [],
 )
+
+const infoKampBlocks = computed(() => {
+  const t = translations?.infoKampText
+  return (locale.value === 'en' && t?.en) ? t.en : t?.hr
+})
 
 const visibleRight = ref(false)
 const toggleVisibleRight = (): void => {
@@ -21,27 +28,30 @@ const toggleVisibleRight = (): void => {
   <Marquee backgroundColor="var(--knk-orange)" textShadowColor="var(--knk-lightblue)" />
 
   <div class="page-header">
-    <p class="page-title">kampiranje</p>
-    <img
-      src="/assets/icons/burger.svg?v=2"
-      alt="burger"
-      @click="toggleVisibleRight"
-      class="burger-icon"
-    />
+    <p class="page-title">{{ $t('camping.title') }}</p>
+    <div class="header-right">
+      <LanguageSwitcher />
+      <img
+        src="/assets/icons/burger.svg?v=2"
+        alt="burger"
+        @click="toggleVisibleRight"
+        class="burger-icon"
+      />
+    </div>
   </div>
 
   <div class="page-wrapper">
     <div class="kamp-image-wrapper">
       <img src="/assets/icons/krug-zuti.svg" alt="krug zuti" class="krug-zuti" />
       <img src="/assets/icons/krug-narancasti.svg" alt="krug narancasti" class="krug-narancasti" />
-      <img src="/assets/icons/kamp.jpeg" alt="kamp" class="kamp-image" />
+      <img src="/assets/icons/kamp.jpg" alt="kamp" class="kamp-image" />
     </div>
 
     <div class="info-section">
       <div class="info-content">
-        <h1 class="info-title">kamp</h1>
+        <h1 class="info-title">{{ $t('camping.info') }}</h1>
         <div class="info-text">
-          <BlockContent :blocks="translations?.infoKampText" class="info-text" />
+          <BlockContent :blocks="infoKampBlocks" class="info-text" />
         </div>
       </div>
     </div>
@@ -72,9 +82,15 @@ const toggleVisibleRight = (): void => {
   margin: 0;
 }
 
-.burger-icon {
+.header-right {
   position: absolute;
   right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.burger-icon {
   cursor: pointer;
   width: 2.5rem;
   border-radius: 0;

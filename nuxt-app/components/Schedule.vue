@@ -7,6 +7,8 @@ import FullCalendar from '@fullcalendar/vue3'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
+const { t } = useI18n()
+const localePath = useLocalePath()
 const scheduleStore = useScheduleStore()
 const dates = ['2025-08-14', '2025-08-15', '2025-08-16']
 
@@ -22,7 +24,7 @@ const getInitialTab = () => {
 }
 
 const vrataEvents = dates.map((d) => ({
-  title: 'Vrata',
+  title: t('schedule.gates'),
   start: `${d}T20:00:00`,
   end: `${d}T21:00:00`,
   backgroundColor: '#D46558',
@@ -36,22 +38,24 @@ const calendarRef = ref(null)
 const artistSelectedTab = ref(getInitialTab())
 const artistCalendarRef = ref(null)
 
+const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
+
 const dayHeaderContent = (arg) => {
-  const dayMap = ['NED', 'PON', 'UTORAK', 'SRI', 'ČETVRTAK', 'PETAK', 'SUBOTA']
   const d = arg.date
-  return `${dayMap[d.getDay()]} ${d.getDate()}.${d.getMonth() + 1}.`
+  const dayLabel = t(`days.${dayKeys[d.getDay()]}`)
+  return `${dayLabel} ${d.getDate()}.${d.getMonth() + 1}.`
 }
 
 const goWorkshops = (info) => {
   info.jsEvent.preventDefault()
-  const path = '/workshops'
+  const path = localePath('/workshops')
   if (info.jsEvent.metaKey || info.jsEvent.ctrlKey) window.open(path, '_blank')
   else router.push(path)
 }
 
 const goLineup = (info) => {
   info.jsEvent.preventDefault()
-  const path = '/lineup'
+  const path = localePath('/lineup')
   if (info.jsEvent.metaKey || info.jsEvent.ctrlKey) window.open(path, '_blank')
   else router.push(path)
 }
@@ -143,17 +147,17 @@ const formatShowDate = (iso) =>
 
 <template>
   <div class="schedule-container">
-    <h1 style="color: white">raspored</h1>
+    <h1 style="color: white">{{ $t('schedule.title') }}</h1>
     <Tabs v-model:value="selectedTab">
       <TabList style="flex-wrap: wrap">
         <Tab value="0" class="artist-tab"
-          >Dan 1 – {{ formatShowDate(dates[0]) }}</Tab
+          >{{ $t('schedule.day') }} 1 – {{ formatShowDate(dates[0]) }}</Tab
         >
         <Tab value="1" class="artist-tab"
-          >Dan 2 – {{ formatShowDate(dates[1]) }}</Tab
+          >{{ $t('schedule.day') }} 2 – {{ formatShowDate(dates[1]) }}</Tab
         >
         <Tab value="2" class="artist-tab"
-          >Dan 3 – {{ formatShowDate(dates[2]) }}</Tab
+          >{{ $t('schedule.day') }} 3 – {{ formatShowDate(dates[2]) }}</Tab
         >
       </TabList>
     </Tabs>
@@ -161,32 +165,31 @@ const formatShowDate = (iso) =>
 
   <div class="schedule-container" v-if="scheduleStore.eventsWorkshops.length">
     <div class="legend">
-      <p style="margin: 0">Legenda:</p>
-      <p class="legend-item" style="background-color: #f3bb64">Škola</p>
-      <p class="legend-item" style="background-color: #a565bd">Vanjske</p>
-      <p class="legend-item" style="background-color: #76c6d2">Kamp*</p>
+      <p style="margin: 0">{{ $t('schedule.legend') }}</p>
+      <p class="legend-item" style="background-color: #f3bb64">{{ $t('schedule.school') }}</p>
+      <p class="legend-item" style="background-color: #a565bd">{{ $t('schedule.outdoor') }}</p>
+      <p class="legend-item" style="background-color: #76c6d2">{{ $t('schedule.camp') }}</p>
     </div>
     <ClientOnly>
       <FullCalendar ref="calendarRef" :options="workshopCalendarOptions" />
     </ClientOnly>
     <p style="margin: 0.5rem 1rem">
-      * Radionice u kampu dostupne su isključivo uz ulaznice koje uključuju
-      smještaj u kampu
+      {{ $t('schedule.campNote') }}
     </p>
   </div>
 
   <div class="schedule-container" style="margin-top: 3rem">
-    <h1 style="color: white">program</h1>
+    <h1 style="color: white">{{ $t('schedule.program') }}</h1>
     <Tabs v-model:value="artistSelectedTab">
       <TabList style="flex-wrap: wrap">
         <Tab value="0" class="artist-tab"
-          >Dan 1 – {{ formatShowDate(dates[0]) }}</Tab
+          >{{ $t('schedule.day') }} 1 – {{ formatShowDate(dates[0]) }}</Tab
         >
         <Tab value="1" class="artist-tab"
-          >Dan 2 – {{ formatShowDate(dates[1]) }}</Tab
+          >{{ $t('schedule.day') }} 2 – {{ formatShowDate(dates[1]) }}</Tab
         >
         <Tab value="2" class="artist-tab"
-          >Dan 3 – {{ formatShowDate(dates[2]) }}</Tab
+          >{{ $t('schedule.day') }} 3 – {{ formatShowDate(dates[2]) }}</Tab
         >
       </TabList>
     </Tabs>

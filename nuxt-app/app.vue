@@ -14,6 +14,14 @@
 <script setup lang="ts">
 const route = useRoute()
 const { enabled: previewEnabled, inFrame } = useSanityVisualEditingState()
+const { t } = useI18n()
+const head = useLocaleHead({ addSeoAttributes: true })
+
+useHead({
+  title: 'KSET na Krku',
+  meta: [{ name: 'description', content: () => t('meta.description') }],
+  htmlAttrs: { lang: () => head.value.htmlAttrs?.lang || 'hr' },
+})
 </script>
 
 <style>

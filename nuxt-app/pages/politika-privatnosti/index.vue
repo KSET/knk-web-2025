@@ -9,9 +9,16 @@ import type { Translation } from '~/types/Translation'
 const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
 
+const { locale } = useI18n()
+
 const translations = Object.fromEntries(
-  translationsRaw.value?.map((entry) => [entry.key, entry.text]) || [],
+  translationsRaw.value?.map((entry) => [entry.key, { hr: entry.text, en: entry.textEn }]) || [],
 )
+
+const privacyBlocks = computed(() => {
+  const t = translations?.politikaPrivatnostiText
+  return (locale.value === 'en' && t?.en) ? t.en : t?.hr
+})
 
 useHead({
   bodyAttrs: {
@@ -36,7 +43,7 @@ useHead({
 
     <div class="page-container">
       <BlockContent
-        :blocks="translations?.politikaPrivatnostiText"
+        :blocks="privacyBlocks"
         class="info-text"
       />
     </div>

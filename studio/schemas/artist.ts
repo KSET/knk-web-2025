@@ -22,13 +22,25 @@ export default defineType({
     }),
     defineField({
       name: 'description',
-      title: 'Description-short',
+      title: 'Description-short (HR)',
+      type: 'text',
+      rows: 4,
+    }),
+    defineField({
+      name: 'descriptionEn',
+      title: 'Description-short (EN)',
       type: 'text',
       rows: 4,
     }),
     defineField({
       name: 'bio',
-      title: 'Bio-long',
+      title: 'Bio-long (HR)',
+      type: 'text',
+      rows: 8,
+    }),
+    defineField({
+      name: 'bioEn',
+      title: 'Bio-long (EN)',
       type: 'text',
       rows: 8,
     }),

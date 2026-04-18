@@ -37,7 +37,7 @@ const toggleShowDialog = (): void => {
       <p class="artist-description">{{ artist.description }}</p>
 
       <div class="artist-button" @click="toggleShowDialog">
-        Saznaj više
+        {{ $t('common.learnMore') }}
         <img
           src="/assets/icons/arrow-right-orange.svg"
           alt="arrow-right"

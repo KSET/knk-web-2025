@@ -12,7 +12,12 @@ export default defineType({
     }),
     defineField({
       name: 'text',
-      title: 'Text',
+      title: 'Text (HR)',
+      type: 'blockContent',
+    }),
+    defineField({
+      name: 'textEn',
+      title: 'Text (EN)',
       type: 'blockContent',
     }),
   ],

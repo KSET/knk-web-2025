@@ -1,9 +1,19 @@
 <script setup lang="ts">
 const visible = defineModel<boolean>({ required: true })
+const localePath = useLocalePath()
 
 const close = () => {
   visible.value = false
 }
+
+const navItems = [
+  { label: 'nav.home', path: '/' },
+  { label: 'nav.lineup', path: '/lineup' },
+  { label: 'nav.tickets', path: '/tickets' },
+  { label: 'nav.festival', path: '/festival' },
+  { label: 'nav.camping', path: '/kampiranje' },
+  { label: 'nav.gallery', path: '/gallery' },
+]
 </script>
 
 <template>
@@ -18,20 +28,12 @@ const close = () => {
     <div class="drawer-wrapper">
       <img src="/assets/icons/sunceko.svg" alt="sunceko" class="drawer-sunceko" />
       <div class="drawer-container" @click="close">
-        <div>
-          <NuxtLink to="/" class="hover:underline drawer-text" :style="{ color: $route.path === '/' ? 'var(--knk-orange)' : 'white' }">Naslovnica</NuxtLink>
-        </div>
-        <div>
-          <NuxtLink to="/tickets" class="hover:underline drawer-text" :style="{ color: $route.path === '/tickets' ? 'var(--knk-orange)' : 'white' }">Ulaznice</NuxtLink>
-        </div>
-        <div>
-          <NuxtLink to="/festival" class="hover:underline drawer-text" :style="{ color: $route.path === '/festival' ? 'var(--knk-orange)' : 'white' }">Festival</NuxtLink>
-        </div>
-        <div>
-          <NuxtLink to="/kampiranje" class="hover:underline drawer-text" :style="{ color: $route.path === '/kampiranje' ? 'var(--knk-orange)' : 'white' }">Kampiranje</NuxtLink>
-        </div>
-        <div>
-          <NuxtLink to="/gallery" class="hover:underline drawer-text" :style="{ color: $route.path === '/gallery' ? 'var(--knk-orange)' : 'white' }">Galerija</NuxtLink>
+        <div v-for="item in navItems" :key="item.path">
+          <NuxtLink
+            :to="localePath(item.path)"
+            class="hover:underline drawer-text"
+            :style="{ color: $route.path === localePath(item.path) ? 'var(--knk-orange)' : 'white' }"
+          >{{ $t(item.label) }}</NuxtLink>
         </div>
       </div>
 
@@ -79,7 +81,7 @@ const close = () => {
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-rows: 60% 40%;
+  grid-template-rows: 1fr auto;
   position: relative;
 }
 
@@ -122,9 +124,9 @@ const close = () => {
 }
 
 .stolica-icon {
-  max-height: 80%;
-  max-width: 100%;
-  object-fit: contain;
+  width: 100%;
+  height: auto;
+  display: block;
   z-index: 10;
 }
 </style>

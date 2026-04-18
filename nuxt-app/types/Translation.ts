@@ -6,4 +6,5 @@ export interface Translation {
   _createdAt: string
   key: string
   text: PortableTextBlock[]
+  textEn?: PortableTextBlock[]
 }

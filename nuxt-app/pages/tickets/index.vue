@@ -24,13 +24,16 @@ onMounted(() => {
   <Marquee backgroundColor="var(--knk-blue)" />
 
   <div class="page-header">
-    <p class="page-title">ulaznice</p>
-    <img
-      src="/assets/icons/burger.svg?v=2"
-      alt="burger"
-      @click="toggleVisibleRight"
-      class="burger-icon"
-    />
+    <p class="page-title">{{ $t('nav.tickets') }}</p>
+    <div class="header-right">
+      <LanguageSwitcher />
+      <img
+        src="/assets/icons/burger.svg?v=2"
+        alt="burger"
+        @click="toggleVisibleRight"
+        class="burger-icon"
+      />
+    </div>
   </div>
 
   <div class="page-wrapper">
@@ -102,9 +105,15 @@ onMounted(() => {
   margin: 0;
 }
 
-.burger-icon {
+.header-right {
   position: absolute;
   right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.burger-icon {
   cursor: pointer;
   width: 2.5rem;
   border-radius: 0;

@@ -5,6 +5,7 @@ export interface Workshop {
   _type: 'workshop'
   _createdAt: string
   name: string
+  nameEn?: string
   timeline?: {
     start: string
     end: string
@@ -13,5 +14,7 @@ export interface Workshop {
   imageLarge?: ImageAsset
   imageSmall?: ImageAsset
   descriptionShort?: string
+  descriptionShortEn?: string
   descriptionLong?: string
+  descriptionLongEn?: string
 }

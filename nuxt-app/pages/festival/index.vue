@@ -6,9 +6,16 @@ import { ref } from 'vue'
 const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
 
+const { locale } = useI18n()
+
 const translations = Object.fromEntries(
-  translationsRaw.value?.map((entry) => [entry.key, entry.text]) || [],
+  translationsRaw.value?.map((entry) => [entry.key, { hr: entry.text, en: entry.textEn }]) || [],
 )
+
+const infoFestivalBlocks = computed(() => {
+  const t = translations?.infoFestivalText
+  return (locale.value === 'en' && t?.en) ? t.en : t?.hr
+})
 
 const visibleRight = ref(false)
 const toggleVisibleRight = (): void => {
@@ -21,13 +28,16 @@ const toggleVisibleRight = (): void => {
   <Marquee backgroundColor="var(--knk-orange)" textShadowColor="var(--knk-lightblue)" />
 
   <div class="page-header">
-    <p class="page-title">festival</p>
-    <img
-      src="/assets/icons/burger.svg?v=2"
-      alt="burger"
-      @click="toggleVisibleRight"
-      class="burger-icon"
-    />
+    <p class="page-title">{{ $t('festival.title') }}</p>
+    <div class="header-right">
+      <LanguageSwitcher />
+      <img
+        src="/assets/icons/burger.svg?v=2"
+        alt="burger"
+        @click="toggleVisibleRight"
+        class="burger-icon"
+      />
+    </div>
   </div>
 
   <div class="page-wrapper">
@@ -39,10 +49,10 @@ const toggleVisibleRight = (): void => {
 
     <div class="info-section">
       <div class="info-content">
-        <h1 class="info-title">info</h1>
+        <h1 class="info-title">{{ $t('festival.info') }}</h1>
         <div class="info-text">
           <BlockContent
-            :blocks="translations?.infoFestivalText"
+            :blocks="infoFestivalBlocks"
             class="info-text"
           />
         </div>
@@ -88,9 +98,15 @@ const toggleVisibleRight = (): void => {
   margin: 0;
 }
 
-.burger-icon {
+.header-right {
   position: absolute;
   right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.burger-icon {
   cursor: pointer;
   width: 2.5rem;
   border-radius: 0;

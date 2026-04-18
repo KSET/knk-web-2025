@@ -3,6 +3,8 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 const visible = ref(false)
 const drawerVisible = defineModel<boolean>('drawerVisible', { required: true })
+const localePath = useLocalePath()
+const { t } = useI18n()
 
 const checkScroll = () => {
   const hero = document.querySelector('.header-wrapper')
@@ -28,22 +30,25 @@ onUnmounted(() => {
 <template>
   <Transition name="sticky-slide">
     <div v-show="visible" class="sticky-header">
-      <NuxtLink to="/tickets" class="sticky-btn">
-        Kupi ulaznice
+      <NuxtLink :to="localePath('/tickets')" class="sticky-btn">
+        {{ $t('common.buyTickets') }}
         <img src="/assets/icons/arrow-right-orange.svg" alt="" class="sticky-btn-arrow" />
       </NuxtLink>
 
       <div class="sticky-center">
-        <NuxtLink to="/" class="sticky-title">knk</NuxtLink>
-        <span class="sticky-dates">14. 8. - 16. 8.</span>
+        <NuxtLink :to="localePath('/')" class="sticky-title">knk</NuxtLink>
+        <span class="sticky-dates">{{ $t('home.dates') }}</span>
       </div>
 
-      <img
-        src="/assets/icons/burger.svg?v=2"
-        alt="menu"
-        class="sticky-burger"
-        @click="drawerVisible = !drawerVisible"
-      />
+      <div class="sticky-right">
+        <LanguageSwitcher class="sticky-lang" />
+        <img
+          src="/assets/icons/burger.svg?v=2"
+          alt="menu"
+          class="sticky-burger"
+          @click="drawerVisible = !drawerVisible"
+        />
+      </div>
     </div>
   </Transition>
 </template>
@@ -107,6 +112,17 @@ onUnmounted(() => {
   font-size: 1.2rem;
   font-weight: bold;
   color: #efe5dd;
+}
+
+.sticky-right {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.sticky-lang {
+  display: flex;
+  align-items: center;
 }
 
 .sticky-burger {
@@ -182,6 +198,11 @@ onUnmounted(() => {
 
   .sticky-burger {
     width: 1.4rem;
+  }
+
+  .sticky-lang .lang-link {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.35rem;
   }
 }
 </style>

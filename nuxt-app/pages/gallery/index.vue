@@ -52,6 +52,16 @@ galleries.sort((a, b) => (typeOrder[a.type] ?? 99) - (typeOrder[b.type] ?? 99))
 const filteredGalleries = computed(() =>
   galleries.filter((g) => g.year === selectedYear.value)
 )
+
+const { t } = useI18n()
+const galleryTypeLabel = (type: string) => {
+  const map: Record<string, string> = {
+    'Koncerti': t('gallery.concerts'),
+    'Radionice': t('gallery.workshops'),
+    'Kamp': t('gallery.camp'),
+  }
+  return map[type] || type
+}
 </script>
 
 <template>
@@ -59,13 +69,16 @@ const filteredGalleries = computed(() =>
   <Marquee backgroundColor="var(--knk-orange)" textShadowColor="var(--knk-blue)" />
 
   <div class="page-header">
-    <p class="page-title">galerija</p>
-    <img
-      src="/assets/icons/burger.svg?v=2"
-      alt="burger"
-      @click="visibleRight = !visibleRight"
-      class="burger-icon"
-    />
+    <p class="page-title">{{ $t('gallery.title') }}</p>
+    <div class="header-right">
+      <LanguageSwitcher />
+      <img
+        src="/assets/icons/burger.svg?v=2"
+        alt="burger"
+        @click="visibleRight = !visibleRight"
+        class="burger-icon"
+      />
+    </div>
   </div>
 
   <div class="gallery-wrapper">
@@ -87,7 +100,7 @@ const filteredGalleries = computed(() =>
         :key="group.id"
         class="gallery-section"
       >
-        <h3 class="gallery-title">{{ group.type }}</h3>
+        <h3 class="gallery-title">{{ galleryTypeLabel(group.type) }}</h3>
 
         <Galleria
           v-model:activeIndex="group.activeIndex.value"
@@ -262,9 +275,15 @@ const filteredGalleries = computed(() =>
   margin: 0;
 }
 
-.burger-icon {
+.header-right {
   position: absolute;
   right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.burger-icon {
   cursor: pointer;
   width: 2.5rem;
   border-radius: 0;

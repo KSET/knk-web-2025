@@ -8,10 +8,12 @@ const props = withDefaults(defineProps<Props>(), {
   backgroundColor: 'var(--knk-lightblue)',
   textShadowColor: 'var(--knk-orange)',
 })
+
+const localePath = useLocalePath()
 </script>
 
 <template>
-  <NuxtLink to="/" class="marquee-wrapper" :style="{ backgroundColor: props.backgroundColor }">
+  <NuxtLink :to="localePath('/')" class="marquee-wrapper" :style="{ backgroundColor: props.backgroundColor }">
     <div class="marquee-track">
       <span
         class="marquee-text"

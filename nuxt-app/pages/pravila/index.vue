@@ -9,9 +9,16 @@ import type { Translation } from '~/types/Translation'
 const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
 
+const { locale } = useI18n()
+
 const translations = Object.fromEntries(
-  translationsRaw.value?.map((entry) => [entry.key, entry.text]) || [],
+  translationsRaw.value?.map((entry) => [entry.key, { hr: entry.text, en: entry.textEn }]) || [],
 )
+
+const pravilaBlocks = computed(() => {
+  const t = translations?.opcaPravilaText
+  return (locale.value === 'en' && t?.en) ? t.en : t?.hr
+})
 
 useHead({
   bodyAttrs: {
@@ -35,7 +42,7 @@ useHead({
     <img src="/assets/icons/oblak-4.svg" alt="oblak" class="oblak oblak-8" />
 
     <div class="page-container">
-      <BlockContent :blocks="translations?.opcaPravilaText" class="info-text" />
+      <BlockContent :blocks="pravilaBlocks" class="info-text" />
     </div>
   </div>
 

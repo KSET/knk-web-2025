@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "home": "Naslovnica",
+    "tickets": "Ulaznice",
+    "festival": "Festival",
+    "lineup": "Izvođači",
+    "camping": "Kampiranje",
+    "gallery": "Galerija"
+  },
+  "common": {
+    "buyTickets": "kupi ulaznice",
+    "seeMore": "pogledaj više",
+    "learnMore": "saznaj više",
+    "comingSoon": "+ još uskoro...",
+    "signUp": "prijavi se"
+  },
+  "home": {
+    "artists": "izvođači",
+    "tickets": "ulaznice",
+    "camping": "kampiranje",
+    "dates": "14. 8. - 16. 8."
+  },
+  "schedule": {
+    "title": "raspored",
+    "program": "program",
+    "legend": "Legenda:",
+    "school": "Škola",
+    "outdoor": "Vanjske",
+    "camp": "Kamp*",
+    "campNote": "* Radionice u kampu dostupne su isključivo uz ulaznice koje uključuju smještaj u kampu",
+    "day": "Dan",
+    "gates": "Vrata"
+  },
+  "gallery": {
+    "title": "galerija",
+    "concerts": "Koncerti",
+    "workshops": "Radionice",
+    "camp": "Kamp"
+  },
+  "workshops": {
+    "title": "radionice",
+    "outdoor": "vanjske"
+  },
+  "festival": {
+    "title": "festival",
+    "info": "info"
+  },
+  "camping": {
+    "title": "kampiranje",
+    "info": "kamp"
+  },
+  "footer": {
+    "allRightsReserved": "Sva prava pridržana © 2026",
+    "studentUnion": "Savez studenata FER-a",
+    "rules": "pravila",
+    "privacyPolicy": "politika privatnosti"
+  },
+  "meta": {
+    "title": "KSET na Krku",
+    "description": "KSET na Krku četverodnevni je festival, organiziran od strane Saveza studenata Fakulteta elektrotehnike i računarstva (poznatijeg kao KSET), koji promiče kulturu i neformalnu edukaciju te aktivno druženje uz razmjenu znanja i suradnju mladih."
+  },
+  "days": {
+    "sun": "NED",
+    "mon": "PON",
+    "tue": "UTO",
+    "wed": "SRI",
+    "thu": "ČET",
+    "fri": "PET",
+    "sat": "SUB"
+  }
+}

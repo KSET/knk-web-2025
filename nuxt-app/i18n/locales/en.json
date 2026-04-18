@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "home": "Home",
+    "tickets": "Tickets",
+    "festival": "Festival",
+    "lineup": "Lineup",
+    "camping": "Camping",
+    "gallery": "Gallery"
+  },
+  "common": {
+    "buyTickets": "buy tickets",
+    "seeMore": "see more",
+    "learnMore": "learn more",
+    "comingSoon": "+ more coming soon...",
+    "signUp": "sign up"
+  },
+  "home": {
+    "artists": "artists",
+    "tickets": "tickets",
+    "camping": "camping",
+    "dates": "Aug 14 - Aug 16"
+  },
+  "schedule": {
+    "title": "schedule",
+    "program": "program",
+    "legend": "Legend:",
+    "school": "School",
+    "outdoor": "Outdoor",
+    "camp": "Camp*",
+    "campNote": "* Camp workshops are available exclusively with tickets that include camp accommodation",
+    "day": "Day",
+    "gates": "Gates"
+  },
+  "gallery": {
+    "title": "gallery",
+    "concerts": "Concerts",
+    "workshops": "Workshops",
+    "camp": "Camp"
+  },
+  "workshops": {
+    "title": "workshops",
+    "outdoor": "outdoor"
+  },
+  "festival": {
+    "title": "festival",
+    "info": "info"
+  },
+  "camping": {
+    "title": "camping",
+    "info": "camp"
+  },
+  "footer": {
+    "allRightsReserved": "All rights reserved © 2026",
+    "studentUnion": "Student Association of Faculty of Electrical Engineering and Computing",
+    "rules": "rules",
+    "privacyPolicy": "privacy policy"
+  },
+  "meta": {
+    "title": "KSET na Krku",
+    "description": "KSET na Krku is a multi-day festival organized by the Students' Association of the Faculty of Electrical Engineering and Computing (known as KSET), promoting culture, informal education, and active socializing through knowledge exchange and youth collaboration."
+  },
+  "days": {
+    "sun": "SUN",
+    "mon": "MON",
+    "tue": "TUE",
+    "wed": "WED",
+    "thu": "THU",
+    "fri": "FRI",
+    "sat": "SAT"
+  }
+}

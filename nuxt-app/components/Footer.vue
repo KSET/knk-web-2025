@@ -7,6 +7,8 @@ const props = withDefaults(defineProps<{
   decorImage: '/assets/icons/teta.svg'
 })
 
+const localePath = useLocalePath()
+
 const query = groq`*[_type == "sponsor"] | order(barIndex asc, orderRank asc)`
 const { data: sponsors } = await useSanityQuery<Sponsor[]>(query)
 
@@ -52,8 +54,7 @@ const groupedByBarIndex = computed(() => {
       </div>
     </div>
 
-    <p>Sva prava pridržana © 2026</p>
-    <p>Savez studenata FER-a</p>
+    <p>{{ $t('footer.allRightsReserved') }}</p>
     <div class="footer-links">
       <div>
         <a
@@ -88,9 +89,9 @@ const groupedByBarIndex = computed(() => {
     </div>
 
     <div class="footer-links">
-      <NuxtLink to="/pravila" class="" style="color: white">pravila</NuxtLink>
-      <NuxtLink to="/politika-privatnosti" class="" style="color: white"
-        >politika privatnosti</NuxtLink
+      <NuxtLink :to="localePath('/pravila')" class="" style="color: white">{{ $t('footer.rules') }}</NuxtLink>
+      <NuxtLink :to="localePath('/politika-privatnosti')" class="" style="color: white"
+        >{{ $t('footer.privacyPolicy') }}</NuxtLink
       >
     </div>
 

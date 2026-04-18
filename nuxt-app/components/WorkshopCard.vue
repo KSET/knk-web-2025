@@ -89,7 +89,7 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
       <p class="workshop-description">{{ workshop.descriptionShort }}</p>
 
       <div class="workshop-button" @click="toggleShowDialog">
-        Saznaj više
+        {{ $t('common.learnMore') }}
         <img
           src="/assets/icons/arrow-right.svg"
           alt="arrow-right"

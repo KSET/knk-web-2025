@@ -5,14 +5,6 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 export default defineNuxtConfig({
   app: {
     head: {
-      title: 'KSET na Krku',
-      meta: [
-        {
-          name: 'description',
-          content:
-            'KSET na Krku četverodnevni je festival, organiziran od strane Saveza studenata Fakulteta elektrotehnike i računarstva (poznatijeg kao KSET), koji promiče kulturu i neformalnu edukaciju te aktivno druženje uz razmjenu znanja i suradnju mladih.',
-        },
-      ],
       link: [
         {
           rel: 'stylesheet',
@@ -45,6 +37,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/sanity',
     '@primevue/nuxt-module',
+    '@nuxtjs/i18n',
     [
       '@nuxtjs/google-fonts',
       {
@@ -60,6 +53,31 @@ export default defineNuxtConfig({
       },
     ],
   ],
+
+  i18n: {
+    locales: [
+      { code: 'hr', file: 'hr.json', name: 'Hrvatski' },
+      { code: 'en', file: 'en.json', name: 'English' },
+    ],
+    defaultLocale: 'hr',
+    strategy: 'prefix_except_default',
+    langDir: 'locales/',
+    detectBrowserLanguage: false,
+    pages: {
+      'kampiranje/index': {
+        en: '/camping',
+        hr: '/kampiranje',
+      },
+      'pravila/index': {
+        en: '/rules',
+        hr: '/pravila',
+      },
+      'politika-privatnosti/index': {
+        en: '/privacy-policy',
+        hr: '/politika-privatnosti',
+      },
+    },
+  },
 
   primevue: {
     options: {
@@ -96,5 +114,17 @@ export default defineNuxtConfig({
   ssr: false,
   nitro: {
     preset: 'static',
+    prerender: {
+      routes: [
+        '/en',
+        '/en/tickets',
+        '/en/festival',
+        '/en/lineup',
+        '/en/camping',
+        '/en/gallery',
+        '/en/rules',
+        '/en/privacy-policy',
+      ],
+    },
   },
 })

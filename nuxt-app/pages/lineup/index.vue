@@ -5,6 +5,7 @@ import Footer from '~/components/Footer.vue'
 
 import { useArtistsStore } from '../../stores/artists'
 
+const localePath = useLocalePath()
 const artistsStore = useArtistsStore()
 
 const visibleRight = ref(false)
@@ -22,13 +23,16 @@ onMounted(async () => {
   <Marquee backgroundColor="var(--knk-orange)" textShadowColor="var(--knk-lightblue)" />
 
   <div class="page-header">
-    <p class="page-title">izvođači</p>
-    <img
-      src="/assets/icons/burger.svg?v=2"
-      alt="burger"
-      @click="toggleVisibleRight"
-      class="burger-icon"
-    />
+    <p class="page-title">{{ $t('nav.lineup') }}</p>
+    <div class="header-right">
+      <LanguageSwitcher />
+      <img
+        src="/assets/icons/burger.svg?v=2"
+        alt="burger"
+        @click="toggleVisibleRight"
+        class="burger-icon"
+      />
+    </div>
   </div>
 
   <div class="artists-wrapper">
@@ -58,12 +62,12 @@ onMounted(async () => {
             />
           </div>
 
-          <p class="coming-soon-text">+ još uskoro...</p>
+          <p class="coming-soon-text">{{ $t('common.comingSoon') }}</p>
 
           <div class="ticket-buy-container">
-            <NuxtLink to="/tickets" style="text-decoration: none">
+            <NuxtLink :to="localePath('/tickets')" style="text-decoration: none">
               <button class="ticket-buy-button">
-                kupi ulaznice
+                {{ $t('common.buyTickets') }}
               </button>
             </NuxtLink>
           </div>
@@ -217,9 +221,15 @@ onMounted(async () => {
   margin: 0;
 }
 
-.burger-icon {
+.header-right {
   position: absolute;
   right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.burger-icon {
   cursor: pointer;
   width: 2.5rem;
   border-radius: 0;

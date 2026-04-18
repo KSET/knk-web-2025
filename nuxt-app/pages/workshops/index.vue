@@ -25,6 +25,8 @@ const uniqueLocations = computed(() => [
 const groupedByLocation = (location: string) =>
   (workshops.value ?? []).filter((w) => w.location === location)
 
+const { locale } = useI18n()
+
 const displayLocation = (location: string) =>
   location === 'vanjska' ? 'vanjske' : location
 
@@ -32,10 +34,15 @@ const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
 
 const translations = Object.fromEntries(
-  translationsRaw.value?.map((entry) => [entry.key, entry.text]) || [],
+  translationsRaw.value?.map((entry) => [entry.key, { hr: entry.text, en: entry.textEn }]) || [],
 )
 
-const workshopsFormLink = translations['workshopsFormLink']
+const workshopsFormLink = translations['workshopsFormLink']?.hr
+
+const workshopsHeaderBlocks = computed(() => {
+  const t = translations?.workshopsHeaderText
+  return (locale.value === 'en' && t?.en) ? t.en : t?.hr
+})
 const getPlainTextLink = (blocks: any[]): string | undefined => {
   if (!Array.isArray(blocks)) return undefined
 
@@ -68,11 +75,11 @@ onMounted(() => {
 
   <div class="workshops-wrapper">
     <div class="page-container">
-      <h1 style="color: white">radionice</h1>
+      <h1 style="color: white">{{ $t('workshops.title') }}</h1>
 
       <p class="wall-text">
         <BlockContent
-          :blocks="translations?.workshopsHeaderText"
+          :blocks="workshopsHeaderBlocks"
           class="wall-text"
         />
       </p>
@@ -110,7 +117,7 @@ onMounted(() => {
           rel="noopener noreferrer"
           class="title-button"
         >
-          prijavi se
+          {{ $t('common.signUp') }}
           <img
             src="/assets/icons/arrow-right.svg"
             alt="arrow-right"

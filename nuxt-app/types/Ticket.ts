@@ -6,6 +6,7 @@ export interface Ticket {
   _type: 'ticket'
   _createdAt: string
   name: string
+  nameEn?: string
   price: number
   backgroundColor: string
   ctaColor: string
