@@ -12,7 +12,7 @@ const switchLocalePath = useSwitchLocalePath()
       class="lang-link"
       :class="{ active: locale === loc.code }"
     >
-      {{ loc.code === 'en' ? 'ENG' : loc.code.toUpperCase() }}
+      {{ loc.code.toUpperCase() }}
     </NuxtLink>
   </div>
 </template>
