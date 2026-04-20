@@ -1,11 +1,11 @@
 {
   "nav": {
-    "home": "Naslovnica",
-    "tickets": "Ulaznice",
-    "festival": "Festival",
-    "lineup": "Izvođači",
-    "camping": "Kampiranje",
-    "gallery": "Galerija"
+    "home": "naslovnica",
+    "tickets": "ulaznice",
+    "festival": "festival",
+    "lineup": "izvođači",
+    "camping": "kampiranje",
+    "gallery": "galerija"
   },
   "common": {
     "buyTickets": "kupi ulaznice",

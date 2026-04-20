@@ -10,8 +10,17 @@ const props = defineProps<{
 }>()
 
 import { ref } from 'vue'
+const { locale } = useI18n()
 
 const showDialog = ref(false)
+
+const description = computed(() =>
+  locale.value === 'en' && props.artist.descriptionEn ? props.artist.descriptionEn : props.artist.description
+)
+
+const bio = computed(() =>
+  locale.value === 'en' && props.artist.bioEn ? props.artist.bioEn : props.artist.bio
+)
 
 const toggleShowDialog = (): void => {
   showDialog.value = !showDialog.value
@@ -34,7 +43,7 @@ const toggleShowDialog = (): void => {
         <p class="artist-name">{{ artist.name }}</p>
         <hr class="artist-divider" />
       </div>
-      <p class="artist-description">{{ artist.description }}</p>
+      <p class="artist-description">{{ description }}</p>
 
       <div class="artist-button" @click="toggleShowDialog">
         {{ $t('common.learnMore') }}
@@ -64,7 +73,7 @@ const toggleShowDialog = (): void => {
         />
         <img :src="okvirs[(index ?? 0) % 3]" alt="" class="okvir-overlay dialog-okvir" />
       </div>
-      <p v-if="artist.bio">{{ artist.bio }}</p>
+      <p v-if="bio">{{ bio }}</p>
       <p v-else>Nema dodatnih informacija.</p>
     </template>
   </Dialog>
