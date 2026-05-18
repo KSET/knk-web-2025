@@ -62,7 +62,7 @@ onMounted(async () => {
             />
           </div>
 
-          <p class="coming-soon-text">{{ $t('common.comingSoon') }}</p>
+          <!-- <p class="coming-soon-text">{{ $t('common.comingSoon') }}</p> -->
 
           <div class="ticket-buy-container">
             <NuxtLink :to="localePath('/tickets')" style="text-decoration: none">

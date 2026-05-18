@@ -98,7 +98,7 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
 
       <HomeArtistsContainer :artists="artistsStore.all" />
 
-      <p class="coming-soon-text">{{ $t('common.comingSoon') }}</p>
+      <!-- <p class="coming-soon-text">{{ $t('common.comingSoon') }}</p> -->
 
       <!-- <Tabs value="0">
         <TabList style="flex-wrap: wrap">
