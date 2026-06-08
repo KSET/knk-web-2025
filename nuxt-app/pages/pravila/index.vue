@@ -3,6 +3,9 @@ import { ref } from 'vue'
 import Footer from '~/components/Footer.vue'
 
 const visibleRight = ref(false)
+const toggleVisibleRight = (): void => {
+  visibleRight.value = !visibleRight.value
+}
 
 import type { Translation } from '~/types/Translation'
 
@@ -31,6 +34,19 @@ useHead({
   <StickyHeader v-model:drawer-visible="visibleRight" />
   <Marquee backgroundColor="var(--knk-blue)" />
 
+  <div class="page-header">
+    <p class="page-title">{{ $t('footer.rules') }}</p>
+    <div class="header-right">
+      <LanguageSwitcher />
+      <img
+        src="/assets/icons/burger.svg?v=2"
+        alt="burger"
+        @click="toggleVisibleRight"
+        class="burger-icon"
+      />
+    </div>
+  </div>
+
   <div class="page-wrapper">
     <img src="/assets/icons/oblak-1.svg" alt="oblak" class="oblak oblak-1" />
     <img src="/assets/icons/oblak-2.svg" alt="oblak" class="oblak oblak-2" />
@@ -52,6 +68,59 @@ useHead({
 </template>
 
 <style scoped>
+.page-header {
+  background-color: #f5c518;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 1.5rem 1rem;
+}
+
+.page-title {
+  font-family: 'Rokkitt', serif;
+  font-size: 5rem;
+  font-weight: 500;
+  color: #efe5dd;
+  text-shadow: 3px 4px 0 var(--knk-orange);
+  margin: 0;
+}
+
+.header-right {
+  position: absolute;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.burger-icon {
+  cursor: pointer;
+  width: 2.5rem;
+  border-radius: 0;
+}
+
+@media (max-width: 900px) {
+  .page-title {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 2.5rem;
+    text-shadow: 2px 3px 0 var(--knk-orange);
+  }
+
+  .burger-icon {
+    width: 1.8rem;
+  }
+
+  .page-header {
+    padding: 1rem 0.75rem;
+  }
+}
+
 .page-container {
   max-width: 50rem;
   width: 100%;

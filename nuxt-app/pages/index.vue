@@ -149,9 +149,10 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
       </div>
 
       <div class="tickets-container">
-        <div
+        <NuxtLink
           v-for="(ticket, index) in tickets"
           :key="ticket._id"
+          :to="localePath('/tickets')"
           class="ticket-card"
           :style="{ backgroundColor: ticket.backgroundColor }"
         >
@@ -164,7 +165,7 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
             <div class="ticket-name" :style="{ color: ticket.backgroundColor }">{{ (locale === 'en' && ticket.nameEn) ? ticket.nameEn : ticket.name }}</div>
             <div class="ticket-price" :style="{ color: ticket.backgroundColor }">{{ ticket.price }}</div>
           </div>
-        </div>
+        </NuxtLink>
       </div>
 
       <div class="ticket-buy-container">
@@ -664,6 +665,14 @@ img {
   border-radius: 20px;
   text-align: center;
   overflow: hidden;
+
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.15s ease;
+}
+
+.ticket-card:hover {
+  transform: scale(1.03);
 }
 
 .ticket-blob {
