@@ -162,7 +162,7 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
           />
           <div class="ticket-content">
             <div class="ticket-name" :style="{ color: ticket.backgroundColor }">{{ (locale === 'en' && ticket.nameEn) ? ticket.nameEn : ticket.name }}</div>
-            <div class="ticket-price" :style="{ color: ticket.backgroundColor }">{{ ticket.price }}€</div>
+            <div class="ticket-price" :style="{ color: ticket.backgroundColor }">{{ ticket.price }}</div>
           </div>
         </div>
       </div>

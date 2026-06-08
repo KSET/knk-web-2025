@@ -7,7 +7,7 @@ export interface Ticket {
   _createdAt: string
   name: string
   nameEn?: string
-  price: number
+  price: string
   backgroundColor: string
   ctaColor: string
 }

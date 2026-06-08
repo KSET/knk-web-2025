@@ -21,8 +21,8 @@ export default defineType({
     defineField({
       name: 'price',
       title: 'Price',
-      type: 'number',
-      validation: (Rule) => Rule.required().min(0),
+      type: 'string',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'backgroundColor',
