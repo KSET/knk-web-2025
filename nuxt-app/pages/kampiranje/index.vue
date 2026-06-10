@@ -55,6 +55,18 @@ const toggleVisibleRight = (): void => {
         </div>
       </div>
     </div>
+
+    <div style="display: flex; width: 100%; padding: 0 1rem; position: relative; z-index: 3;">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3428.8985978225624!2d14.573440076250725!3d45.03548477107016!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDXCsDAyJzA3LjgiTiAxNMKwMzQnMzMuNyJF!5e1!3m2!1sen!2shr!4v1781125364833!5m2!1sen!2shr"
+        width="900"
+        height="450"
+        style="border: 0; flex: 1"
+        allowfullscreen="true"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
   </div>
 
   <Footer />
