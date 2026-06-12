@@ -39,7 +39,10 @@
   },
   "workshops": {
     "title": "radionice",
-    "outdoor": "vanjske"
+    "all": "sve",
+    "school": "u školi",
+    "outdoor": "vanjske",
+    "moreInfo": "Više informacija"
   },
   "festival": {
     "title": "festival",

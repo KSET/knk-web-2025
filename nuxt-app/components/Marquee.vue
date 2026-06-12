@@ -2,11 +2,13 @@
 interface Props {
   backgroundColor?: string
   textShadowColor?: string
+  textColor?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   backgroundColor: 'var(--knk-lightblue)',
   textShadowColor: 'var(--knk-orange)',
+  textColor: '#efe5dd',
 })
 
 const localePath = useLocalePath()
@@ -19,7 +21,7 @@ const localePath = useLocalePath()
         class="marquee-text"
         v-for="i in 20"
         :key="i"
-        :style="{ textShadow: '3px 4px 0 ' + props.textShadowColor }"
+        :style="{ textShadow: '3px 4px 0 ' + props.textShadowColor, color: props.textColor }"
       >knk&nbsp;</span>
     </div>
   </NuxtLink>
@@ -50,7 +52,6 @@ const localePath = useLocalePath()
   font-weight: bold;
   font-size: 6.5rem;
   line-height: 1;
-  color: #efe5dd;
   padding: 0 1rem;
 }
 

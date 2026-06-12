@@ -3,17 +3,50 @@ import { type Workshop } from '~/types/Workshop'
 
 const props = defineProps<{
   workshop: Workshop
-  reverse?: boolean
+  index?: number
 }>()
 
 import { ref } from 'vue'
 import type { Translation } from '~/types/Translation'
+
+const { locale } = useI18n()
+
+// Top and bottom scallop strips cycle independently by card index (1..4).
+const okvirTops = [
+  '/assets/workshops/okvir-top1.svg',
+  '/assets/workshops/okvir-top2.svg',
+  '/assets/workshops/okvir-top3.svg',
+  '/assets/workshops/okvir-top4.svg',
+]
+const okvirBottoms = [
+  '/assets/workshops/okvir-bottom1.svg',
+  '/assets/workshops/okvir-bottom2.svg',
+  '/assets/workshops/okvir-bottom3.svg',
+  '/assets/workshops/okvir-bottom4.svg',
+]
+const okvirTop = computed(() => okvirTops[(props.index ?? 0) % okvirTops.length])
+const okvirBottom = computed(() => okvirBottoms[(props.index ?? 0) % okvirBottoms.length])
 
 const showDialog = ref(false)
 
 const toggleShowDialog = (): void => {
   showDialog.value = !showDialog.value
 }
+
+const name = computed(() =>
+  locale.value === 'en' && props.workshop.nameEn ? props.workshop.nameEn : props.workshop.name,
+)
+
+// The grid card no longer shows a description, so the modal shows whichever
+// description is populated. Prefer the current locale (long, then short),
+// then fall back to the other locale so something always shows if it exists.
+const description = computed(() => {
+  const w = props.workshop
+  const en = [w.descriptionLongEn, w.descriptionShortEn]
+  const hr = [w.descriptionLong, w.descriptionShort]
+  const preferred = locale.value === 'en' ? [...en, ...hr] : [...hr, ...en]
+  return preferred.find((d) => d && d.trim())
+})
 
 const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
@@ -69,56 +102,50 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
 </script>
 
 <template>
-  <div :class="['workshop-card', reverse ? 'reverse' : '']">
+  <div class="workshop-card" @click="toggleShowDialog">
     <img
       v-if="workshop.imageSmall"
-      :src="$urlFor(workshop.imageSmall).width(1200).url()"
+      :src="$urlFor(workshop.imageSmall).width(800).url()"
       alt="workshop image"
-      class="workshop-image desktop"
-      @click="toggleShowDialog"
+      class="workshop-image"
     />
-    <img
-      v-if="workshop.imageLarge"
-      :src="$urlFor(workshop.imageLarge).width(1200).url()"
-      alt="workshop image"
-      class="workshop-image mobile"
-      @click="toggleShowDialog"
-    />
-    <div :class="['workshop-info', !reverse ? 'reverse' : '']">
-      <p class="workshop-name">{{ workshop.name }}</p>
-      <p class="workshop-description">{{ workshop.descriptionShort }}</p>
+    <img :src="okvirTop" alt="" class="okvir-strip okvir-strip-top" />
+    <img :src="okvirBottom" alt="" class="okvir-strip okvir-strip-bottom" />
 
-      <div class="workshop-button" @click="toggleShowDialog">
-        {{ $t('common.learnMore') }}
-        <img
-          src="/assets/icons/arrow-right.svg"
-          alt="arrow-right"
-          class="arrow-icon"
-        />
-      </div>
+    <p class="workshop-name">{{ name }}</p>
+
+    <div class="workshop-action">
+      {{ $t('common.learnMore') }}
+      <img
+        src="/assets/icons/arrow-right.svg"
+        alt="arrow-right"
+        class="arrow-icon"
+      />
     </div>
   </div>
 
   <Dialog
     v-model:visible="showDialog"
     modal
-    :header="workshop.name"
+    :header="name"
     class="workshop-dialog"
     style="max-width: 30rem"
   >
     <template #default>
-      <img
-        v-if="workshop.imageLarge"
-        :src="
-          $urlFor(workshop.imageLarge)
-            .width(1200)
-            .quality(100)
-            .auto('format')
-            .url()
-        "
-        alt="workshop image"
-        class="workshop-dialog-image"
-      />
+      <div class="workshop-dialog-image-wrapper">
+        <img
+          v-if="workshop.imageLarge"
+          :src="
+            $urlFor(workshop.imageLarge)
+              .width(1200)
+              .quality(100)
+              .auto('format')
+              .url()
+          "
+          alt="workshop image"
+          class="workshop-dialog-image"
+        />
+      </div>
       <p v-if="workshop.timeline?.start" style="opacity: 0.7">
         Datum i vrijeme:
         {{ formatFullTimeline(workshop.timeline.start, workshop.timeline.end) }}
@@ -131,7 +158,7 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
         Lokacija: {{ workshop.location }}
       </p>
 
-      <p v-if="workshop.descriptionLong">{{ workshop.descriptionLong }}</p>
+      <p v-if="description">{{ description }}</p>
       <p v-else>Nema dodatnih informacija.</p>
     </template>
     <template #footer>
@@ -142,7 +169,7 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
         rel="noopener noreferrer"
         class="title-button"
       >
-        Prijavi se
+        {{ $t('common.signUp') }}
         <img
           src="/assets/icons/arrow-right.svg"
           alt="arrow-right"
@@ -164,8 +191,11 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
 }
 
 .workshop-dialog .p-dialog-header {
-  padding-top: 12rem;
+  /* clears the absolutely-positioned image wrapper below (keep in sync with
+     .workshop-dialog-image-wrapper height) */
+  padding-top: 16rem;
   padding-bottom: 0rem;
+  font-family: 'Rockwell', serif;
 }
 
 .workshop-dialog {
@@ -178,10 +208,20 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
   flex-direction: column;
   gap: 0rem;
 
-  background-color: rgba(212, 101, 88, 0.7);
-  border-radius: 12px;
+  background-color: var(--knk-orange);
+  border-radius: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(6px);
+}
+
+/* align the dialog body paragraphs with the page typography
+   (page body font is Montserrat, paragraph color #efe5dd) */
+.workshop-dialog .p-dialog-content {
+  font-family: 'Montserrat';
+  color: #efe5dd;
+}
+
+.workshop-dialog .p-dialog-content p {
+  color: #efe5dd;
 }
 </style>
 
@@ -191,79 +231,84 @@ a {
   background-color: transparent;
 }
 
-.desktop {
-  display: block;
-}
-
-.mobile {
-  display: none;
-}
-
 .workshop-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  width: 95%;
-  height: 100%;
-  margin: 1rem auto;
-
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(6px);
-}
-
-.workshop-card.reverse {
-  flex-direction: column-reverse;
+  position: relative;
+  width: 100%;
+  /* match okvir.svg native ratio (484.1 / 690.96) so the scalloped
+     frame edges line up with the image edges */
+  aspect-ratio: 484.1 / 690.96;
+  cursor: pointer;
+  overflow: hidden;
+  /* The strip SVGs round corners with a 51.4px arc over a 484.1-wide viewBox
+     = 10.62% of width (≈ 7.44% of height given the fixed aspect-ratio). Clip
+     the card a hair tighter than the strip so the square image can never peek
+     out past the strip's rounded corner. */
+  border-radius: 11.5% / 8.1%;
 }
 
 .workshop-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 12px;
-  max-width: 100%;
 }
 
-.workshop-info {
-  padding: 2% 3%;
+/* top/bottom scallop strips overlay the image at its top and bottom edges,
+   rendered at their natural width:height ratio (no stretch) */
+.okvir-strip {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.okvir-strip-top {
+  top: 0;
+}
+
+.okvir-strip-bottom {
+  bottom: 0;
+}
+
+/* title sits over the okvir's top orange band — center it in the band's
+   solid flat region (≈ top 17% of the frame, before the wave dips) */
+.workshop-name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 17%;
+  padding: 0 1.1rem;
 
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-content: stretch;
-  align-items: flex-start;
+  align-items: center;
 
-  gap: 0.5rem;
-  height: 100%;
-  width: 100%;
-}
-
-.workshop-info.reverse {
-  text-align: right;
-  align-items: flex-end;
-}
-
-.workshop-name {
-  font-size: 1.5rem;
+  font-family: 'Rockwell', serif;
+  font-size: 1.6rem;
   font-weight: bold;
+  color: #efe5dd;
   margin: 0;
+  line-height: 1.05;
+  text-align: left;
 }
 
-.workshop-description {
-  font-size: 1rem;
-  color: lightgray;
-  margin: 0;
-}
+/* action sits over the okvir's bottom orange band — center it in the band's
+   solid flat region (≈ bottom 17% of the frame, below the wave) */
+.workshop-action {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 17%;
+  padding: 0 1.1rem;
 
-.workshop-button {
-  font-family: 'Montserrat';
-  background-color: #f5c26b;
-  color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  text-align: center;
-  cursor: pointer;
-  width: fit-content;
+  font-family: 'Rockwell', serif;
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #efe5dd;
+  text-align: left;
 
   display: flex;
   align-items: center;
@@ -275,24 +320,24 @@ a {
   margin-left: 0.5rem;
 }
 
-.workshop-dialog-image {
-  max-height: 12rem;
-  width: 100%;
-  object-fit: cover;
-  max-width: 100%;
-
+.workshop-dialog-image-wrapper {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  /* keep the dialog header's padding-top in sync with this height */
+  height: 15rem;
+}
 
-  border-radius: 12px;
+.workshop-dialog-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
 }
 
 .title-button {
   font-family: 'Montserrat';
-  /* background-color: #dd7d91; */
   color: #fff;
   padding: 0 0 0.2rem 0;
   border-radius: 0;
@@ -311,54 +356,18 @@ a {
 }
 
 @media (max-width: 900px) {
-  .desktop {
-    display: none;
-  }
-
-  .mobile {
-    display: block;
-  }
-
-  .workshop-card,
-  .workshop-card.reverse {
-    display: flex;
-    flex-direction: column;
-    height: 20rem;
-    height: fit-content;
-  }
-
-  .workshop-image {
-    width: 100%;
-    object-fit: cover;
-    max-width: 100%;
-  }
-
-  .workshop-info.reverse,
-  .workshop-info {
-    text-align: left;
-    align-items: flex-start;
-
-    height: fit-content;
-    padding: 2% 2%;
-  }
-
   .workshop-name {
     font-size: 1.2rem;
-    font-weight: bold;
-    margin: 0;
   }
 
-  .workshop-description {
-    font-size: 0.8rem;
+  .workshop-action {
+    font-size: 1rem;
   }
+}
 
-  .workshop-button {
-    font-size: 0.8rem;
-
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-
-    align-self: end;
+@media (max-width: 480px) {
+  .workshop-name {
+    font-size: 1.1rem;
   }
 }
 </style>

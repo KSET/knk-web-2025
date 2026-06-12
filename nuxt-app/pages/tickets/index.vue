@@ -71,7 +71,7 @@ onMounted(() => {
     </div>
   </div>
 
-  <Footer />
+  <Footer backgroundColor="var(--knk-orange)" />
   <Marquee backgroundColor="var(--knk-blue)" />
   <NavDrawer v-model="visibleRight" />
 </template>

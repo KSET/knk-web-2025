@@ -39,7 +39,10 @@
   },
   "workshops": {
     "title": "workshops",
-    "outdoor": "outdoor"
+    "all": "all",
+    "school": "at school",
+    "outdoor": "outdoor",
+    "moreInfo": "More info"
   },
   "festival": {
     "title": "festival",

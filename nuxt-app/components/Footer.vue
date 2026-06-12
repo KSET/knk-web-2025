@@ -3,8 +3,14 @@ import { type Sponsor } from '~/types/Sponsor'
 
 const props = withDefaults(defineProps<{
   decorImage?: string
+  decorSide?: 'left' | 'right'
+  decorRow?: string
+  backgroundColor?: string
 }>(), {
-  decorImage: '/assets/icons/teta.svg'
+  decorImage: '/assets/icons/teta.svg',
+  decorSide: 'right',
+  decorRow: '',
+  backgroundColor: 'var(--knk-blue)'
 })
 
 const localePath = useLocalePath()
@@ -25,7 +31,7 @@ const groupedByBarIndex = computed(() => {
 </script>
 
 <template>
-  <div class="footer-wrapper">
+  <div class="footer-wrapper" :style="{ backgroundColor: props.backgroundColor }">
     <div class="footer-container">
       <div
         v-for="[barIndex, group] in groupedByBarIndex"
@@ -96,9 +102,16 @@ const groupedByBarIndex = computed(() => {
     </div>
 
     <img
+      v-if="props.decorRow"
+      :src="props.decorRow"
+      alt=""
+      class="footer-decor-row"
+    />
+
+    <img
       :src="props.decorImage"
       alt="footer-decor"
-      class="footer-teta"
+      :class="['footer-teta', props.decorSide === 'left' ? 'footer-teta-left' : '']"
     />
   </div>
 </template>
@@ -112,7 +125,6 @@ const groupedByBarIndex = computed(() => {
   align-items: center;
   overflow: hidden;
 
-  background-color: var(--knk-blue);
   padding-top: 2rem;
 }
 
@@ -192,7 +204,25 @@ const groupedByBarIndex = computed(() => {
   z-index: 0;
 }
 
-.footer-wrapper > *:not(.footer-teta) {
+.footer-teta-left {
+  right: auto;
+  left: -8%;
+}
+
+/* decorative dot row (kruzi) running from the lik figure's right edge to the
+   right edge of the footer, sitting near the bottom */
+.footer-decor-row {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 25%;
+  width: 75%;
+  height: auto;
+  pointer-events: none;
+  opacity: 0.8;
+  z-index: 0;
+}
+
+.footer-wrapper > *:not(.footer-teta):not(.footer-decor-row) {
   position: relative;
   z-index: 1;
 }
