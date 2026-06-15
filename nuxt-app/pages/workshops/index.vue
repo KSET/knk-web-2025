@@ -256,7 +256,8 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
 
 .page-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 1rem;
   align-items: center;
   position: relative;
   padding: 1.5rem 1rem;
@@ -271,11 +272,14 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
   margin: 0;
   position: relative;
   z-index: 2;
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .header-right {
-  position: absolute;
-  right: 1.5rem;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -306,13 +310,14 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
 
 .page-container {
   max-width: 50rem;
-  width: 100%;
-  padding: 1rem;
+  width: 90%;
+  margin: 0 auto;
+  padding: 1rem 0;
 }
 
 .filter-row {
-  width: 100%;
-  padding: 0 2rem;
+  width: 90%;
+  margin: 0 auto;
 
   display: flex;
   justify-content: space-between;
@@ -354,8 +359,8 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
 }
 
 .workshops-container {
-  width: 100%;
-  padding: 0 2rem;
+  width: 90%;
+  margin: 0 auto;
 
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -409,10 +414,19 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
   }
 
   .page-header {
-    padding: 1rem 0.75rem;
+    padding: 1rem;
+  }
+
+  .page-title {
+    text-align: left;
+  }
+
+  .page-container {
+    width: calc(100% - 2rem);
   }
 
   .workshops-container {
+    width: calc(100% - 2rem);
     grid-template-columns: 1fr;
   }
 }

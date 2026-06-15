@@ -186,8 +186,9 @@ const galleryTypeLabel = (type: string) => {
 }
 
 .gallery-container {
-  width: 100%;
-  padding: 1rem;
+  width: 90%;
+  margin: 0 auto;
+  padding: 1rem 0;
 }
 
 .gallery-wrapper {
@@ -259,7 +260,8 @@ const galleryTypeLabel = (type: string) => {
 .page-header {
   background-color: var(--knk-lightblue);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 1rem;
   align-items: center;
   position: relative;
   padding: 1.5rem 1rem;
@@ -273,11 +275,14 @@ const galleryTypeLabel = (type: string) => {
   color: #efe5dd;
   text-shadow: 3px 4px 0 var(--knk-orange);
   margin: 0;
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .header-right {
-  position: absolute;
-  right: 1.5rem;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -307,6 +312,7 @@ const galleryTypeLabel = (type: string) => {
   .page-title {
     font-size: 2.5rem;
     text-shadow: 2px 3px 0 var(--knk-orange);
+    text-align: left;
   }
 
   .gallery-title {
@@ -323,7 +329,11 @@ const galleryTypeLabel = (type: string) => {
   }
 
   .page-header {
-    padding: 1rem 0.75rem;
+    padding: 1rem;
+  }
+
+  .gallery-container {
+    width: calc(100% - 2rem);
   }
 }
 </style>

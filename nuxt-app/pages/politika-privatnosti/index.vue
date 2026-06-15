@@ -74,8 +74,9 @@ useHead({
 .page-header {
   background-color: #f5c518;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  gap: 1rem;
   position: relative;
   padding: 1.5rem 1rem;
 }
@@ -87,11 +88,14 @@ useHead({
   color: #efe5dd;
   text-shadow: 3px 4px 0 var(--knk-orange);
   margin: 0;
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .header-right {
-  position: absolute;
-  right: 1.5rem;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -120,14 +124,23 @@ useHead({
   }
 
   .page-header {
-    padding: 1rem 0.75rem;
+    padding: 1rem;
+  }
+
+  .page-title {
+    text-align: left;
+  }
+
+  .page-container {
+    width: calc(100% - 2rem);
   }
 }
 
 .page-container {
   max-width: 50rem;
-  width: 100%;
-  padding: 1rem;
+  width: 90%;
+  margin: 0 auto;
+  padding: 1rem 0;
 
   color: black;
 }

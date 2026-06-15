@@ -83,7 +83,8 @@ const toggleVisibleRight = (): void => {
 .page-header {
   background-color: var(--knk-blue);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 1rem;
   align-items: center;
   position: relative;
   padding: 1.5rem 1rem;
@@ -96,11 +97,14 @@ const toggleVisibleRight = (): void => {
   color: #efe5dd;
   text-shadow: 3px 4px 0 var(--knk-orange);
   margin: 0;
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .header-right {
-  position: absolute;
-  right: 1.5rem;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -240,7 +244,11 @@ const toggleVisibleRight = (): void => {
   }
 
   .page-header {
-    padding: 1rem 0.75rem;
+    padding: 1rem;
+  }
+
+  .page-title {
+    text-align: left;
   }
 }
 </style>

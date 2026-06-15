@@ -255,6 +255,8 @@ const toggleShowDialog = (): void => {
     flex-direction: column;
     height: 20rem;
     height: fit-content;
+    width: calc(100% - 2rem);
+    margin: 1rem auto;
   }
 
   .artist-image-wrapper {
