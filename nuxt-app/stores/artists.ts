@@ -30,38 +30,43 @@ export const useArtistsStore = defineStore('artists', () => {
 
       all.value = data.value ?? []
 
-      const grouped = new Map<string, Artist[]>()
+      const grouped = new Map<string, { start: string; artists: Artist[] }>()
 
       for (const artist of data.value ?? []) {
-        const start = new Date(artist.timeline!.start)
+        if (!artist.timeline?.start) continue
+
+        const start = new Date(artist.timeline.start)
 
         if (isNaN(start.getTime())) {
-          console.warn('Invalid date:', artist.timeline!.start)
+          console.warn('Invalid date:', artist.timeline.start)
           continue
         }
 
-        const dateKey = start.toISOString().split('T')[0]
+        // Group by local calendar day (matches the Schedule view, which
+        // also reads local date parts). Sanity stores starts in UTC, so a
+        // 22:00Z slot is actually past midnight local in summer (UTC+2).
+        const dateKey = `${start.getFullYear()}-${start.getMonth()}-${start.getDate()}`
 
-        if (!grouped.has(dateKey)) grouped.set(dateKey, [])
-        grouped.get(dateKey)!.push(artist)
+        if (!grouped.has(dateKey)) {
+          grouped.set(dateKey, { start: artist.timeline.start, artists: [] })
+        }
+        grouped.get(dateKey)!.artists.push(artist)
       }
 
-      console.log('Grouped map:', [...grouped.entries()])
-
-      const sorted = [...grouped.entries()].sort(([a], [b]) =>
-        a.localeCompare(b),
+      const sorted = [...grouped.values()].sort(
+        (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime(),
       )
 
       day1.value = sorted[0]
-        ? { date: sorted[0][0], artists: sorted[0][1] }
+        ? { date: sorted[0].start, artists: sorted[0].artists }
         : { date: '', artists: [] }
 
       day2.value = sorted[1]
-        ? { date: sorted[1][0], artists: sorted[1][1] }
+        ? { date: sorted[1].start, artists: sorted[1].artists }
         : { date: '', artists: [] }
 
       day3.value = sorted[2]
-        ? { date: sorted[2][0], artists: sorted[2][1] }
+        ? { date: sorted[2].start, artists: sorted[2].artists }
         : { date: '', artists: [] }
     } catch (err: any) {
       error.value = err

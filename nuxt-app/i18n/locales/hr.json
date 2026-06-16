@@ -37,6 +37,9 @@
     "workshops": "Radionice",
     "camp": "Kamp"
   },
+  "lineup": {
+    "all": "Svi"
+  },
   "workshops": {
     "title": "radionice",
     "all": "sve",

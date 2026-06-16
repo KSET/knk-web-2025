@@ -7,6 +7,7 @@ import { useArtistsStore } from '../../stores/artists'
 
 const localePath = useLocalePath()
 const artistsStore = useArtistsStore()
+const { formatDayLabel } = useDayLabel()
 
 const visibleRight = ref(false)
 const toggleVisibleRight = (): void => {
@@ -15,6 +16,28 @@ const toggleVisibleRight = (): void => {
 
 onMounted(async () => {
   await artistsStore.fetchArtists()
+})
+
+const selectedDay = ref('all')
+
+// Day filter pills: an "all" pill plus one per non-empty day group.
+const dayPills = computed(() => {
+  const pills = [{ key: 'all', label: '' as string }]
+  ;[artistsStore.day1, artistsStore.day2, artistsStore.day3].forEach(
+    (day, i) => {
+      if (day.artists.length) {
+        pills.push({ key: `day${i + 1}`, label: formatDayLabel(day.date, i + 1) })
+      }
+    },
+  )
+  return pills
+})
+
+const visibleArtists = computed(() => {
+  if (selectedDay.value === 'day1') return artistsStore.day1.artists
+  if (selectedDay.value === 'day2') return artistsStore.day2.artists
+  if (selectedDay.value === 'day3') return artistsStore.day3.artists
+  return artistsStore.all
 })
 </script>
 
@@ -36,77 +59,35 @@ onMounted(async () => {
   </div>
 
   <div class="artists-wrapper">
-    <!-- <Tabs value="0">
-      <TabList style="flex-wrap: wrap; margin: auto 1rem">
-        <Tab value="0" class="artist-tab">Svi</Tab>
-        <Tab value="1" class="artist-tab"
-          >Dan 1 – {{ formatShowDate(artistsStore.day1.date) }}</Tab
-        >
-        <Tab value="2" class="artist-tab"
-          >Dan 2 – {{ formatShowDate(artistsStore.day2.date) }}</Tab
-        >
-        <Tab value="3" class="artist-tab"
-          >Dan 3 – {{ formatShowDate(artistsStore.day3.date) }}</Tab
-        >
-      </TabList>
+    <div v-if="dayPills.length > 1" class="filter-pills">
+      <button
+        v-for="pill in dayPills"
+        :key="pill.key"
+        type="button"
+        :class="['filter-pill', selectedDay === pill.key ? 'active' : '']"
+        @click="selectedDay = pill.key"
+      >
+        {{ pill.key === 'all' ? $t('lineup.all') : pill.label }}
+      </button>
+    </div>
 
-      <TabPanels>
-        <TabPanel value="0"> -->
-          <div class="artists-container">
-            <ArtistCard
-              v-for="(artist, index) in artistsStore.all"
-              :key="artist._id"
-              :artist="artist"
-              :reverse="index % 2 !== 0"
-              :index="index"
-            />
-          </div>
+    <div class="artists-container">
+      <ArtistCard
+        v-for="(artist, index) in visibleArtists"
+        :key="`${selectedDay}-${artist._id}`"
+        :artist="artist"
+        :reverse="index % 2 !== 0"
+        :index="index"
+      />
+    </div>
 
-          <!-- <p class="coming-soon-text">{{ $t('common.comingSoon') }}</p> -->
-
-          <div class="ticket-buy-container">
-            <NuxtLink :to="localePath('/tickets')" style="text-decoration: none">
-              <button class="ticket-buy-button">
-                {{ $t('common.buyTickets') }}
-              </button>
-            </NuxtLink>
-          </div>
-        <!-- </TabPanel>
-
-        <TabPanel value="1">
-          <div class="artists-container">
-            <ArtistCard
-              v-for="(artist, index) in artistsStore.day1.artists"
-              :key="artist._id"
-              :artist="artist"
-              :reverse="index % 2 !== 0"
-            />
-          </div>
-        </TabPanel>
-
-        <TabPanel value="2">
-          <div class="artists-container">
-            <ArtistCard
-              v-for="(artist, index) in artistsStore.day2.artists"
-              :key="artist._id"
-              :artist="artist"
-              :reverse="index % 2 !== 0"
-            />
-          </div>
-        </TabPanel>
-
-        <TabPanel value="3">
-          <div class="artists-container">
-            <ArtistCard
-              v-for="(artist, index) in artistsStore.day3.artists"
-              :key="artist._id"
-              :artist="artist"
-              :reverse="index % 2 !== 0"
-            />
-          </div>
-        </TabPanel>
-      </TabPanels>
-    </Tabs> -->
+    <div class="ticket-buy-container">
+      <NuxtLink :to="localePath('/tickets')" style="text-decoration: none">
+        <button class="ticket-buy-button">
+          {{ $t('common.buyTickets') }}
+        </button>
+      </NuxtLink>
+    </div>
   </div>
 
   <Footer decor-image="/assets/icons/knjiga.svg" />
@@ -116,11 +97,44 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.artist-tab {
-  border-radius: 12px;
-  padding: 0.25rem 1rem;
-  height: fit-content;
-  margin: 0.25rem;
+.filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  width: 90%;
+  margin: 0 auto 0.5rem;
+}
+
+@media (max-width: 650px) {
+  .filter-pills {
+    width: calc(100% - 2rem);
+  }
+}
+
+.filter-pill {
+  font-family: 'Rockwell', serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+
+  color: var(--knk-blue);
+  background-color: white;
+  border: 2.5px solid white;
+  border-radius: 8px;
+  padding: 0.2rem 0.75rem;
+
+  cursor: pointer;
+  text-transform: lowercase;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.filter-pill.active {
+  background-color: var(--knk-blue);
+  border-color: white;
+  color: white;
+}
+
+.filter-pill:hover:not(.active) {
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .artists-wrapper {

@@ -260,12 +260,13 @@ const toggleShowDialog = (): void => {
   }
 
   .artist-image-wrapper {
+    width: 100%;
     max-width: 100%;
-    max-height: 12rem;
+    height: 12rem;
   }
 
   .artist-image {
-    max-height: 12rem;
+    height: 12rem;
     width: 100%;
     object-fit: cover;
     max-width: 100%;

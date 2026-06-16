@@ -14,9 +14,32 @@ import Schedule from '~/components/Schedule.vue'
 const localePath = useLocalePath()
 const { locale } = useI18n()
 const artistsStore = useArtistsStore()
+const { formatDayLabel } = useDayLabel()
 
 onMounted(async () => {
   await artistsStore.fetchArtists()
+})
+
+const selectedDay = ref('all')
+
+const dayPills = computed(() => {
+  const pills = [{ key: 'all', label: '' as string }]
+  ;[artistsStore.day1, artistsStore.day2, artistsStore.day3].forEach(
+    (day, i) => {
+      if (day.artists.length) {
+        pills.push({ key: `day${i + 1}`, label: formatDayLabel(day.date, i + 1) })
+      }
+    },
+  )
+  return pills
+})
+
+const visibleArtists = computed(() => {
+  if (selectedDay.value === 'all') return artistsStore.all
+  if (selectedDay.value === 'day1') return artistsStore.day1.artists
+  if (selectedDay.value === 'day2') return artistsStore.day2.artists
+  if (selectedDay.value === 'day3') return artistsStore.day3.artists
+  return artistsStore.all
 })
 
 const query2 = groq`*[ _type == "translation"]`
@@ -37,13 +60,6 @@ const visibleRight = ref(false)
 
 const toggleVisibleRight = (): void => {
   visibleRight.value = !visibleRight.value
-}
-
-function formatShowDate(date: string | Date): string {
-  const d = new Date(date)
-  const month = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return `${day}.${month}.`
 }
 
 const queryGallerySections = groq`*[_type == "gallerySection" && year == 2025] | order(_createdAt desc)`
@@ -96,33 +112,19 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
         </NuxtLink>
       </div>
 
-      <HomeArtistsContainer :artists="artistsStore.all" />
+      <div v-if="dayPills.length > 1" class="filter-pills">
+        <button
+          v-for="pill in dayPills"
+          :key="pill.key"
+          type="button"
+          :class="['filter-pill', selectedDay === pill.key ? 'active' : '']"
+          @click="selectedDay = pill.key"
+        >
+          {{ pill.key === 'all' ? $t('lineup.all') : pill.label }}
+        </button>
+      </div>
 
-      <!-- <p class="coming-soon-text">{{ $t('common.comingSoon') }}</p> -->
-
-      <!-- <Tabs value="0">
-        <TabList style="flex-wrap: wrap">
-          <Tab value="0" class="artist-tab">Svi</Tab>
-          <Tab value="1" class="artist-tab">Dan 1 - {{ formatShowDate(artistsStore.day1.date) }}</Tab>
-          <Tab value="2" class="artist-tab">Dan 2 - {{ formatShowDate(artistsStore.day2.date) }}</Tab>
-          <Tab value="3" class="artist-tab">Dan 3 - {{ formatShowDate(artistsStore.day3.date) }}</Tab>
-        </TabList>
-
-        <TabPanels>
-          <TabPanel value="0">
-            <HomeArtistsContainer :artists="artistsStore.all" />
-          </TabPanel>
-          <TabPanel value="1">
-            <HomeArtistsContainer :artists="artistsStore.day1.artists" />
-          </TabPanel>
-          <TabPanel value="2">
-            <HomeArtistsContainer :artists="artistsStore.day2.artists" />
-          </TabPanel>
-          <TabPanel value="3">
-            <HomeArtistsContainer :artists="artistsStore.day3.artists" />
-          </TabPanel>
-        </TabPanels>
-      </Tabs> -->
+      <HomeArtistsContainer :artists="visibleArtists" />
     </div>
 
   </div>
@@ -623,11 +625,38 @@ img {
 }
 
 
-.artist-tab {
-  border-radius: 12px;
-  padding: 0.25rem 1rem;
-  height: fit-content;
-  margin: 0.25rem;
+.filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-right: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.filter-pill {
+  font-family: 'Rockwell', serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+
+  color: var(--knk-blue);
+  background-color: white;
+  border: 2.5px solid white;
+  border-radius: 8px;
+  padding: 0.2rem 0.75rem;
+
+  cursor: pointer;
+  text-transform: lowercase;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.filter-pill.active {
+  background-color: var(--knk-blue);
+  border-color: white;
+  color: white;
+}
+
+.filter-pill:hover:not(.active) {
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .artist-carousel-container {

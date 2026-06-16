@@ -131,6 +131,9 @@ const bio = computed(() =>
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    margin-left: -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .artist-container::-webkit-scrollbar {

@@ -37,6 +37,9 @@
     "workshops": "Workshops",
     "camp": "Camp"
   },
+  "lineup": {
+    "all": "All"
+  },
   "workshops": {
     "title": "workshops",
     "all": "all",
