@@ -60,15 +60,20 @@ const toggleVisibleRight = (): void => {
     </div>
 
     <div style="display: flex; width: 100%; padding: 0 1rem; position: relative; z-index: 3;">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d365.7898541572364!2d14.5753015!3d45.0281636!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476373bfab3c4067%3A0xa899598a56cfc788!2sFran%20Krsto%20Frankopan%20Elementary%20School!5e1!3m2!1sen!2shr!4v1754159994657!5m2!1sen!2shr"
-        width="900"
-        height="450"
-        style="border: 0; flex: 1"
-        allowfullscreen="true"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-      ></iframe>
+      <ClientOnly>
+        <LocationMap
+          :markers="[
+            { label: $t('camping.title'), lat: 45.0354848, lng: 14.576015 },
+            {
+              label: `${$t('festival.title')} - OŠ Fran Krsto Frankopan`,
+              lat: 45.0281636,
+              lng: 14.5753015,
+              url: 'https://www.google.com/maps/place/Fran+Krsto+Frankopan+Elementary+School/@45.0281763,14.5754214,125m/data=!3m1!1e3!4m12!1m5!3m4!2zNDXCsDAxJzQxLjQiTiAxNMKwMzQnMzEuMSJF!8m2!3d45.0281636!4d14.5753015!3m5!1s0x476373bfab3c4067:0xa899598a56cfc788!8m2!3d45.0281819!4d14.5754043!16s%2Fg%2F1q69w5y62',
+            },
+          ]"
+          style="flex: 1"
+        />
+      </ClientOnly>
     </div>
 
   </div>
