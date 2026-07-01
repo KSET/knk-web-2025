@@ -198,7 +198,8 @@ const groupedByBarIndex = computed(() => {
   position: absolute;
   bottom: -6%;
   right: -8%;
-  height: 100%;
+  height: auto;
+  max-height: 18rem;
   pointer-events: none;
   opacity: 0.8;
   z-index: 0;
@@ -209,8 +210,6 @@ const groupedByBarIndex = computed(() => {
   left: -8%;
 }
 
-/* decorative dot row (kruzi) running from the lik figure's right edge to the
-   right edge of the footer, sitting near the bottom */
 .footer-decor-row {
   position: absolute;
   bottom: 1.5rem;

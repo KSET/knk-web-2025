@@ -11,21 +11,8 @@ import type { Translation } from '~/types/Translation'
 
 const { locale } = useI18n()
 
-// Top and bottom scallop strips cycle independently by card index (1..4).
-const okvirTops = [
-  '/assets/workshops/okvir-top1.svg',
-  '/assets/workshops/okvir-top2.svg',
-  '/assets/workshops/okvir-top3.svg',
-  '/assets/workshops/okvir-top4.svg',
-]
-const okvirBottoms = [
-  '/assets/workshops/okvir-bottom1.svg',
-  '/assets/workshops/okvir-bottom2.svg',
-  '/assets/workshops/okvir-bottom3.svg',
-  '/assets/workshops/okvir-bottom4.svg',
-]
-const okvirTop = computed(() => okvirTops[(props.index ?? 0) % okvirTops.length])
-const okvirBottom = computed(() => okvirBottoms[(props.index ?? 0) % okvirBottoms.length])
+const okvirDefault = '/assets/workshops/okvir.svg'
+const okvir = computed(() => props.workshop.okvirUrl ?? okvirDefault)
 
 const showDialog = ref(false)
 
@@ -37,9 +24,6 @@ const name = computed(() =>
   locale.value === 'en' && props.workshop.nameEn ? props.workshop.nameEn : props.workshop.name,
 )
 
-// The grid card no longer shows a description, so the modal shows whichever
-// description is populated. Prefer the current locale (long, then short),
-// then fall back to the other locale so something always shows if it exists.
 const description = computed(() => {
   const w = props.workshop
   const en = [w.descriptionLongEn, w.descriptionShortEn]
@@ -103,14 +87,15 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
 
 <template>
   <div class="workshop-card" @click="toggleShowDialog">
-    <img
-      v-if="workshop.imageSmall"
-      :src="$urlFor(workshop.imageSmall).width(800).url()"
-      alt="workshop image"
-      class="workshop-image"
-    />
-    <img :src="okvirTop" alt="" class="okvir-strip okvir-strip-top" />
-    <img :src="okvirBottom" alt="" class="okvir-strip okvir-strip-bottom" />
+    <div class="workshop-image-wrap">
+      <img
+        v-if="workshop.imageSmall"
+        :src="$urlFor(workshop.imageSmall).width(800).url()"
+        alt="workshop image"
+        class="workshop-image"
+      />
+    </div>
+    <img :src="okvir" alt="" class="okvir-frame" />
 
     <p class="workshop-name">{{ name }}</p>
 
@@ -191,8 +176,6 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
 }
 
 .workshop-dialog .p-dialog-header {
-  /* clears the absolutely-positioned image wrapper below (keep in sync with
-     .workshop-dialog-image-wrapper height) */
   padding-top: 16rem;
   padding-bottom: 0rem;
   font-family: 'Rockwell', serif;
@@ -213,8 +196,6 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* align the dialog body paragraphs with the page typography
-   (page body font is Montserrat, paragraph color #efe5dd) */
 .workshop-dialog .p-dialog-content {
   font-family: 'Montserrat';
   color: #efe5dd;
@@ -234,46 +215,33 @@ a {
 .workshop-card {
   position: relative;
   width: 100%;
-  /* match okvir.svg native ratio (484.1 / 690.96) so the scalloped
-     frame edges line up with the image edges */
-  aspect-ratio: 484.1 / 690.96;
   cursor: pointer;
   overflow: hidden;
-  /* The strip SVGs round corners with a 51.4px arc over a 484.1-wide viewBox
-     = 10.62% of width (≈ 7.44% of height given the fixed aspect-ratio). Clip
-     the card a hair tighter than the strip so the square image can never peek
-     out past the strip's rounded corner. */
   border-radius: 11.5% / 8.1%;
 }
 
+.workshop-image-wrap {
+  position: relative;
+  width: 100%;
+  padding-block: 14%;
+}
+
 .workshop-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.okvir-frame {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-}
-
-/* top/bottom scallop strips overlay the image at its top and bottom edges,
-   rendered at their natural width:height ratio (no stretch) */
-.okvir-strip {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: auto;
+  object-fit: fill;
   pointer-events: none;
 }
 
-.okvir-strip-top {
-  top: 0;
-}
-
-.okvir-strip-bottom {
-  bottom: 0;
-}
-
-/* title sits over the okvir's top orange band — center it in the band's
-   solid flat region (≈ top 17% of the frame, before the wave dips) */
 .workshop-name {
   position: absolute;
   top: 0;
@@ -294,8 +262,6 @@ a {
   text-align: left;
 }
 
-/* action sits over the okvir's bottom orange band — center it in the band's
-   solid flat region (≈ bottom 17% of the frame, below the wave) */
 .workshop-action {
   position: absolute;
   bottom: 0;
@@ -325,7 +291,6 @@ a {
   top: 0;
   left: 0;
   right: 0;
-  /* keep the dialog header's padding-top in sync with this height */
   height: 15rem;
 }
 

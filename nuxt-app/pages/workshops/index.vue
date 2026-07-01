@@ -11,7 +11,10 @@ const toggleVisibleRight = (): void => {
 }
 
 const query = groq`*[
-  _type == "workshop" && (!defined(location) || lower(location) != "kamp")] | order(orderRank asc)`
+  _type == "workshop" && (!defined(location) || lower(location) != "kamp")] | order(orderRank asc){
+    ...,
+    "okvirUrl": okvir.asset->url
+  }`
 const { data: workshops } = await useSanityQuery<Workshop[]>(query)
 
 const uniqueLocations = computed(() => [
@@ -20,7 +23,6 @@ const uniqueLocations = computed(() => [
 
 const { locale, t } = useI18n()
 
-// Localized label for a location filter pill.
 const locationLabel = (location: string) => {
   if (location === 'škola') return t('workshops.school')
   if (location === 'vanjska') return t('workshops.outdoor')
@@ -218,12 +220,6 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
   z-index: 0;
 }
 
-/* plukruyi wave ornament running vertically down both page edges.
-   The svg is a horizontal strip of waves, so we lay it out as a wide
-   horizontal strip (its natural orientation, repeated a few times) and
-   rotate the whole strip 90deg so it runs top-to-bottom along the edge. */
-/* plukruyi wave ornament: two full svg copies at each edge, rotated 180deg,
-   placed at irregular vertical offsets for an organic, scattered feel */
 .edge-decor {
   position: absolute;
   width: 4rem;
@@ -393,13 +389,21 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
   margin-left: 0.5rem;
 }
 
+@media (max-width: 1400px) {
+  .workshops-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1000px) {
+  .workshops-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 900px) {
   .page-title {
     font-size: 3.5rem;
-  }
-
-  .workshops-container {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -427,6 +431,11 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
 
   .workshops-container {
     width: calc(100% - 2rem);
+  }
+}
+
+@media (max-width: 530px) {
+  .workshops-container {
     grid-template-columns: 1fr;
   }
 }

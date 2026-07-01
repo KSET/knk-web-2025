@@ -13,6 +13,14 @@ export interface Workshop {
   location: 'škola' | 'kamp' | 'vanjska'
   imageLarge?: ImageAsset
   imageSmall?: ImageAsset
+  okvir?: {
+    _type: 'file'
+    asset: {
+      _ref: string
+      _type: 'reference'
+    }
+  }
+  okvirUrl?: string
   descriptionShort?: string
   descriptionShortEn?: string
   descriptionLong?: string

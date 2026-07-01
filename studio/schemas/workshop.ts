@@ -63,6 +63,13 @@ export default defineType({
       type: 'image',
       options: {hotspot: true},
     }),
+    defineField({
+      name: 'okvir',
+      title: 'Okvir (Frame SVG)',
+      description: 'Custom SVG frame overlaid on the card image for this workshop.',
+      type: 'file',
+      options: {accept: 'image/svg+xml'},
+    }),
     defineField({name: 'descriptionShort', title: 'Short Description (HR)', type: 'text', rows: 3}),
     defineField({name: 'descriptionShortEn', title: 'Short Description (EN)', type: 'text', rows: 3}),
     defineField({name: 'descriptionLong', title: 'Long Description (HR)', type: 'text', rows: 8}),
