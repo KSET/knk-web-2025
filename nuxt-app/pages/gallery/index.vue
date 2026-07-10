@@ -116,14 +116,16 @@ const galleryTypeLabel = (type: string) => {
         >
           <template #item="slotProps">
             <div class="image-wrapper">
-              <img
-                :src="slotProps.item.itemImageSrc"
-                :alt="slotProps.item.alt"
-                class="galleria-image"
-              />
-              <span v-if="slotProps.item.author" class="galleria-caption">
-                {{ slotProps.item.author }} // {{ $t('gallery.photoSection') }}
-              </span>
+              <figure class="image-figure">
+                <img
+                  :src="slotProps.item.itemImageSrc"
+                  :alt="slotProps.item.alt"
+                  class="galleria-image"
+                />
+                <figcaption v-if="slotProps.item.author" class="galleria-caption">
+                  {{ slotProps.item.author }} // {{ $t('gallery.photoSection') }}
+                </figcaption>
+              </figure>
             </div>
           </template>
           <template #thumbnail="slotProps">
@@ -175,9 +177,21 @@ const galleryTypeLabel = (type: string) => {
   border-radius: 8px;
 }
 
+.image-figure {
+  margin: 0;
+  min-height: 0;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: fit-content;
+}
+
 .galleria-caption {
-  align-self: flex-end;
+  flex-shrink: 0;
   margin-top: 0.5rem;
+  text-align: right;
   font-family: 'Rockwell', serif;
   font-size: 1.1rem;
   color: #efe5dd;
@@ -185,8 +199,10 @@ const galleryTypeLabel = (type: string) => {
 
 .galleria-image {
   max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  max-height: calc(90vh - 2rem);
+  min-height: 0;
+  width: auto;
+  height: auto;
   border-radius: 8px;
 }
 </style>
