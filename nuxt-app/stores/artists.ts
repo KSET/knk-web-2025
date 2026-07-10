@@ -42,9 +42,6 @@ export const useArtistsStore = defineStore('artists', () => {
           continue
         }
 
-        // Group by local calendar day (matches the Schedule view, which
-        // also reads local date parts). Sanity stores starts in UTC, so a
-        // 22:00Z slot is actually past midnight local in summer (UTC+2).
         const dateKey = `${start.getFullYear()}-${start.getMonth()}-${start.getDate()}`
 
         if (!grouped.has(dateKey)) {

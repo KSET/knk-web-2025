@@ -40,9 +40,10 @@ const bio = computed(() =>
       <div class="artist-image-wrapper">
         <img
           v-if="artist.image"
-          :src="$urlFor(artist.image).url()"
+          :src="$urlFor(artist.image).width(800).auto('format').url()"
           alt="artist image"
           class="artist-image"
+          loading="eager"
           draggable="false"
         />
         <img :src="okvirs[index % 3]" alt="" class="okvir-overlay" draggable="false" />
@@ -152,7 +153,17 @@ const bio = computed(() =>
 
 @media (min-width: 769px) {
   .artist-image-wrapper {
-    height: clamp(12rem, 20vw, 18rem);
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .artist-image-wrapper {
+    width: 80vw;
+    max-width: 26rem;
+    aspect-ratio: 16 / 9;
+    height: auto;
   }
 }
 
@@ -161,13 +172,6 @@ const bio = computed(() =>
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-@media (max-width: 768px) {
-  .artist-image {
-    max-height: 20rem;
-    width: auto;
-  }
 }
 
 .okvir-overlay {

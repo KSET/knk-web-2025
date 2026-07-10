@@ -4,10 +4,10 @@ import { type Workshop } from '~/types/Workshop'
 const props = defineProps<{
   workshop: Workshop
   index?: number
+  formLink?: string
 }>()
 
 import { ref } from 'vue'
-import type { Translation } from '~/types/Translation'
 
 const { locale } = useI18n()
 
@@ -31,26 +31,6 @@ const description = computed(() => {
   const preferred = locale.value === 'en' ? [...en, ...hr] : [...hr, ...en]
   return preferred.find((d) => d && d.trim())
 })
-
-const query2 = groq`*[ _type == "translation"]`
-const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
-
-const translations = Object.fromEntries(
-  translationsRaw.value?.map((entry) => [entry.key, entry.text]) || [],
-)
-
-const workshopsFormLink = translations['workshopsFormLink']
-const getPlainTextLink = (blocks: any[]): string | undefined => {
-  if (!Array.isArray(blocks)) return undefined
-
-  const firstBlock = blocks[0]
-  const firstSpan = firstBlock?.children?.[0]
-
-  const text = firstSpan?.text || ''
-  const isLink = text.startsWith('http://') || text.startsWith('https://')
-
-  return isLink ? text : undefined
-}
 
 function formatFullTimeline(start?: string | Date, end?: string | Date) {
   if (!start) return '-'
@@ -81,8 +61,6 @@ function formatFullTimeline(start?: string | Date, end?: string | Date) {
 
   return `${cleanDate} ${startTime} - ${endTime}`
 }
-
-const formLink = computed(() => getPlainTextLink(workshopsFormLink))
 </script>
 
 <template>
@@ -148,8 +126,8 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
     </template>
     <template #footer>
       <a
-        v-if="workshopsFormLink"
-        :href="formLink"
+        v-if="props.formLink"
+        :href="props.formLink"
         target="_blank"
         rel="noopener noreferrer"
         class="title-button"

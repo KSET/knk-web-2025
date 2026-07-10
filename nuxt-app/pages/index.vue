@@ -6,7 +6,7 @@ import { ref } from 'vue'
 import { useArtistsStore } from '../stores/artists'
 
 import Footer from '~/components/Footer.vue'
-import type { Translation } from '~/types/Translation'
+import WorkshopCard from '~/components/WorkshopCard.vue'
 import type { Workshop } from '~/types/Workshop'
 
 import Schedule from '~/components/Schedule.vue'
@@ -42,16 +42,22 @@ const visibleArtists = computed(() => {
   return artistsStore.all
 })
 
-const query2 = groq`*[ _type == "translation"]`
-const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
-
 const query4 = groq`*[
-  _type == "workshop" && (!defined(location) || lower(location) != "kamp")] | order(location asc, orderRank asc)`
+  _type == "workshop" && (!defined(location) || lower(location) != "kamp")] | order(orderRank asc){
+    ...,
+    "okvirUrl": okvir.asset->url
+  }`
 const { data: workshops } = await useSanityQuery<Workshop[]>(query4)
 
-const translations = Object.fromEntries(
-  translationsRaw.value?.map((entry) => [entry.key, entry.text]) || [],
-)
+const workshopFormLink = await useWorkshopFormLink()
+
+const responsiveOptionsGalleryCarousel = [
+  {
+    breakpoint: '1200px',
+    numVisible: 3,
+    numScroll: 1,
+  },
+]
 
 const query3 = groq`*[ _type == "ticket"] | order(orderRank)`
 const { data: tickets } = await useSanityQuery<Ticket[]>(query3)
@@ -76,6 +82,25 @@ const galleryImages =
 
 const galleryRow1 = galleryImages.filter((_, i) => i % 2 === 0)
 const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
+
+const workshopsMediaQuery = '(max-width: 900px)'
+const isMobileWorkshops = ref(
+  import.meta.client ? window.matchMedia(workshopsMediaQuery).matches : false,
+)
+let workshopsMql: MediaQueryList | null = null
+const syncWorkshopsLayout = () => {
+  isMobileWorkshops.value = workshopsMql?.matches ?? false
+}
+
+onMounted(() => {
+  workshopsMql = window.matchMedia(workshopsMediaQuery)
+  syncWorkshopsLayout()
+  workshopsMql.addEventListener('change', syncWorkshopsLayout)
+})
+
+onBeforeUnmount(() => {
+  workshopsMql?.removeEventListener('change', syncWorkshopsLayout)
+})
 </script>
 
 <template>
@@ -203,40 +228,34 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
           </button>
         </NuxtLink>
       </div>
+    </div>
+  </div>
 
+  <div class="prijelaz-hero">
+    <img src="/assets/prijelazi/prijelaz-plaza-more.svg?v=2" alt="prijelaz-plaza-more" />
+  </div>
+
+  <div class="sea-wrapper">
+    <div class="wall-container">
       <div class="title-text-container">
-        <!-- <p class="title-text" style="color: #264f6c">Radionice</p>
+        <p class="title-text" style="color: white">{{ $t('home.workshops') }}</p>
 
-        <NuxtLink to="/workshops" style="text-decoration: none">
-          <span class="title-button-blue" style="color: #264f6c">
-            Pogledaj više
+        <NuxtLink :to="localePath('/workshops')" style="text-decoration: none">
+          <span class="title-button-blue" style="color: white">
+            {{ $t('common.seeMore') }}
             <img
-              src="/assets/icons/arrow-right-blue.svg"
-              alt="arrow-right-blue"
+              src="/assets/icons/arrow-right.svg"
+              alt="arrow-right"
               class="arrow-icon"
-              style="color: #264f6c"
             />
           </span>
-        </NuxtLink> -->
+        </NuxtLink>
       </div>
 
-      <!-- <div class="artist-container">
-        <div v-for="workshop in workshops">
-          <NuxtLink to="/workshops" style="text-decoration: none">
-            <img
-              v-if="workshop.imageSmall"
-              :src="$urlFor(workshop.imageSmall).url()"
-              alt="artist image"
-              class="artist-image"
-            />
-            <p style="color: #264f6c">{{ workshop.name }}</p>
-          </NuxtLink>
-        </div>
-      </div> -->
-
-      <!-- <Carousel
+      <Carousel
+        v-if="!isMobileWorkshops"
         :value="workshops"
-        :numVisible="2"
+        :numVisible="4"
         :numScroll="1"
         :responsiveOptions="responsiveOptionsGalleryCarousel"
         :circular="true"
@@ -246,29 +265,28 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
       >
         <template #item="slotProps">
           <div class="artist-carousel-container">
-            <NuxtLink to="/workshops" style="text-decoration: none">
-              <img
-                v-if="slotProps.data.imageSmall"
-                :src="$urlFor(slotProps.data.imageSmall).url()"
-                alt="artist image"
-                class="gallery-image"
-              />
-              <p style="color: #264f6c">{{ slotProps.data.name }}</p>
-            </NuxtLink>
+            <WorkshopCard :workshop="slotProps.data" :index="slotProps.index" :form-link="workshopFormLink" />
           </div>
         </template>
-</Carousel> -->
+      </Carousel>
+
+      <div v-else class="workshops-scroll">
+        <div
+          v-for="(workshop, index) in workshops"
+          :key="workshop._id"
+          class="workshops-scroll-item"
+        >
+          <WorkshopCard :workshop="workshop" :index="index" :form-link="workshopFormLink" />
+        </div>
+      </div>
     </div>
-
-    <!-- <p class="soon-text">+ još uskoro...</p> -->
-
   </div>
 
   <div class="prijelaz-hero">
-    <img src="/assets/prijelazi/prijelaz-plaza-more.svg?v=2" alt="prijelaz-plaza-more" />
+    <img src="/assets/prijelazi/prvi-dole.svg" alt="prijelaz-galerija" />
   </div>
 
-  <div class="sea-wrapper">
+  <div class="gallery-section gallery-section-seam">
     <div class="gallery-marquee-wrapper">
       <div class="gallery-marquee-track gallery-marquee-left">
         <img v-for="(img, i) in [...galleryRow1, ...galleryRow1]" :key="'r1-' + i" :src="img.image" :alt="img.alt" class="gallery-marquee-image" />
@@ -279,10 +297,6 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
         <img v-for="(img, i) in [...galleryRow2, ...galleryRow2]" :key="'r2-' + i" :src="img.image" :alt="img.alt" class="gallery-marquee-image" />
       </div>
     </div>
-  </div>
-
-  <div class="prijelaz-hero">
-    <img src="/assets/prijelazi/prvi-dole.svg" alt="prijelaz-galerija" />
   </div>
 
   <Footer />
@@ -323,11 +337,16 @@ const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
 
 .workshops-carousel .p-button-icon,
 .workshops-carousel .p-icon {
-  color: #264f6c !important;
+  color: white !important;
+}
+
+.workshops-carousel button:hover .p-button-icon,
+.workshops-carousel button:hover .p-icon {
+  color: var(--knk-blue) !important;
 }
 
 .workshops-carousel .p-carousel-indicator-active .p-carousel-indicator-button {
-  background-color: #264f6c !important;
+  background-color: var(--knk-blue) !important;
 }
 
 .gallery-carousel .p-carousel-indicator-active .p-carousel-indicator-button {
@@ -416,7 +435,7 @@ img {
 }
 
 .title-button-blue:hover {
-  border-bottom: 1px solid #264f6c;
+  border-bottom: 1px solid white;
 }
 
 .arrow-icon {
@@ -665,11 +684,56 @@ img {
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  padding: 0 0.5rem;
+}
+
+.workshops-scroll {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  gap: 1rem;
+  margin-left: -1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.workshops-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.workshops-scroll-item {
+  flex-shrink: 0;
+  width: 60vw;
+  max-width: 18rem;
+}
+
+.workshops-carousel :deep(.workshop-name),
+.workshops-scroll :deep(.workshop-name) {
+  font-size: 1.15rem;
+}
+
+.workshops-carousel :deep(.workshop-action),
+.workshops-scroll :deep(.workshop-action) {
+  font-size: 1rem;
+}
+
+.workshops-carousel :deep(.arrow-icon),
+.workshops-scroll :deep(.arrow-icon) {
+  width: 0.85rem;
+  height: 0.85rem;
 }
 
 .workshops-carousel,
 .artist-carousel {
   display: flex;
+}
+
+.workshops-carousel {
+  padding-right: 1rem;
 }
 
 .tickets-container {
@@ -849,7 +913,7 @@ img {
 /*  --------------- SEA --------------- */
 
 .sea-wrapper {
-  background-color: var(--knk-orange);
+  background-color: var(--knk-yellow);
   height: fit-content;
   width: 100%;
 
@@ -863,6 +927,16 @@ img {
 .sea-container {
   width: 100%;
   padding-left: 1rem;
+}
+
+.gallery-section-seam {
+  margin-top: -2px;
+}
+
+.gallery-section {
+  background-color: var(--knk-blue);
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .gallery-marquee-wrapper {
@@ -954,11 +1028,9 @@ img {
 
 @media (max-width: 900px) {
 
-  .workshops-carousel,
   .artist-carousel {
     display: none;
   }
-
 
   .header-text {
     font-size: 4rem;

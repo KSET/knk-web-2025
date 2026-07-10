@@ -4,6 +4,7 @@
     "tickets": "ulaznice",
     "festival": "festival",
     "lineup": "izvođači",
+    "workshops": "radionice",
     "camping": "kampiranje",
     "gallery": "galerija"
   },
@@ -18,6 +19,7 @@
     "artists": "izvođači",
     "tickets": "ulaznice",
     "camping": "kampiranje",
+    "workshops": "radionice",
     "dates": "14. 8. - 16. 8."
   },
   "schedule": {

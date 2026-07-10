@@ -9,6 +9,7 @@ const close = () => {
 const navItems = [
   { label: 'nav.home', path: '/' },
   { label: 'nav.lineup', path: '/lineup' },
+  { label: 'nav.workshops', path: '/workshops' },
   { label: 'nav.tickets', path: '/tickets' },
   { label: 'nav.festival', path: '/festival' },
   { label: 'nav.camping', path: '/kampiranje' },

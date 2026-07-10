@@ -44,25 +44,12 @@ const translations = Object.fromEntries(
   translationsRaw.value?.map((entry) => [entry.key, { hr: entry.text, en: entry.textEn }]) || [],
 )
 
-const workshopsFormLink = translations['workshopsFormLink']?.hr
-
 const workshopsHeaderBlocks = computed(() => {
   const tr = translations?.workshopsHeaderText
   return (locale.value === 'en' && tr?.en) ? tr.en : tr?.hr
 })
-const getPlainTextLink = (blocks: any[]): string | undefined => {
-  if (!Array.isArray(blocks)) return undefined
 
-  const firstBlock = blocks[0]
-  const firstSpan = firstBlock?.children?.[0]
-
-  const text = firstSpan?.text || ''
-  const isLink = text.startsWith('http://') || text.startsWith('https://')
-
-  return isLink ? text : undefined
-}
-
-const formLink = computed(() => getPlainTextLink(workshopsFormLink))
+const formLink = await useWorkshopFormLink()
 
 // loading pretix script (commented out — keep for future use)
 // import { onMounted } from 'vue'
@@ -149,7 +136,7 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
       </div>
 
       <a
-        v-if="workshopsFormLink"
+        v-if="formLink"
         :href="formLink"
         target="_blank"
         rel="noopener noreferrer"
@@ -170,6 +157,7 @@ const formLink = computed(() => getPlainTextLink(workshopsFormLink))
         :key="workshop._id"
         :workshop="workshop"
         :index="index"
+        :form-link="formLink"
       />
     </div>
   </div>

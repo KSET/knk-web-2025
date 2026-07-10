@@ -4,6 +4,7 @@
     "tickets": "Tickets",
     "festival": "Festival",
     "lineup": "Lineup",
+    "workshops": "Workshops",
     "camping": "Camping",
     "gallery": "Gallery"
   },
@@ -18,6 +19,7 @@
     "artists": "artists",
     "tickets": "tickets",
     "camping": "camping",
+    "workshops": "workshops",
     "dates": "Aug 14 - Aug 16"
   },
   "schedule": {
