@@ -232,7 +232,7 @@ onBeforeUnmount(() => {
   </div>
 
   <div class="prijelaz-hero">
-    <img src="/assets/prijelazi/prijelaz-plaza-more.svg?v=2" alt="prijelaz-plaza-more" />
+    <img src="/assets/prijelazi/prijelaz-plaza-more.svg?v=3" alt="prijelaz-plaza-more" />
   </div>
 
   <div class="sea-wrapper">
@@ -283,7 +283,7 @@ onBeforeUnmount(() => {
   </div>
 
   <div class="prijelaz-hero">
-    <img src="/assets/prijelazi/prvi-dole.svg" alt="prijelaz-galerija" />
+    <img src="/assets/prijelazi/prvi-dole.svg?v=2" alt="prijelaz-galerija" />
   </div>
 
   <div class="gallery-section gallery-section-seam">
