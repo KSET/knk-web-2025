@@ -97,7 +97,7 @@ const toggleVisibleRight = (): void => {
 
 .page-title {
   font-family: 'Rokkitt', serif;
-  font-size: 5rem;
+  font-size: var(--text-display);
   font-weight: 500;
   color: #efe5dd;
   text-shadow: 3px 4px 0 var(--knk-orange);
@@ -142,7 +142,7 @@ const toggleVisibleRight = (): void => {
 
 .info-title {
   font-family: 'Rockwell', serif;
-  font-size: 3rem;
+  font-size: var(--text-heading);
   font-weight: 900;
   color: white;
   text-shadow: 3px 4px 0 var(--knk-orange);
@@ -206,37 +206,17 @@ const toggleVisibleRight = (): void => {
 
 .info-text {
   color: white;
-  font-size: 1.5rem;
+  font-size: var(--text-title);
   line-height: 1.6;
-}
-
-@media (max-width: 900px) {
-  .page-title {
-    font-size: 3.5rem;
-  }
-
-  .info-title {
-    font-size: 2.2rem;
-  }
-
-  .info-text {
-    font-size: 1.2rem;
-  }
 }
 
 @media (max-width: 480px) {
   .page-title {
-    font-size: 2.5rem;
     text-shadow: 2px 3px 0 var(--knk-orange);
   }
 
   .info-title {
-    font-size: 1.8rem;
     padding: 0.2rem 1rem;
-  }
-
-  .info-text {
-    font-size: 1rem;
   }
 
   .info-content {

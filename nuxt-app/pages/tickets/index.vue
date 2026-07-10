@@ -81,6 +81,7 @@ onMounted(() => {
   background-color: white !important;
 }
 
+.pretix-widget-category-description p,
 .pretix-widget-item-description p {
   color: gray !important;
 }
@@ -99,7 +100,7 @@ onMounted(() => {
 
 .page-title {
   font-family: 'Rokkitt', serif;
-  font-size: 5rem;
+  font-size: var(--text-display);
   font-weight: 500;
   color: #efe5dd;
   text-shadow: 3px 4px 0 var(--knk-blue);
@@ -200,15 +201,8 @@ onMounted(() => {
   width: 9rem;
 }
 
-@media (max-width: 900px) {
-  .page-title {
-    font-size: 3.5rem;
-  }
-}
-
 @media (max-width: 480px) {
   .page-title {
-    font-size: 2.5rem;
     text-shadow: 2px 3px 0 var(--knk-blue);
   }
 

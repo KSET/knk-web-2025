@@ -7,14 +7,9 @@ const localePath = useLocalePath()
 const { t } = useI18n()
 
 const checkScroll = () => {
-  const hero = document.querySelector('.header-wrapper')
-  if (!hero) {
-    const halfHero = (window.innerHeight - 104) / 2
-    visible.value = window.scrollY >= halfHero
-    return
-  }
-  const heroBottom = hero.getBoundingClientRect().bottom
-  visible.value = heroBottom <= 0
+  const marquee = document.querySelector('.marquee-wrapper')
+  const marqueeHeight = marquee?.getBoundingClientRect().height ?? 104
+  visible.value = window.scrollY >= marqueeHeight * 2
 }
 
 onMounted(() => {
@@ -76,7 +71,7 @@ onUnmounted(() => {
   color: var(--knk-orange);
   font-family: 'Rokkitt', serif;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: var(--text-title);
   padding: 0.5rem 1.2rem;
   border-radius: 8px;
   text-decoration: none;
@@ -101,7 +96,7 @@ onUnmounted(() => {
 .sticky-title {
   font-family: 'Rockwell', serif;
   font-weight: bold;
-  font-size: 4.5rem;
+  font-size: var(--text-display);
   color: #efe5dd;
   text-shadow: 2px 3px 0 var(--knk-orange);
   text-decoration: none;
@@ -109,7 +104,7 @@ onUnmounted(() => {
 
 .sticky-dates {
   font-family: 'Rockwell', serif;
-  font-size: 1.2rem;
+  font-size: var(--text-body);
   font-weight: bold;
   color: #efe5dd;
 }
@@ -150,16 +145,7 @@ onUnmounted(() => {
   }
 
   .sticky-btn {
-    font-size: 1rem;
     padding: 0.4rem 0.9rem;
-  }
-
-  .sticky-title {
-    font-size: 3.5rem;
-  }
-
-  .sticky-dates {
-    font-size: 0.9rem;
   }
 
   .sticky-burger {
@@ -173,23 +159,23 @@ onUnmounted(() => {
   }
 
   .sticky-btn {
-    font-size: 0.75rem;
+    font-size: calc(var(--text-title) * 0.7);
     padding: 0.3rem 0.6rem;
     gap: 0.3rem;
     border-radius: 6px;
   }
 
-  .sticky-btn-arrow {
-    width: 0.75rem;
-    height: 0.75rem;
-  }
-
   .sticky-title {
-    font-size: 2.2rem;
+    font-size: calc(var(--text-display) * 0.8);
   }
 
   .sticky-dates {
-    font-size: 0.7rem;
+    font-size: calc(var(--text-body) * 0.8);
+  }
+
+  .sticky-btn-arrow {
+    width: 0.75rem;
+    height: 0.75rem;
   }
 
   .sticky-center {
@@ -200,8 +186,8 @@ onUnmounted(() => {
     width: 1.4rem;
   }
 
-  .sticky-lang .lang-link {
-    font-size: 0.7rem;
+  .sticky-lang :deep(.lang-link) {
+    font-size: calc(var(--text-body) * 0.7);
     padding: 0.15rem 0.35rem;
   }
 }

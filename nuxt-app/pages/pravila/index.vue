@@ -25,7 +25,7 @@ const pravilaBlocks = computed(() => {
 
 useHead({
   bodyAttrs: {
-    style: 'background-color: var(--knk-blue);',
+    style: 'background-color: var(--knk-yellow);',
   },
 })
 </script>
@@ -62,14 +62,14 @@ useHead({
     </div>
   </div>
 
-  <Footer />
+  <Footer backgroundColor="var(--knk-yellow)" />
   <Marquee backgroundColor="var(--knk-blue)" />
   <NavDrawer v-model="visibleRight" />
 </template>
 
 <style scoped>
 .page-header {
-  background-color: #f5c518;
+  background-color: var(--knk-yellow);
   display: flex;
   justify-content: space-between;
   gap: 1rem;
@@ -80,7 +80,7 @@ useHead({
 
 .page-title {
   font-family: 'Rokkitt', serif;
-  font-size: 5rem;
+  font-size: var(--text-display);
   font-weight: 500;
   color: #efe5dd;
   text-shadow: 3px 4px 0 var(--knk-orange);
@@ -104,15 +104,8 @@ useHead({
   border-radius: 0;
 }
 
-@media (max-width: 900px) {
-  .page-title {
-    font-size: 3.5rem;
-  }
-}
-
 @media (max-width: 480px) {
   .page-title {
-    font-size: 2.5rem;
     text-shadow: 2px 3px 0 var(--knk-orange);
   }
 
@@ -139,6 +132,8 @@ useHead({
   margin: 0 auto;
   padding: 1rem 0;
 
+  position: relative;
+  z-index: 1;
   color: black;
 }
 
@@ -153,7 +148,7 @@ useHead({
   min-height: 70vh;
   position: relative;
 
-  background-color: #f5c518;
+  background-color: var(--knk-yellow);
   height: fit-content;
   width: 100%;
 
@@ -171,6 +166,7 @@ useHead({
   position: absolute;
   pointer-events: none;
   opacity: 0.8;
+  z-index: 0;
 }
 
 .oblak-1 {

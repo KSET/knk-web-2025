@@ -102,7 +102,7 @@ onBeforeUnmount(() => {
   border-radius: 0;
   font-family: 'Rokkitt', serif;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: var(--text-body);
   padding: 0.15rem 0.6rem;
   box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.25);
   cursor: pointer;

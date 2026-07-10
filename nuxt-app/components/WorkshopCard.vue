@@ -232,7 +232,7 @@ a {
   align-items: center;
 
   font-family: 'Rockwell', serif;
-  font-size: 1.6rem;
+  font-size: var(--text-title);
   font-weight: bold;
   color: #efe5dd;
   margin: 0;
@@ -250,7 +250,7 @@ a {
 
   font-family: 'Rockwell', serif;
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: var(--text-body);
   color: #efe5dd;
   text-align: left;
 
@@ -298,19 +298,4 @@ a {
   border-bottom: 1px solid white;
 }
 
-@media (max-width: 900px) {
-  .workshop-name {
-    font-size: 1.2rem;
-  }
-
-  .workshop-action {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .workshop-name {
-    font-size: 1.1rem;
-  }
-}
 </style>

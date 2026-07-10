@@ -27,7 +27,7 @@ const dayPills = computed(() => {
   ;[artistsStore.day1, artistsStore.day2, artistsStore.day3].forEach(
     (day, i) => {
       if (day.artists.length) {
-        pills.push({ key: `day${i + 1}`, label: formatDayLabel(day.date, i + 1) })
+        pills.push({ key: `day${i + 1}`, label: formatDayLabel(day.date) })
       }
     },
   )
@@ -487,7 +487,7 @@ img {
   position: relative;
   text-shadow: 0.5px 4px 0 #dd7d91;
 
-  font-size: 6rem;
+  font-size: var(--text-display);
   margin: 0;
   padding: 0;
   font-family: 'Bright';
@@ -498,7 +498,7 @@ img {
 
 .year-text {
   font-family: 'LondrinaSolid';
-  font-size: 3.5rem;
+  font-size: var(--text-heading);
 }
 
 .year-icon {
@@ -520,7 +520,7 @@ img {
 .header-date {
   font-family: 'Montserrat';
   color: #efe5dd;
-  font-size: 2rem;
+  font-size: var(--text-subheading);
   text-align: center;
   margin: 0;
   padding: 0 0 0.5rem 0;
@@ -539,7 +539,7 @@ img {
 
 .header-date-text {
   font-family: 'Rockwell', serif;
-  font-size: 4rem;
+  font-size: var(--text-heading);
   font-weight: bold;
   color: #efe5dd;
   text-align: center;
@@ -605,7 +605,7 @@ img {
 
 .soon-text {
   color: #264f6c;
-  font-size: 1.5rem;
+  font-size: var(--text-title);
   font-weight: 600;
   text-align: center;
   margin-top: 1rem;
@@ -619,7 +619,7 @@ img {
 .wall-text {
   background-color: rgba(255, 255, 255, 0.15);
   border-radius: 12px;
-  font-size: 1.25rem;
+  font-size: var(--text-title);
   padding: 1.25rem;
   margin-right: 1rem;
   backdrop-filter: blur(6px);
@@ -631,7 +631,7 @@ img {
 
 .title-text {
   font-family: 'Rokkitt', serif;
-  font-size: 5rem;
+  font-size: var(--text-display);
   font-weight: 900;
   color: white;
   text-shadow: 3px 4px 0 var(--knk-orange);
@@ -645,7 +645,6 @@ img {
   text-shadow: 3px 4px 0 var(--knk-blue);
 }
 
-
 .filter-pills {
   display: flex;
   flex-wrap: wrap;
@@ -657,10 +656,10 @@ img {
 .filter-pill {
   font-family: 'Rockwell', serif;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: var(--text-body);
 
-  color: var(--knk-blue);
-  background-color: white;
+  color: white;
+  background-color: transparent;
   border: 2.5px solid white;
   border-radius: 8px;
   padding: 0.2rem 0.75rem;
@@ -671,13 +670,13 @@ img {
 }
 
 .filter-pill.active {
-  background-color: var(--knk-blue);
+  background-color: white;
   border-color: white;
-  color: white;
+  color: var(--knk-blue);
 }
 
 .filter-pill:hover:not(.active) {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .artist-carousel-container {
@@ -711,16 +710,6 @@ img {
   flex-shrink: 0;
   width: 60vw;
   max-width: 18rem;
-}
-
-.workshops-carousel :deep(.workshop-name),
-.workshops-scroll :deep(.workshop-name) {
-  font-size: 1.15rem;
-}
-
-.workshops-carousel :deep(.workshop-action),
-.workshops-scroll :deep(.workshop-action) {
-  font-size: 1rem;
 }
 
 .workshops-carousel :deep(.arrow-icon),
@@ -795,7 +784,7 @@ img {
 
 .ticket-name {
   font-weight: 900;
-  font-size: 1.8rem;
+  font-size: var(--text-title);
   margin-bottom: 0.25rem;
   min-height: 4.4rem;
   display: flex;
@@ -804,7 +793,7 @@ img {
 }
 
 .ticket-price {
-  font-size: 3rem;
+  font-size: var(--text-heading);
   font-weight: 900;
   margin-bottom: 0.5rem;
 }
@@ -824,7 +813,7 @@ img {
   border-radius: 12px;
   font-family: 'Rokkitt', serif;
   font-weight: bold;
-  font-size: 4rem;
+  font-size: var(--text-heading);
   cursor: pointer;
   text-transform: uppercase;
   line-height: 1;
@@ -903,7 +892,7 @@ img {
   border-radius: 12px;
   font-family: 'Rokkitt', serif;
   font-weight: bold;
-  font-size: 4rem;
+  font-size: var(--text-heading);
   cursor: pointer;
   text-transform: uppercase;
   line-height: 1;
@@ -1023,7 +1012,7 @@ img {
 
 .coming-soon-text {
   font-family: 'Rockwell', serif;
-  font-size: 2rem;
+  font-size: var(--text-subheading);
   font-weight: bold;
   color: white;
   text-align: center;
@@ -1038,43 +1027,16 @@ img {
     display: none;
   }
 
-  .header-text {
-    font-size: 4rem;
-  }
-
-  .year-text {
-    font-size: 2.5rem;
-  }
-
-  .title-text {
-    font-size: 3.5rem;
-  }
-
-  .header-date-text {
-    font-size: 2.5rem;
-  }
-
   .ticket-buy-button {
-    font-size: 2.5rem;
     padding: 10px 28px;
   }
 
   .kamp-buy-button {
-    font-size: 2.5rem;
     padding: 10px 28px;
   }
 
-  .coming-soon-text {
-    font-size: 1.5rem;
-  }
-
   .ticket-name {
-    font-size: 1.4rem;
     min-height: 3.5rem;
-  }
-
-  .ticket-price {
-    font-size: 2.2rem;
   }
 
   .ticket-card {
@@ -1102,12 +1064,7 @@ img {
 
 @media (max-width: 480px) {
   .title-text {
-    font-size: 2.5rem;
     text-shadow: 2px 3px 0 var(--knk-orange);
-  }
-
-  .header-date-text {
-    font-size: 1.4rem;
   }
 
   .header-top-row {
@@ -1121,35 +1078,19 @@ img {
   }
 
   .header-text {
-    font-size: 3rem;
     line-height: 2.5rem;
   }
 
-  .year-text {
-    font-size: 2rem;
-  }
-
   .ticket-buy-button {
-    font-size: 1.8rem;
     padding: 8px 20px;
   }
 
   .kamp-buy-button {
-    font-size: 1.8rem;
     padding: 8px 20px;
   }
 
-  .coming-soon-text {
-    font-size: 1.2rem;
-  }
-
   .ticket-name {
-    font-size: 1.2rem;
     min-height: 3rem;
-  }
-
-  .ticket-price {
-    font-size: 1.8rem;
   }
 
   .ticket-card {
@@ -1179,12 +1120,5 @@ img {
     height: 1.5rem;
   }
 
-  .title-button {
-    font-size: 0.85rem;
-  }
-
-  .wall-text {
-    font-size: 1rem;
-  }
 }
 </style>

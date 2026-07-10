@@ -50,7 +50,7 @@ const localePath = useLocalePath()
 .marquee-text {
   font-family: 'Rockwell', serif;
   font-weight: bold;
-  font-size: 6.5rem;
+  font-size: var(--text-display);
   line-height: 1;
   padding: 0 1rem;
 }
@@ -69,9 +69,6 @@ const localePath = useLocalePath()
     height: 4.5rem;
   }
 
-  .marquee-text {
-    font-size: 4.5rem;
-  }
 }
 
 @media (max-width: 480px) {
@@ -80,7 +77,6 @@ const localePath = useLocalePath()
   }
 
   .marquee-text {
-    font-size: 3rem;
     padding: 0 0.5rem;
   }
 }

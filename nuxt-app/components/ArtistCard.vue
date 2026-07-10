@@ -177,7 +177,7 @@ const toggleShowDialog = (): void => {
 
 .artist-name {
   font-family: 'Rockwell', serif;
-  font-size: 2.5rem;
+  font-size: var(--text-subheading);
   font-weight: bold;
   margin: 0;
   text-align: center;
@@ -197,7 +197,7 @@ const toggleShowDialog = (): void => {
 }
 
 .artist-description {
-  font-size: 1rem;
+  font-size: var(--text-body);
   color: white;
   margin: 0;
 }
@@ -248,7 +248,7 @@ const toggleShowDialog = (): void => {
   border-radius: 0;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 900px) {
   .artist-card,
   .artist-card.reverse {
     display: flex;
@@ -282,17 +282,11 @@ const toggleShowDialog = (): void => {
   }
 
   .artist-name {
-    font-size: 1.2rem;
     font-weight: bold;
     margin: 0;
   }
 
-  .artist-description {
-    font-size: 0.8rem;
-  }
-
   .artist-button {
-    font-size: 0.8rem;
 
     padding: 0.5rem 1rem;
     border-radius: 8px;

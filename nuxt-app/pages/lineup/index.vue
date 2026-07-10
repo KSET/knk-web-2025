@@ -26,7 +26,7 @@ const dayPills = computed(() => {
   ;[artistsStore.day1, artistsStore.day2, artistsStore.day3].forEach(
     (day, i) => {
       if (day.artists.length) {
-        pills.push({ key: `day${i + 1}`, label: formatDayLabel(day.date, i + 1) })
+        pills.push({ key: `day${i + 1}`, label: formatDayLabel(day.date) })
       }
     },
   )
@@ -114,10 +114,10 @@ const visibleArtists = computed(() => {
 .filter-pill {
   font-family: 'Rockwell', serif;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: var(--text-body);
 
-  color: var(--knk-blue);
-  background-color: white;
+  color: white;
+  background-color: transparent;
   border: 2.5px solid white;
   border-radius: 8px;
   padding: 0.2rem 0.75rem;
@@ -128,13 +128,13 @@ const visibleArtists = computed(() => {
 }
 
 .filter-pill.active {
-  background-color: var(--knk-blue);
+  background-color: white;
   border-color: white;
-  color: white;
+  color: var(--knk-blue);
 }
 
 .filter-pill:hover:not(.active) {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .artists-wrapper {
@@ -189,7 +189,7 @@ const visibleArtists = computed(() => {
   border-radius: 12px;
   font-family: 'Rokkitt', serif;
   font-weight: bold;
-  font-size: 4rem;
+  font-size: var(--text-heading);
   cursor: pointer;
   text-transform: uppercase;
   line-height: 1;
@@ -200,7 +200,7 @@ const visibleArtists = computed(() => {
 
 .soon-text {
   color: white;
-  font-size: 1.5rem;
+  font-size: var(--text-title);
   font-weight: 600;
   text-align: center;
   margin-top: 2rem;
@@ -208,7 +208,7 @@ const visibleArtists = computed(() => {
 
 .coming-soon-text {
   font-family: 'Rockwell', serif;
-  font-size: 2rem;
+  font-size: var(--text-subheading);
   font-weight: bold;
   color: white;
   text-align: center;
@@ -229,7 +229,7 @@ const visibleArtists = computed(() => {
 
 .page-title {
   font-family: 'Rokkitt', serif;
-  font-size: 5rem;
+  font-size: var(--text-display);
   font-weight: 500;
   color: #efe5dd;
   text-shadow: 3px 4px 0 var(--knk-orange);
@@ -254,33 +254,20 @@ const visibleArtists = computed(() => {
 }
 
 @media (max-width: 900px) {
-  .page-title {
-    font-size: 3.5rem;
-  }
 
   .ticket-buy-button {
-    font-size: 2.5rem;
     padding: 10px 28px;
   }
 
-  .coming-soon-text {
-    font-size: 1.5rem;
-  }
 }
 
 @media (max-width: 480px) {
   .page-title {
-    font-size: 2.5rem;
     text-shadow: 2px 3px 0 var(--knk-orange);
   }
 
   .ticket-buy-button {
-    font-size: 1.8rem;
     padding: 8px 20px;
-  }
-
-  .coming-soon-text {
-    font-size: 1.2rem;
   }
 
   .burger-icon {

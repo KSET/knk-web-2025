@@ -37,31 +37,15 @@ useHead({
   --space-8: 136px;
   --space-9: 220px;
 
-  --font-size-0: 12px;
-  --font-size-1: 14px;
-  --font-size-2: 16px;
-  --font-size-3: 18px;
-  --font-size-4: 20px;
-  --font-size-5: 24px;
-  --font-size-6: 30px;
-  --font-size-7: 36px;
-  --font-size-8: 48px;
-  --font-size-9: 60px;
-  --font-size-10: 72px;
+  --text-body: 1rem;
+  --text-title: 1.5rem;
+  --text-subheading: 2.5rem;
+  --text-heading: 3.5rem;
+  --text-display: 5rem;
 
-  --line-height-0: 16px;
-  --line-height-1: 20px;
-  --line-height-2: 24px;
-  --line-height-3: 28px;
-  --line-height-4: 28px;
-  --line-height-5: 32px;
-  --line-height-6: 36px;
-  --line-height-7: 40px;
-  --line-height-8: 48px;
-  --line-height-9: 60px;
-  --line-height-10: 72px;
-  --line-height-11: 96px;
-  --line-height-12: 128px;
+  --line-height-0: 1.2;
+  --line-height-1: 1.3;
+  --line-height-2: 1.5;
 
   --white: #fff;
   --black: #101112;
@@ -81,7 +65,7 @@ useHead({
 html,
 body {
   background-color: var(--knk-lightblue);
-  font-family: var(--font-family-sans), var(--font-family-serif), sans-serif;
+  font-family: Montserrat, sans-serif;
   text-size-adjust: 100%;
   margin: 0;
 }
@@ -92,5 +76,30 @@ body {
 
 p {
   color: #efe5dd;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --text-title: 1.25rem;
+    --text-subheading: 1.8rem;
+    --text-heading: 2.5rem;
+    --text-display: 3.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --text-body: 0.9rem;
+    --text-title: 1.1rem;
+    --text-subheading: 1.5rem;
+    --text-heading: 2rem;
+    --text-display: 2.75rem;
+  }
+}
+
+@media (min-width: 2000px) {
+  html {
+    font-size: 125%;
+  }
 }
 </style>

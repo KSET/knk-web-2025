@@ -60,7 +60,7 @@ const groupedByBarIndex = computed(() => {
       </div>
     </div>
 
-    <p>{{ $t('footer.allRightsReserved') }}</p>
+    <p style="color: white">{{ $t('footer.allRightsReserved') }}</p>
     <div class="footer-links">
       <div>
         <a
@@ -166,7 +166,7 @@ const groupedByBarIndex = computed(() => {
 }
 
 .title-text {
-  font-size: 1.5rem;
+  font-size: var(--text-title);
   font-weight: bold;
   text-align: center;
 }

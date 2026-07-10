@@ -33,7 +33,7 @@ const navItems = [
           <NuxtLink
             :to="localePath(item.path)"
             class="hover:underline drawer-text"
-            :style="{ color: $route.path === localePath(item.path) ? 'var(--knk-orange)' : 'white' }"
+            :style="{ color: $route.path === localePath(item.path) ? 'var(--knk-blue)' : 'white' }"
           >{{ $t(item.label) }}</NuxtLink>
         </div>
       </div>
@@ -72,7 +72,7 @@ const navItems = [
   background: none;
   border: none;
   color: white;
-  font-size: 1.5rem;
+  font-size: var(--text-title);
   cursor: pointer;
   padding: 0.25rem 0.5rem;
   line-height: 1;
@@ -107,13 +107,18 @@ const navItems = [
 
 .drawer-text {
   font-family: 'Rockwell', serif;
-  font-size: 1.5rem;
+  font-size: var(--text-title);
   text-align: center;
   margin: 0;
   padding: 0;
   text-decoration: none;
   font-weight: bold;
   text-transform: lowercase;
+  transition: color 0.15s ease;
+}
+
+.drawer-text:hover {
+  color: #587ca2 !important;
 }
 
 .drawer-footer {

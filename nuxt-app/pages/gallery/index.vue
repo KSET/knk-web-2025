@@ -157,7 +157,7 @@ const galleryTypeLabel = (type: string) => {
     </div>
   </div>
 
-  <Footer />
+  <Footer backgroundColor="var(--knk-lightblue)" />
   <Marquee backgroundColor="var(--knk-orange)" textShadowColor="var(--knk-blue)" />
   <NavDrawer v-model="visibleRight" />
 </template>
@@ -193,7 +193,7 @@ const galleryTypeLabel = (type: string) => {
   margin-top: 0.5rem;
   text-align: right;
   font-family: 'Rockwell', serif;
-  font-size: 1.1rem;
+  font-size: var(--text-body);
   color: #efe5dd;
 }
 
@@ -244,7 +244,7 @@ const galleryTypeLabel = (type: string) => {
 
 .year-button {
   font-family: 'Rockwell', serif;
-  font-size: 1.5rem;
+  font-size: var(--text-title);
   font-weight: 700;
   padding: 0.5rem 1.75rem;
   border: 3px solid #efe5dd;
@@ -263,7 +263,7 @@ const galleryTypeLabel = (type: string) => {
 
 .gallery-title {
   font-family: 'Rockwell', serif;
-  font-size: 2.5rem;
+  font-size: var(--text-subheading);
   font-weight: 600;
   color: #efe5dd;
   text-shadow: 2px 3px 0 var(--knk-orange);
@@ -273,6 +273,12 @@ const galleryTypeLabel = (type: string) => {
 .gallery-thumbnails {
   column-count: 2;
   column-gap: 16px;
+}
+
+@media (min-width: 1600px) {
+  .gallery-thumbnails {
+    column-count: 3;
+  }
 }
 
 .thumbnail {
@@ -300,7 +306,7 @@ const galleryTypeLabel = (type: string) => {
 
 .page-title {
   font-family: 'Rokkitt', serif;
-  font-size: 5rem;
+  font-size: var(--text-display);
   font-weight: 500;
   color: #efe5dd;
   text-shadow: 3px 4px 0 var(--knk-orange);
@@ -324,33 +330,17 @@ const galleryTypeLabel = (type: string) => {
   border-radius: 0;
 }
 
-@media (max-width: 900px) {
-  .page-title {
-    font-size: 3.5rem;
-  }
-
-  .gallery-title {
-    font-size: 2rem;
-  }
-}
-
 @media (max-width: 480px) {
   .gallery-thumbnails {
     column-count: 1;
   }
 
   .page-title {
-    font-size: 2.5rem;
     text-shadow: 2px 3px 0 var(--knk-orange);
     text-align: left;
   }
 
-  .gallery-title {
-    font-size: 1.5rem;
-  }
-
   .year-button {
-    font-size: 1.1rem;
     padding: 0.4rem 1.2rem;
   }
 

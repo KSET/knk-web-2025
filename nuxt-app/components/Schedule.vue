@@ -207,8 +207,8 @@ const formatShowDate = (iso) =>
 
 <style scoped>
 .artists-calendar :deep(.fc) {
-  font-size: 18px;
-  --fc-small-font-size: 1rem;
+  font-size: var(--text-body);
+  --fc-small-font-size: var(--text-body);
 }
 
 .legend {

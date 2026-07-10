@@ -249,8 +249,8 @@ const formLink = await useWorkshopFormLink()
 
 .page-title {
   font-family: 'Rokkitt', serif;
-  font-size: 5rem;
-  font-weight: 500;
+  font-size: var(--text-display);
+  font-weight: 900;
   color: #efe5dd;
   text-shadow: 3px 4px 0 var(--knk-orange);
   margin: 0;
@@ -319,7 +319,7 @@ const formLink = await useWorkshopFormLink()
 .filter-pill {
   font-family: 'Rockwell', serif;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: var(--text-body);
 
   color: var(--knk-orange);
   background-color: white;
@@ -389,15 +389,8 @@ const formLink = await useWorkshopFormLink()
   }
 }
 
-@media (max-width: 900px) {
-  .page-title {
-    font-size: 3.5rem;
-  }
-}
-
 @media (max-width: 480px) {
   .page-title {
-    font-size: 2.5rem;
     text-shadow: 2px 3px 0 var(--knk-orange);
   }
 

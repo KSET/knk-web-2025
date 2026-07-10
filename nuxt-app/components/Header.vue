@@ -74,7 +74,7 @@ const toggleVisibleRight = (): void => {
 .header-text {
   position: relative;
   text-shadow: 3px 4px 0 #d46558;
-  font-size: 4rem;
+  font-size: var(--text-heading);
   margin: 0;
   padding: 0;
   font-family: 'Bright';
@@ -86,7 +86,7 @@ const toggleVisibleRight = (): void => {
 
 .year-text {
   font-family: 'LondrinaSolid';
-  font-size: 3rem;
+  font-size: var(--text-heading);
 }
 
 .sunce-icon {
@@ -123,13 +123,6 @@ const toggleVisibleRight = (): void => {
 }
 
 @media (max-width: 900px) {
-  .header-text {
-    font-size: 3rem;
-  }
-
-  .year-text {
-    font-size: 2.5rem;
-  }
 
   .sunce-icon {
     top: -86%;
@@ -148,12 +141,7 @@ const toggleVisibleRight = (): void => {
 
 @media (max-width: 480px) {
   .header-text {
-    font-size: 2.2rem;
     line-height: 2rem;
-  }
-
-  .year-text {
-    font-size: 1.8rem;
   }
 
   .burger-icon {

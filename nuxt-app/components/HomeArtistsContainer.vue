@@ -187,7 +187,7 @@ const bio = computed(() =>
 
 .artist-name {
   font-family: 'Rockwell', serif;
-  font-size: 1.5em;
+  font-size: var(--text-title);
   text-align: center;
   margin-top: 0.25rem;
 }

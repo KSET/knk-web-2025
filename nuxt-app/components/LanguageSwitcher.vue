@@ -27,7 +27,7 @@ const switchLocalePath = useSwitchLocalePath()
 .lang-link {
   font-family: 'Rockwell', serif;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: var(--text-body);
   color: var(--knk-orange);
   text-decoration: none;
   padding: 0.2rem 0.5rem;
@@ -40,7 +40,6 @@ const switchLocalePath = useSwitchLocalePath()
 
 @media (max-width: 480px) {
   .lang-link {
-    font-size: 0.65rem;
     padding: 0.15rem 0.35rem;
     border-width: 2px;
   }
