@@ -599,8 +599,6 @@ img {
   padding-bottom: 2rem;
 }
 
-.prijelaz-zid-plaza {}
-
 .soon-text {
   color: #264f6c;
   font-size: 1.5rem;

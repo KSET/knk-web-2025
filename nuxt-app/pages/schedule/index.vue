@@ -16,14 +16,6 @@ const visibleRight = ref(false)
     <Schedule />
   </div>
 
-  <div class="prijelaz-container">
-    <img
-      src="/assets/prijelazi/prijelaz-more-dm.svg"
-      alt="prijelaz-zid-plaza"
-      style="background-color: #dd7d91"
-    />
-  </div>
-
   <Footer />
   <Marquee />
   <NavDrawer v-model="visibleRight" />
@@ -42,16 +34,5 @@ const visibleRight = ref(false)
   background-size: contain;
   min-height: 60rem;
   padding-top: 2rem;
-}
-
-.prijelaz-container {
-  height: 4.5rem;
-  width: 100%;
-}
-.prijelaz-container img {
-  object-fit: fill;
-  width: 100%;
-  height: 4.5rem;
-  border-radius: 0;
 }
 </style>
