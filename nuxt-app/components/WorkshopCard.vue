@@ -14,6 +14,8 @@ const { locale } = useI18n()
 const okvirDefault = '/assets/workshops/okvir.svg'
 const okvir = computed(() => props.workshop.okvirUrl ?? okvirDefault)
 
+const popupColor = computed(() => props.workshop.popupColor ?? 'var(--knk-orange)')
+
 const showDialog = ref(false)
 
 const toggleShowDialog = (): void => {
@@ -92,7 +94,7 @@ function formatFullTimeline(start?: string | Date, end?: string | Date) {
     modal
     :header="name"
     class="workshop-dialog"
-    style="max-width: 30rem"
+    :style="{ maxWidth: '30rem', backgroundColor: popupColor }"
   >
     <template #default>
       <div class="workshop-dialog-image-wrapper">
@@ -169,7 +171,6 @@ function formatFullTimeline(start?: string | Date, end?: string | Date) {
   flex-direction: column;
   gap: 0rem;
 
-  background-color: var(--knk-orange);
   border-radius: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }

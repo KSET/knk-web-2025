@@ -11,6 +11,7 @@ export interface Workshop {
     end: string
   }
   location: 'škola' | 'kamp' | 'vanjska'
+  popupColor?: string
   imageLarge?: ImageAsset
   imageSmall?: ImageAsset
   okvir?: {

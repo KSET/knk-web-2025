@@ -52,6 +52,22 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'popupColor',
+      title: 'Popup Color',
+      description: 'Background color of the workshop popup.',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Orange', value: 'var(--knk-orange)'},
+          {title: 'Blue', value: 'var(--knk-blue)'},
+          {title: 'Light Blue', value: 'var(--knk-lightblue)'},
+          {title: 'Yellow', value: 'var(--knk-yellow)'},
+        ],
+        layout: 'dropdown',
+      },
+      initialValue: 'var(--knk-orange)',
+    }),
+    defineField({
       name: 'imageLarge',
       title: 'Header Image (Large) (11-4)',
       type: 'image',

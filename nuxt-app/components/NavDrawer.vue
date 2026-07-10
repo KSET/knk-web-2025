@@ -48,6 +48,7 @@ const navItems = [
 <style>
 .p-drawer {
   background-color: var(--knk-lightblue) !important;
+  border: none !important;
 }
 
 .p-drawer-content {
