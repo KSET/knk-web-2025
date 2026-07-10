@@ -15,6 +15,7 @@ type GalleryInstance = {
   images: {
     itemImageSrc: string
     thumbnailImageSrc: string
+    author: string
     alt: string
   }[]
   activeIndex: Ref<number>
@@ -27,7 +28,8 @@ gallerySections.value?.forEach((section) => {
   const images = (section.images ?? []).map((img, index) => ({
     itemImageSrc: urlFor(img).width(1200).url(),
     thumbnailImageSrc: urlFor(img).width(1200).url(),
-    alt: `Image ${index + 1}`,
+    author: img.author ?? '',
+    alt: img.author || `Image ${index + 1}`,
   }))
 
   galleries.push({
@@ -119,6 +121,9 @@ const galleryTypeLabel = (type: string) => {
                 :alt="slotProps.item.alt"
                 class="galleria-image"
               />
+              <span v-if="slotProps.item.author" class="galleria-caption">
+                {{ slotProps.item.author }} // {{ $t('gallery.photoSection') }}
+              </span>
             </div>
           </template>
           <template #thumbnail="slotProps">
@@ -163,10 +168,19 @@ const galleryTypeLabel = (type: string) => {
   width: 90vw;
   height: 90vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   border-radius: 8px;
+}
+
+.galleria-caption {
+  align-self: flex-end;
+  margin-top: 0.5rem;
+  font-family: 'Rockwell', serif;
+  font-size: 1.1rem;
+  color: #efe5dd;
 }
 
 .galleria-image {

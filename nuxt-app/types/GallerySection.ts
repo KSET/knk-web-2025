@@ -8,5 +8,5 @@ export interface GallerySection {
   year: Number
   description?: string
   type: 'Koncerti' | 'Radionice' | 'Kamp'
-  images?: ImageAsset[]
+  images?: (ImageAsset & { author?: string })[]
 }

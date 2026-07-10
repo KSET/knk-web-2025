@@ -41,7 +41,19 @@ export default defineType({
       name: 'images',
       title: 'Gallery Images',
       type: 'array',
-      of: [{type: 'image', options: {hotspot: true}}],
+      of: [
+        {
+          type: 'image',
+          options: {hotspot: true},
+          fields: [
+            defineField({
+              name: 'author',
+              title: 'Author',
+              type: 'string',
+            }),
+          ],
+        },
+      ],
     }),
   ],
   preview: {

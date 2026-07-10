@@ -289,12 +289,16 @@ onBeforeUnmount(() => {
   <div class="gallery-section gallery-section-seam">
     <div class="gallery-marquee-wrapper">
       <div class="gallery-marquee-track gallery-marquee-left">
-        <img v-for="(img, i) in [...galleryRow1, ...galleryRow1]" :key="'r1-' + i" :src="img.image" :alt="img.alt" class="gallery-marquee-image" />
+        <NuxtLink v-for="(img, i) in [...galleryRow1, ...galleryRow1]" :key="'r1-' + i" :to="localePath('/gallery')" class="gallery-marquee-link">
+          <img :src="img.image" :alt="img.alt" class="gallery-marquee-image" />
+        </NuxtLink>
       </div>
     </div>
     <div class="gallery-marquee-wrapper">
       <div class="gallery-marquee-track gallery-marquee-right">
-        <img v-for="(img, i) in [...galleryRow2, ...galleryRow2]" :key="'r2-' + i" :src="img.image" :alt="img.alt" class="gallery-marquee-image" />
+        <NuxtLink v-for="(img, i) in [...galleryRow2, ...galleryRow2]" :key="'r2-' + i" :to="localePath('/gallery')" class="gallery-marquee-link">
+          <img :src="img.image" :alt="img.alt" class="gallery-marquee-image" />
+        </NuxtLink>
       </div>
     </div>
   </div>
@@ -956,6 +960,10 @@ img {
 
 .gallery-marquee-right {
   animation: gallery-scroll-right 40s linear infinite;
+}
+
+.gallery-marquee-link {
+  display: contents;
 }
 
 .gallery-marquee-image {
