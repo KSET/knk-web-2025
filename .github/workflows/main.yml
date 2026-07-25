@@ -37,12 +37,12 @@ jobs:
             ksetcomp/knk-web:latest
             ksetcomp/knk-web:${{ github.sha }}
 
-#  notify-watchtower:
-#    runs-on: ubuntu-latest
-#    needs: [build-frontend, build-backend]
-#    steps:
-#      - name: Notify Watchtower
-#        run: |
-#          curl -sL -v \
-#            --header 'Authorization: Bearer ${{ secrets.WATCHTOWER_TOKEN }}' \
-#            "${{ vars.WATCHTOWER_URL }}/v1/update"
+  notify-watchtower:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Notify Watchtower
+        run: |
+          curl -sL -v \
+            --header 'Authorization: Bearer ${{ secrets.WATCHTOWER_TOKEN }}' \
+            "${{ vars.WATCHTOWER_URL }}/v1/update"
