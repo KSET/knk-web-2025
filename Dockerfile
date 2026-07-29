@@ -7,6 +7,14 @@ COPY . .
 # Install all dependencies (including in workspaces)
 RUN npm ci --legacy-peer-deps
 
+ARG NUXT_SANITY_PROJECT_ID
+ARG NUXT_SANITY_DATASET
+ENV NUXT_SANITY_PROJECT_ID=$NUXT_SANITY_PROJECT_ID
+ENV NUXT_SANITY_DATASET=$NUXT_SANITY_DATASET
+
+RUN test -n "$NUXT_SANITY_PROJECT_ID" || (echo "NUXT_SANITY_PROJECT_ID is required" && exit 1)
+RUN test -n "$NUXT_SANITY_DATASET" || (echo "NUXT_SANITY_DATASET is required" && exit 1)
+
 # Build the Nuxt app (you can add studio if needed)
 RUN npm run --workspace=nuxt-app generate
 
