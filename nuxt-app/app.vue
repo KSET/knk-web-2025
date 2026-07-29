@@ -1,26 +1,67 @@
 <template>
-  <a
-    v-if="previewEnabled && !inFrame"
-    :href="`/preview/disable?redirect=${route.fullPath}`"
-    class="preview-toggle"
-  >
-    <span>Preview Enabled</span>
-    <span>Disable Preview</span>
-  </a>
+  <PreviewToggle v-if="visualEditingEnabled" />
 
   <NuxtPage />
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
-const { enabled: previewEnabled, inFrame } = useSanityVisualEditingState()
+const visualEditingEnabled = Boolean(
+  useRuntimeConfig().public.sanity?.visualEditing,
+)
 const { t } = useI18n()
-const head = useLocaleHead({ addSeoAttributes: true })
+const head = useLocaleHead({ seo: true })
+
+const siteUrl = useSiteConfig().url
 
 useHead({
+  htmlAttrs: computed(() => ({
+    ...head.value.htmlAttrs,
+    lang: head.value.htmlAttrs?.lang || 'hr',
+  })),
+  link: computed(() => head.value.link ?? []),
+  meta: computed(() => head.value.meta ?? []),
+  titleTemplate: (title) =>
+    !title
+      ? 'KSET na Krku'
+      : title.includes('KSET na Krku')
+        ? title
+        : `${title} | KSET na Krku`,
+})
+
+useSeoMeta({
   title: 'KSET na Krku',
-  meta: [{ name: 'description', content: () => t('meta.description') }],
-  htmlAttrs: { lang: () => head.value.htmlAttrs?.lang || 'hr' },
+  description: () => t('meta.description'),
+  ogSiteName: 'KSET na Krku',
+  ogType: 'website',
+  ogTitle: 'KSET na Krku',
+  ogDescription: () => t('meta.description'),
+  ogImage: `${siteUrl}/assets/icons/og-image.png`,
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  ogImageType: 'image/png',
+  ogImageAlt: 'KSET na Krku, 14.-16.8.2026., grad Krk',
+  twitterCard: 'summary_large_image',
+  twitterImage: `${siteUrl}/assets/icons/og-image.png`,
+  twitterImageAlt: 'KSET na Krku, 14.-16.8.2026., grad Krk',
+})
+
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'KSET na Krku',
+        url: siteUrl,
+        logo: `${siteUrl}/assets/icons/kset-logo.svg`,
+        sameAs: [
+          'https://www.instagram.com/ksetnakrku/',
+          'https://www.kset.org/',
+        ],
+      }),
+    },
+  ],
 })
 </script>
 
@@ -53,10 +94,10 @@ useHead({
   --gray-600: #6e7683;
   --blue-600: #1e61cd;
   --magenta-100: #f9d7eb;
-  --knk-blue: #3A4384;
-  --knk-lightblue: #76B3D0;
-  --knk-orange: #FF6C1F;
-  --knk-yellow: #EBAB32;
+  --knk-blue: #3a4384;
+  --knk-lightblue: #76b3d0;
+  --knk-orange: #ff6c1f;
+  --knk-yellow: #ebab32;
 
   --max-width-0: 320px;
   --max-width-1: 768px;

@@ -1,11 +1,18 @@
 <script setup lang="ts">
-const router = useRouter()
+// Catch-all so vue-router matches unknown paths; without it the router never
+// 404s and error.vue is unreachable.
+const { t } = useI18n()
 
-onMounted(() => {
-  router.replace('/')
+useSeoMeta({
+  title: () => `404 - ${t('notFound.title')}`,
+  robots: 'noindex, follow',
 })
+
+// Real 404 for SSR/prerender; the static host still sets the header itself.
+const event = useRequestEvent()
+if (event) setResponseStatus(event, 404)
 </script>
 
 <template>
-  <div />
+  <NotFoundContent />
 </template>

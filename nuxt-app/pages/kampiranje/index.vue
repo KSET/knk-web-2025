@@ -6,15 +6,25 @@ import { ref } from 'vue'
 const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
+
+useSeoMeta({
+  title: () => t('meta.pages.camping.title'),
+  description: () => t('meta.pages.camping.description'),
+  ogTitle: () => `${t('meta.pages.camping.title')} | KSET na Krku`,
+  ogDescription: () => t('meta.pages.camping.description'),
+})
 
 const translations = Object.fromEntries(
-  translationsRaw.value?.map((entry) => [entry.key, { hr: entry.text, en: entry.textEn }]) || [],
+  translationsRaw.value?.map((entry) => [
+    entry.key,
+    { hr: entry.text, en: entry.textEn },
+  ]) || [],
 )
 
 const infoKampBlocks = computed(() => {
   const t = translations?.infoKampText
-  return (locale.value === 'en' && t?.en) ? t.en : t?.hr
+  return locale.value === 'en' && t?.en ? t.en : t?.hr
 })
 
 const visibleRight = ref(false)
@@ -25,7 +35,10 @@ const toggleVisibleRight = (): void => {
 
 <template>
   <StickyHeader v-model:drawer-visible="visibleRight" />
-  <Marquee backgroundColor="var(--knk-orange)" textShadowColor="var(--knk-lightblue)" />
+  <Marquee
+    backgroundColor="var(--knk-orange)"
+    textShadowColor="var(--knk-lightblue)"
+  />
 
   <div class="page-header">
     <p class="page-title">{{ $t('camping.title') }}</p>
@@ -42,8 +55,16 @@ const toggleVisibleRight = (): void => {
 
   <div class="page-wrapper">
     <div class="kamp-image-wrapper">
-      <img src="/assets/icons/krug-zuti.svg" alt="krug zuti" class="krug-zuti" />
-      <img src="/assets/icons/krug-narancasti.svg" alt="krug narancasti" class="krug-narancasti" />
+      <img
+        src="/assets/icons/krug-zuti.svg"
+        alt="krug zuti"
+        class="krug-zuti"
+      />
+      <img
+        src="/assets/icons/krug-narancasti.svg"
+        alt="krug narancasti"
+        class="krug-narancasti"
+      />
       <img src="/assets/icons/kamp.jpg" alt="kamp" class="kamp-image" />
     </div>
 
@@ -56,7 +77,15 @@ const toggleVisibleRight = (): void => {
       </div>
     </div>
 
-    <div style="display: flex; width: 100%; padding: 0 1rem; position: relative; z-index: 3;">
+    <div
+      style="
+        display: flex;
+        width: 100%;
+        padding: 0 1rem;
+        position: relative;
+        z-index: 3;
+      "
+    >
       <ClientOnly>
         <LocationMap
           :markers="[

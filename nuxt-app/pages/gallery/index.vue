@@ -43,7 +43,7 @@ gallerySections.value?.forEach((section) => {
 })
 
 const availableYears = computed(() =>
-  [...new Set(galleries.map((g) => g.year))].sort((a, b) => b - a)
+  [...new Set(galleries.map((g) => g.year))].sort((a, b) => b - a),
 )
 
 const selectedYear = ref(availableYears.value[0] ?? new Date().getFullYear())
@@ -52,15 +52,22 @@ const typeOrder: Record<string, number> = { Koncerti: 0, Radionice: 1, Kamp: 2 }
 galleries.sort((a, b) => (typeOrder[a.type] ?? 99) - (typeOrder[b.type] ?? 99))
 
 const filteredGalleries = computed(() =>
-  galleries.filter((g) => g.year === selectedYear.value)
+  galleries.filter((g) => g.year === selectedYear.value),
 )
 
 const { t } = useI18n()
+
+useSeoMeta({
+  title: () => t('meta.pages.gallery.title'),
+  description: () => t('meta.pages.gallery.description'),
+  ogTitle: () => `${t('meta.pages.gallery.title')} | KSET na Krku`,
+  ogDescription: () => t('meta.pages.gallery.description'),
+})
 const galleryTypeLabel = (type: string) => {
   const map: Record<string, string> = {
-    'Koncerti': t('gallery.concerts'),
-    'Radionice': t('gallery.workshops'),
-    'Kamp': t('gallery.camp'),
+    Koncerti: t('gallery.concerts'),
+    Radionice: t('gallery.workshops'),
+    Kamp: t('gallery.camp'),
   }
   return map[type] || type
 }
@@ -68,7 +75,10 @@ const galleryTypeLabel = (type: string) => {
 
 <template>
   <StickyHeader v-model:drawer-visible="visibleRight" />
-  <Marquee backgroundColor="var(--knk-orange)" textShadowColor="var(--knk-blue)" />
+  <Marquee
+    backgroundColor="var(--knk-orange)"
+    textShadowColor="var(--knk-blue)"
+  />
 
   <div class="page-header">
     <p class="page-title">{{ $t('gallery.title') }}</p>
@@ -122,8 +132,12 @@ const galleryTypeLabel = (type: string) => {
                   :alt="slotProps.item.alt"
                   class="galleria-image"
                 />
-                <figcaption v-if="slotProps.item.author" class="galleria-caption">
-                  {{ slotProps.item.author }} // {{ $t('gallery.photoSection') }}
+                <figcaption
+                  v-if="slotProps.item.author"
+                  class="galleria-caption"
+                >
+                  {{ slotProps.item.author }} //
+                  {{ $t('gallery.photoSection') }}
                 </figcaption>
               </figure>
             </div>
@@ -158,7 +172,10 @@ const galleryTypeLabel = (type: string) => {
   </div>
 
   <Footer backgroundColor="var(--knk-lightblue)" />
-  <Marquee backgroundColor="var(--knk-orange)" textShadowColor="var(--knk-blue)" />
+  <Marquee
+    backgroundColor="var(--knk-orange)"
+    textShadowColor="var(--knk-blue)"
+  />
   <NavDrawer v-model="visibleRight" />
 </template>
 

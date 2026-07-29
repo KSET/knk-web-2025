@@ -1,4 +1,12 @@
 <script setup lang="ts">
+const { t } = useI18n()
+useSeoMeta({
+  title: () => t('meta.pages.tickets.title'),
+  description: () => t('meta.pages.tickets.description'),
+  ogTitle: () => `${t('meta.pages.tickets.title')} | KSET na Krku`,
+  ogDescription: () => t('meta.pages.tickets.description'),
+})
+
 import { ref } from 'vue'
 import Footer from '~/components/Footer.vue'
 
@@ -7,7 +15,6 @@ const toggleVisibleRight = (): void => {
   visibleRight.value = !visibleRight.value
 }
 
-// loading pretix script
 import { onMounted } from 'vue'
 
 onMounted(() => {

@@ -23,6 +23,13 @@ const uniqueLocations = computed(() => [
 
 const { locale, t } = useI18n()
 
+useSeoMeta({
+  title: () => t('meta.pages.workshops.title'),
+  description: () => t('meta.pages.workshops.description'),
+  ogTitle: () => `${t('meta.pages.workshops.title')} | KSET na Krku`,
+  ogDescription: () => t('meta.pages.workshops.description'),
+})
+
 const locationLabel = (location: string) => {
   if (location === 'škola') return t('workshops.school')
   if (location === 'vanjska') return t('workshops.outdoor')
@@ -41,17 +48,20 @@ const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
 
 const translations = Object.fromEntries(
-  translationsRaw.value?.map((entry) => [entry.key, { hr: entry.text, en: entry.textEn }]) || [],
+  translationsRaw.value?.map((entry) => [
+    entry.key,
+    { hr: entry.text, en: entry.textEn },
+  ]) || [],
 )
 
 const workshopsHeaderBlocks = computed(() => {
   const tr = translations?.workshopsHeaderText
-  return (locale.value === 'en' && tr?.en) ? tr.en : tr?.hr
+  return locale.value === 'en' && tr?.en ? tr.en : tr?.hr
 })
 
 const formLink = await useWorkshopFormLink()
 
-// loading pretix script (commented out — keep for future use)
+// loading pretix script (commented out - keep for future use)
 // import { onMounted } from 'vue'
 //
 // onMounted(() => {
@@ -65,34 +75,55 @@ const formLink = await useWorkshopFormLink()
 
 <template>
   <StickyHeader v-model:drawer-visible="visibleRight" />
-  <Marquee backgroundColor="var(--knk-blue)" textColor="white" textShadowColor="var(--knk-orange)" />
+  <Marquee
+    backgroundColor="var(--knk-blue)"
+    textColor="white"
+    textShadowColor="var(--knk-orange)"
+  />
 
   <div class="workshops-bg">
-  <img src="/assets/workshops/plukruyi-vertical.svg" alt="" class="edge-decor edge-decor-left e1" aria-hidden="true" />
-  <img src="/assets/workshops/plukruyi-vertical.svg" alt="" class="edge-decor edge-decor-left e2" aria-hidden="true" />
-  <img src="/assets/workshops/plukruyi-vertical.svg" alt="" class="edge-decor edge-decor-right e3" aria-hidden="true" />
-  <img src="/assets/workshops/plukruyi-vertical.svg" alt="" class="edge-decor edge-decor-right e4" aria-hidden="true" />
-  <div class="page-header">
-    <p class="page-title">{{ $t('workshops.title') }}</p>
-    <div class="header-right">
-      <LanguageSwitcher />
-      <img
-        src="/assets/icons/burger.svg?v=2"
-        alt="burger"
-        @click="toggleVisibleRight"
-        class="burger-icon"
-      />
+    <img
+      src="/assets/workshops/plukruyi-vertical.svg"
+      alt=""
+      class="edge-decor edge-decor-left e1"
+      aria-hidden="true"
+    />
+    <img
+      src="/assets/workshops/plukruyi-vertical.svg"
+      alt=""
+      class="edge-decor edge-decor-left e2"
+      aria-hidden="true"
+    />
+    <img
+      src="/assets/workshops/plukruyi-vertical.svg"
+      alt=""
+      class="edge-decor edge-decor-right e3"
+      aria-hidden="true"
+    />
+    <img
+      src="/assets/workshops/plukruyi-vertical.svg"
+      alt=""
+      class="edge-decor edge-decor-right e4"
+      aria-hidden="true"
+    />
+    <div class="page-header">
+      <p class="page-title">{{ $t('workshops.title') }}</p>
+      <div class="header-right">
+        <LanguageSwitcher />
+        <img
+          src="/assets/icons/burger.svg?v=2"
+          alt="burger"
+          @click="toggleVisibleRight"
+          class="burger-icon"
+        />
+      </div>
     </div>
-  </div>
 
-  <div class="workshops-wrapper">
-    <div class="page-container">
-      <BlockContent
-        :blocks="workshopsHeaderBlocks"
-        class="wall-text"
-      />
+    <div class="workshops-wrapper">
+      <div class="page-container">
+        <BlockContent :blocks="workshopsHeaderBlocks" class="wall-text" />
 
-      <!-- Pretix ticket widget — commented out, keep for future use
+        <!-- Pretix ticket widget - commented out, keep for future use
       <div
         class="pretix-widget-compat"
         event="https://karte.kset.org/kset/kset-na-krku-radionice/"
@@ -113,54 +144,57 @@ const formLink = await useWorkshopFormLink()
         </div>
       </noscript>
       -->
-    </div>
-
-    <div class="filter-row">
-      <div class="filter-pills">
-        <button
-          type="button"
-          :class="['filter-pill', selectedFilter === 'sve' ? 'active' : '']"
-          @click="selectedFilter = 'sve'"
-        >
-          {{ $t('workshops.all') }}
-        </button>
-        <button
-          v-for="location in uniqueLocations"
-          :key="location"
-          type="button"
-          :class="['filter-pill', selectedFilter === location ? 'active' : '']"
-          @click="selectedFilter = location"
-        >
-          {{ locationLabel(location) }}
-        </button>
       </div>
 
-      <a
-        v-if="formLink"
-        :href="formLink"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="title-button"
-      >
-        {{ $t('workshops.moreInfo') }}
-        <img
-          src="/assets/icons/arrow-right.svg"
-          alt="arrow-right"
-          class="arrow-icon"
-        />
-      </a>
-    </div>
+      <div class="filter-row">
+        <div class="filter-pills">
+          <button
+            type="button"
+            :class="['filter-pill', selectedFilter === 'sve' ? 'active' : '']"
+            @click="selectedFilter = 'sve'"
+          >
+            {{ $t('workshops.all') }}
+          </button>
+          <button
+            v-for="location in uniqueLocations"
+            :key="location"
+            type="button"
+            :class="[
+              'filter-pill',
+              selectedFilter === location ? 'active' : '',
+            ]"
+            @click="selectedFilter = location"
+          >
+            {{ locationLabel(location) }}
+          </button>
+        </div>
 
-    <div class="workshops-container">
-      <WorkshopCard
-        v-for="(workshop, index) in filteredWorkshops"
-        :key="workshop._id"
-        :workshop="workshop"
-        :index="index"
-        :form-link="formLink"
-      />
+        <a
+          v-if="formLink"
+          :href="formLink"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="title-button"
+        >
+          {{ $t('workshops.moreInfo') }}
+          <img
+            src="/assets/icons/arrow-right.svg"
+            alt="arrow-right"
+            class="arrow-icon"
+          />
+        </a>
+      </div>
+
+      <div class="workshops-container">
+        <WorkshopCard
+          v-for="(workshop, index) in filteredWorkshops"
+          :key="workshop._id"
+          :workshop="workshop"
+          :index="index"
+          :form-link="formLink"
+        />
+      </div>
     </div>
-  </div>
   </div>
 
   <Footer
@@ -169,11 +203,15 @@ const formLink = await useWorkshopFormLink()
     decorSide="left"
     decorRow="/assets/workshops/kruzi.svg"
   />
-  <Marquee backgroundColor="var(--knk-blue)" textColor="white" textShadowColor="var(--knk-orange)" />
+  <Marquee
+    backgroundColor="var(--knk-blue)"
+    textColor="white"
+    textShadowColor="var(--knk-orange)"
+  />
   <NavDrawer v-model="visibleRight" />
 </template>
 
-<!-- Pretix widget styles — commented out, keep for future use
+<!-- Pretix widget styles - commented out, keep for future use
 <style>
 .pretix-widget {
   background-color: white !important;
@@ -329,7 +367,9 @@ const formLink = await useWorkshopFormLink()
 
   cursor: pointer;
   text-transform: lowercase;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .filter-pill.active {

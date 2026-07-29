@@ -1,22 +1,27 @@
 <script setup lang="ts">
 import { type Sponsor } from '~/types/Sponsor'
 
-const props = withDefaults(defineProps<{
-  decorImage?: string
-  decorSide?: 'left' | 'right'
-  decorRow?: string
-  backgroundColor?: string
-}>(), {
-  decorImage: '/assets/icons/teta.svg',
-  decorSide: 'right',
-  decorRow: '',
-  backgroundColor: 'var(--knk-blue)'
-})
+const props = withDefaults(
+  defineProps<{
+    decorImage?: string
+    decorSide?: 'left' | 'right'
+    decorRow?: string
+    backgroundColor?: string
+  }>(),
+  {
+    decorImage: '/assets/icons/teta.svg',
+    decorSide: 'right',
+    decorRow: '',
+    backgroundColor: 'var(--knk-blue)',
+  },
+)
 
 const localePath = useLocalePath()
 
 const query = groq`*[_type == "sponsor"] | order(barIndex asc, orderRank asc)`
-const { data: sponsors } = await useSanityQuery<Sponsor[]>(query)
+const { data: sponsors } = await useSanityQuery<Sponsor[]>(query, undefined, {
+  default: () => [] as Sponsor[],
+})
 
 const groupedByBarIndex = computed(() => {
   const map = new Map<number, Sponsor[]>()
@@ -31,7 +36,10 @@ const groupedByBarIndex = computed(() => {
 </script>
 
 <template>
-  <div class="footer-wrapper" :style="{ backgroundColor: props.backgroundColor }">
+  <div
+    class="footer-wrapper"
+    :style="{ backgroundColor: props.backgroundColor }"
+  >
     <div class="footer-container">
       <div
         v-for="[barIndex, group] in groupedByBarIndex"
@@ -95,8 +103,13 @@ const groupedByBarIndex = computed(() => {
     </div>
 
     <div class="footer-links">
-      <NuxtLink :to="localePath('/pravila')" class="" style="color: white">{{ $t('footer.rules') }}</NuxtLink>
-      <NuxtLink :to="localePath('/politika-privatnosti')" class="" style="color: white"
+      <NuxtLink :to="localePath('/pravila')" class="" style="color: white">{{
+        $t('footer.rules')
+      }}</NuxtLink>
+      <NuxtLink
+        :to="localePath('/politika-privatnosti')"
+        class=""
+        style="color: white"
         >{{ $t('footer.privacyPolicy') }}</NuxtLink
       >
     </div>
@@ -111,7 +124,10 @@ const groupedByBarIndex = computed(() => {
     <img
       :src="props.decorImage"
       alt="footer-decor"
-      :class="['footer-teta', props.decorSide === 'left' ? 'footer-teta-left' : '']"
+      :class="[
+        'footer-teta',
+        props.decorSide === 'left' ? 'footer-teta-left' : '',
+      ]"
     />
   </div>
 </template>

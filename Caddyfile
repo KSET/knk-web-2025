@@ -1,0 +1,65 @@
+# Serves the static Nuxt export (nuxt-app/.output/public). Routing lives here
+# because the export has no runtime server: routeRules and error.vue never run.
+
+:80 {
+	root * /app
+	encode zstd gzip
+
+	redir /schedule / 301
+	redir /en/schedule /en 301
+
+	@trailing_slash_query {
+		path_regexp trailing ^(/.+)/$
+		expression {query} != ""
+	}
+	redir @trailing_slash_query {re.trailing.1}?{query} 301
+
+	@trailing_slash {
+		path_regexp trailing ^(/.+)/$
+	}
+	redir @trailing_slash {re.trailing.1} 301
+
+	try_files {path} {path}/index.html {path}.html
+
+	handle_errors {
+		@404_asset {
+			expression {err.status_code} == 404
+			path /_nuxt/* /assets/* *.js *.css *.map *.png *.jpg *.jpeg *.svg *.webp *.avif *.woff *.woff2 *.ico *.xml *.txt *.json
+		}
+		handle @404_asset {
+			respond "404 Not Found" 404
+		}
+
+		@404_en {
+			expression {err.status_code} == 404
+			path /en/*
+		}
+		handle @404_en {
+			rewrite * /en/not-found/index.html
+			file_server {
+				status 404
+			}
+		}
+
+		@404 expression {err.status_code} == 404
+		handle @404 {
+			rewrite * /not-found/index.html
+			file_server {
+				status 404
+			}
+		}
+	}
+
+	header /_nuxt/* Cache-Control "public, max-age=31536000, immutable"
+
+	@og path /assets/icons/og-image.png
+	header @og Cache-Control "public, max-age=2592000"
+
+	@assets_other {
+		path /assets/*
+		not path /assets/icons/og-image.png
+	}
+	header @assets_other Cache-Control "public, max-age=86400"
+
+	file_server
+}

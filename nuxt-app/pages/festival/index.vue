@@ -6,15 +6,25 @@ import { ref } from 'vue'
 const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
+
+useSeoMeta({
+  title: () => t('meta.pages.festival.title'),
+  description: () => t('meta.pages.festival.description'),
+  ogTitle: () => `${t('meta.pages.festival.title')} | KSET na Krku`,
+  ogDescription: () => t('meta.pages.festival.description'),
+})
 
 const translations = Object.fromEntries(
-  translationsRaw.value?.map((entry) => [entry.key, { hr: entry.text, en: entry.textEn }]) || [],
+  translationsRaw.value?.map((entry) => [
+    entry.key,
+    { hr: entry.text, en: entry.textEn },
+  ]) || [],
 )
 
 const infoFestivalBlocks = computed(() => {
   const t = translations?.infoFestivalText
-  return (locale.value === 'en' && t?.en) ? t.en : t?.hr
+  return locale.value === 'en' && t?.en ? t.en : t?.hr
 })
 
 const visibleRight = ref(false)
@@ -25,7 +35,10 @@ const toggleVisibleRight = (): void => {
 
 <template>
   <StickyHeader v-model:drawer-visible="visibleRight" />
-  <Marquee backgroundColor="var(--knk-orange)" textShadowColor="var(--knk-lightblue)" />
+  <Marquee
+    backgroundColor="var(--knk-orange)"
+    textShadowColor="var(--knk-lightblue)"
+  />
 
   <div class="page-header">
     <p class="page-title">{{ $t('festival.title') }}</p>
@@ -42,8 +55,16 @@ const toggleVisibleRight = (): void => {
 
   <div class="page-wrapper">
     <div class="kamp-image-wrapper">
-      <img src="/assets/icons/krug-zuti.svg" alt="krug zuti" class="krug-zuti" />
-      <img src="/assets/icons/krug-narancasti.svg" alt="krug narancasti" class="krug-narancasti" />
+      <img
+        src="/assets/icons/krug-zuti.svg"
+        alt="krug zuti"
+        class="krug-zuti"
+      />
+      <img
+        src="/assets/icons/krug-narancasti.svg"
+        alt="krug narancasti"
+        class="krug-narancasti"
+      />
       <img src="/assets/icons/festival.jpg" alt="festival" class="kamp-image" />
     </div>
 
@@ -51,15 +72,20 @@ const toggleVisibleRight = (): void => {
       <div class="info-content">
         <h1 class="info-title">{{ $t('festival.info') }}</h1>
         <div class="info-text">
-          <BlockContent
-            :blocks="infoFestivalBlocks"
-            class="info-text"
-          />
+          <BlockContent :blocks="infoFestivalBlocks" class="info-text" />
         </div>
       </div>
     </div>
 
-    <div style="display: flex; width: 100%; padding: 0 1rem; position: relative; z-index: 3;">
+    <div
+      style="
+        display: flex;
+        width: 100%;
+        padding: 0 1rem;
+        position: relative;
+        z-index: 3;
+      "
+    >
       <ClientOnly>
         <LocationMap
           :markers="[
@@ -75,7 +101,6 @@ const toggleVisibleRight = (): void => {
         />
       </ClientOnly>
     </div>
-
   </div>
 
   <Footer />

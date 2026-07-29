@@ -9,16 +9,17 @@ import Footer from '~/components/Footer.vue'
 import WorkshopCard from '~/components/WorkshopCard.vue'
 import type { Workshop } from '~/types/Workshop'
 
-import Schedule from '~/components/Schedule.vue'
-
 const localePath = useLocalePath()
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const artistsStore = useArtistsStore()
 const { formatDayLabel } = useDayLabel()
 
-onMounted(async () => {
-  await artistsStore.fetchArtists()
+useSeoMeta({
+  title: () => t('meta.homeTitle'),
+  ogTitle: () => t('meta.homeTitle'),
 })
+
+await artistsStore.fetchArtists()
 
 const selectedDay = ref('all')
 
@@ -83,13 +84,13 @@ const galleryImages =
 const galleryRow1 = galleryImages.filter((_, i) => i % 2 === 0)
 const galleryRow2 = galleryImages.filter((_, i) => i % 2 === 1)
 
-const workshopsMediaQuery = '(max-width: 900px)'
-const isMobileWorkshops = ref(
-  import.meta.client ? window.matchMedia(workshopsMediaQuery).matches : false,
-)
+// The scroll list is the prerendered markup, so crawlers get exactly one copy of
+// each workshop. Desktop swaps in the carousel after mount.
+const workshopsMediaQuery = '(min-width: 901px)'
+const showWorkshopsCarousel = ref(false)
 let workshopsMql: MediaQueryList | null = null
 const syncWorkshopsLayout = () => {
-  isMobileWorkshops.value = workshopsMql?.matches ?? false
+  showWorkshopsCarousel.value = workshopsMql?.matches ?? false
 }
 
 onMounted(() => {
@@ -112,11 +113,20 @@ onBeforeUnmount(() => {
       <span class="header-date-text">{{ $t('home.dates') }}</span>
       <div class="header-right-top">
         <LanguageSwitcher />
-        <img src="/assets/icons/burger.svg?v=2" alt="burger" @click="toggleVisibleRight" class="burger-icon-top" />
+        <img
+          src="/assets/icons/burger.svg?v=2"
+          alt="burger"
+          @click="toggleVisibleRight"
+          class="burger-icon-top"
+        />
       </div>
     </div>
     <div class="header-container">
-      <img src="/assets/icons/knk-i-tete.svg" alt="knk i tete" class="hero-image" />
+      <img
+        src="/assets/icons/knk-i-tete.svg"
+        alt="knk i tete"
+        class="hero-image"
+      />
     </div>
   </div>
 
@@ -151,7 +161,6 @@ onBeforeUnmount(() => {
 
       <HomeArtistsContainer :artists="visibleArtists" />
     </div>
-
   </div>
 
   <div class="prijelaz-hero">
@@ -184,13 +193,26 @@ onBeforeUnmount(() => {
           :style="{ backgroundColor: ticket.backgroundColor }"
         >
           <img
-            :src="index % 2 === 0 ? '/assets/icons/blob-1.svg' : '/assets/icons/blob-2.svg'"
+            :src="
+              index % 2 === 0
+                ? '/assets/icons/blob-1.svg'
+                : '/assets/icons/blob-2.svg'
+            "
             alt=""
             class="ticket-blob"
           />
           <div class="ticket-content">
-            <div class="ticket-name" :style="{ color: ticket.backgroundColor }">{{ (locale === 'en' && ticket.nameEn) ? ticket.nameEn : ticket.name }}</div>
-            <div class="ticket-price" :style="{ color: ticket.backgroundColor }">{{ ticket.price }}</div>
+            <div class="ticket-name" :style="{ color: ticket.backgroundColor }">
+              {{
+                locale === 'en' && ticket.nameEn ? ticket.nameEn : ticket.name
+              }}
+            </div>
+            <div
+              class="ticket-price"
+              :style="{ color: ticket.backgroundColor }"
+            >
+              {{ ticket.price }}
+            </div>
           </div>
         </NuxtLink>
       </div>
@@ -206,7 +228,10 @@ onBeforeUnmount(() => {
   </div>
 
   <div class="prijelaz-hero">
-    <img src="/assets/prijelazi/ulaynice-dole.svg" alt="prijelaz-ulaznice-dole" />
+    <img
+      src="/assets/prijelazi/ulaynice-dole.svg"
+      alt="prijelaz-ulaznice-dole"
+    />
   </div>
 
   <div class="beach-wrapper">
@@ -216,8 +241,16 @@ onBeforeUnmount(() => {
       </div>
 
       <div class="kamp-image-wrapper">
-        <img src="/assets/icons/krug-zuti.svg" alt="krug zuti" class="krug-zuti" />
-        <img src="/assets/icons/krug-narancasti.svg" alt="krug narancasti" class="krug-narancasti" />
+        <img
+          src="/assets/icons/krug-zuti.svg"
+          alt="krug zuti"
+          class="krug-zuti"
+        />
+        <img
+          src="/assets/icons/krug-narancasti.svg"
+          alt="krug narancasti"
+          class="krug-narancasti"
+        />
         <img src="/assets/icons/kamp.jpg" alt="kamp" class="kamp-image" />
       </div>
 
@@ -232,13 +265,18 @@ onBeforeUnmount(() => {
   </div>
 
   <div class="prijelaz-hero">
-    <img src="/assets/prijelazi/prijelaz-plaza-more.svg?v=3" alt="prijelaz-plaza-more" />
+    <img
+      src="/assets/prijelazi/prijelaz-plaza-more.svg?v=3"
+      alt="prijelaz-plaza-more"
+    />
   </div>
 
   <div class="sea-wrapper">
     <div class="wall-container">
       <div class="title-text-container">
-        <p class="title-text" style="color: white">{{ $t('home.workshops') }}</p>
+        <p class="title-text" style="color: white">
+          {{ $t('home.workshops') }}
+        </p>
 
         <NuxtLink :to="localePath('/workshops')" style="text-decoration: none">
           <span class="title-button-blue" style="color: white">
@@ -253,7 +291,7 @@ onBeforeUnmount(() => {
       </div>
 
       <Carousel
-        v-if="!isMobileWorkshops"
+        v-if="showWorkshopsCarousel"
         :value="workshops"
         :numVisible="4"
         :numScroll="1"
@@ -265,7 +303,11 @@ onBeforeUnmount(() => {
       >
         <template #item="slotProps">
           <div class="artist-carousel-container">
-            <WorkshopCard :workshop="slotProps.data" :index="slotProps.index" :form-link="workshopFormLink" />
+            <WorkshopCard
+              :workshop="slotProps.data"
+              :index="slotProps.index"
+              :form-link="workshopFormLink"
+            />
           </div>
         </template>
       </Carousel>
@@ -276,7 +318,11 @@ onBeforeUnmount(() => {
           :key="workshop._id"
           class="workshops-scroll-item"
         >
-          <WorkshopCard :workshop="workshop" :index="index" :form-link="workshopFormLink" />
+          <WorkshopCard
+            :workshop="workshop"
+            :index="index"
+            :form-link="workshopFormLink"
+          />
         </div>
       </div>
     </div>
@@ -289,14 +335,24 @@ onBeforeUnmount(() => {
   <div class="gallery-section gallery-section-seam">
     <div class="gallery-marquee-wrapper">
       <div class="gallery-marquee-track gallery-marquee-left">
-        <NuxtLink v-for="(img, i) in [...galleryRow1, ...galleryRow1]" :key="'r1-' + i" :to="localePath('/gallery')" class="gallery-marquee-link">
+        <NuxtLink
+          v-for="(img, i) in [...galleryRow1, ...galleryRow1]"
+          :key="'r1-' + i"
+          :to="localePath('/gallery')"
+          class="gallery-marquee-link"
+        >
           <img :src="img.image" :alt="img.alt" class="gallery-marquee-image" />
         </NuxtLink>
       </div>
     </div>
     <div class="gallery-marquee-wrapper">
       <div class="gallery-marquee-track gallery-marquee-right">
-        <NuxtLink v-for="(img, i) in [...galleryRow2, ...galleryRow2]" :key="'r2-' + i" :to="localePath('/gallery')" class="gallery-marquee-link">
+        <NuxtLink
+          v-for="(img, i) in [...galleryRow2, ...galleryRow2]"
+          :key="'r2-' + i"
+          :to="localePath('/gallery')"
+          class="gallery-marquee-link"
+        >
           <img :src="img.image" :alt="img.alt" class="gallery-marquee-image" />
         </NuxtLink>
       </div>
@@ -311,7 +367,8 @@ onBeforeUnmount(() => {
 </template>
 
 <style>
-.wall-text, .wall-text p {
+.wall-text,
+.wall-text p {
   white-space: pre-line;
 }
 
@@ -376,7 +433,6 @@ img {
 .p-carousel-prev-button:not(:disabled):hover {
   color: black !important;
 }
-
 </style>
 
 <style scoped>
@@ -420,7 +476,6 @@ img {
 .title-button-blue,
 .title-button {
   font-family: 'Montserrat';
-  /* background-color: #dd7d91; */
   color: #fff;
   padding: 0 0 0.2rem 0;
   border-radius: 0;
@@ -448,7 +503,6 @@ img {
   margin-left: 0.5rem;
 }
 
-/*  --------------- HEADER --------------- */
 
 .header-wrapper {
   background-color: var(--knk-blue);
@@ -560,7 +614,6 @@ img {
   width: auto;
 }
 
-/*  --------------- WALL --------------- */
 
 .wall-divider {
   background-color: #e55a8e;
@@ -666,7 +719,9 @@ img {
 
   cursor: pointer;
   text-transform: lowercase;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .filter-pill.active {
@@ -688,6 +743,7 @@ img {
   padding: 0 0.5rem;
 }
 
+/* Only one workshop layout is in the DOM at a time; v-if picks it. */
 .workshops-scroll {
   display: flex;
   flex-direction: row;
@@ -822,7 +878,6 @@ img {
   justify-content: center;
 }
 
-/*  --------------- BEACH --------------- */
 
 .beach-wrapper {
   background-color: var(--knk-blue);
@@ -901,7 +956,6 @@ img {
   justify-content: center;
 }
 
-/*  --------------- SEA --------------- */
 
 .sea-wrapper {
   background-color: var(--knk-yellow);
@@ -989,7 +1043,6 @@ img {
   width: 100%;
 }
 
-/*  --------------- RESPONNZIVNOST --------------- */
 
 .wall-wrapper,
 .izvodjaci-wrapper,
@@ -1022,7 +1075,6 @@ img {
 }
 
 @media (max-width: 900px) {
-
   .artist-carousel {
     display: none;
   }
@@ -1119,6 +1171,5 @@ img {
   .burger-icon-top {
     height: 1.5rem;
   }
-
 }
 </style>

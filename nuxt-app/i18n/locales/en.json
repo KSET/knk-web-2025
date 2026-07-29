@@ -58,6 +58,18 @@
     "title": "camping",
     "info": "camp"
   },
+  "notFound": {
+    "title": "lost?",
+    "text": "This page doesn't exist - it may have drifted off. Try one of these:",
+    "home": "back to home",
+    "tickets": "tickets",
+    "lineup": "lineup",
+    "festival": "about the festival"
+  },
+  "error": {
+    "title": "oops, something broke",
+    "text": "Something went wrong on our end. Try again, or start from here:"
+  },
   "footer": {
     "allRightsReserved": "All rights reserved © 2026",
     "studentUnion": "Student Association of Faculty of Electrical Engineering and Computing",
@@ -66,7 +78,42 @@
   },
   "meta": {
     "title": "KSET na Krku",
-    "description": "KSET na Krku is a multi-day festival organized by the Students' Association of the Faculty of Electrical Engineering and Computing (known as KSET), promoting culture, informal education, and active socializing through knowledge exchange and youth collaboration."
+    "description": "KSET na Krku is a multi-day festival organized by the Students' Association of the Faculty of Electrical Engineering and Computing (known as KSET), promoting culture, informal education, and active socializing through knowledge exchange and youth collaboration.",
+    "pages": {
+      "tickets": {
+        "title": "Tickets",
+        "description": "Get your tickets for KSET na Krku - a festival of culture, music and informal education on the island of Krk."
+      },
+      "festival": {
+        "title": "About the festival",
+        "description": "Everything about the KSET na Krku festival: programme, location and what to know before you arrive."
+      },
+      "lineup": {
+        "title": "Lineup",
+        "description": "See the KSET na Krku lineup - all artists and the day-by-day performance schedule."
+      },
+      "workshops": {
+        "title": "Workshops",
+        "description": "Workshops at KSET na Krku - informal education, knowledge exchange and creative gatherings."
+      },
+      "camping": {
+        "title": "Camping",
+        "description": "Camping information for the KSET na Krku festival - accommodation, gear and camp rules."
+      },
+      "gallery": {
+        "title": "Gallery",
+        "description": "Photos from past editions of the KSET na Krku festival."
+      },
+      "rules": {
+        "title": "Rules",
+        "description": "Code of conduct and terms of participation for the KSET na Krku festival."
+      },
+      "privacy": {
+        "title": "Privacy policy",
+        "description": "Privacy policy and personal data processing for the KSET na Krku festival."
+      }
+    },
+    "homeTitle": "KSET na Krku - culture and music festival on the island of Krk"
   },
   "days": {
     "sun": "SUN",

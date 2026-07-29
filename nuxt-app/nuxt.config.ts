@@ -2,6 +2,33 @@
 import Aura from '@primeuix/themes/aura'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
+const siteUrl = process.env.NUXT_PUBLIC_SITE_URL || 'https://knk.kset.org'
+const visualEditingEnabled = process.env.NUXT_SANITY_VISUAL_EDITING === 'true'
+
+const localizedPages: [string, string][] = [
+  ['/', '/en'],
+  ['/tickets', '/en/tickets'],
+  ['/festival', '/en/festival'],
+  ['/lineup', '/en/lineup'],
+  ['/workshops', '/en/workshops'],
+  ['/kampiranje', '/en/camping'],
+  ['/gallery', '/en/gallery'],
+  ['/pravila', '/en/rules'],
+  ['/politika-privatnosti', '/en/privacy-policy'],
+]
+
+const sitemapUrls = localizedPages.flatMap(([hr, en]) => {
+  const alternatives = [
+    { hreflang: 'hr', href: hr },
+    { hreflang: 'en', href: en },
+    { hreflang: 'x-default', href: hr },
+  ]
+  return [
+    { loc: hr, alternatives },
+    { loc: en, alternatives },
+  ]
+})
+
 export default defineNuxtConfig({
   app: {
     head: {
@@ -50,6 +77,8 @@ export default defineNuxtConfig({
     '@nuxtjs/sanity',
     '@primevue/nuxt-module',
     '@nuxtjs/i18n',
+    '@nuxtjs/sitemap',
+    '@nuxtjs/robots',
     [
       '@nuxtjs/google-fonts',
       {
@@ -59,22 +88,29 @@ export default defineNuxtConfig({
           Inter: [500, 700, 800],
           'PT Serif': [400, 700],
           Rokkitt: [700, 800, 900],
-          download: true,
-          inject: true,
         },
+        download: true,
+        inject: true,
       },
     ],
   ],
 
+  site: {
+    url: siteUrl,
+    name: 'KSET na Krku',
+  },
+
   i18n: {
+    baseUrl: siteUrl,
     locales: [
-      { code: 'hr', file: 'hr.json', name: 'Hrvatski' },
-      { code: 'en', file: 'en.json', name: 'English' },
+      { code: 'hr', language: 'hr', file: 'hr.json', name: 'Hrvatski' },
+      { code: 'en', language: 'en', file: 'en.json', name: 'English' },
     ],
     defaultLocale: 'hr',
     strategy: 'prefix_except_default',
     langDir: 'locales/',
     detectBrowserLanguage: false,
+    customRoutes: 'config',
     pages: {
       'kampiranje/index': {
         en: '/camping',
@@ -105,13 +141,18 @@ export default defineNuxtConfig({
   sanity: {
     projectId: process.env.NUXT_SANITY_PROJECT_ID,
     dataset: process.env.NUXT_SANITY_DATASET,
-    useCdn: true, // `false` if you want to ensure fresh data
+    useCdn: true,
     apiVersion: process.env.NUXT_SANITY_API_VERSION || '2024-03-15',
-    visualEditing: {
-      studioUrl: process.env.NUXT_SANITY_STUDIO_URL || 'http://localhost:3333',
-      token: process.env.NUXT_SANITY_API_READ_TOKEN,
-      stega: true,
-    },
+    ...(visualEditingEnabled
+      ? {
+          visualEditing: {
+            studioUrl:
+              process.env.NUXT_SANITY_STUDIO_URL || 'http://localhost:3333',
+            token: process.env.NUXT_SANITY_API_READ_TOKEN,
+            stega: true,
+          },
+        }
+      : {}),
   },
 
   postcss: {
@@ -121,13 +162,31 @@ export default defineNuxtConfig({
     },
   },
 
+  sitemap: {
+    exclude: ['/schedule', '/en/schedule', '/not-found', '/en/not-found'],
+    sitemaps: false,
+    excludeAppSources: true,
+    urls: sitemapUrls,
+  },
+
+  robots: {
+    sitemap: `${siteUrl}/sitemap.xml`,
+  },
+
+
   compatibilityDate: '2024-12-17',
 
-  ssr: false,
+  ssr: true,
   nitro: {
     preset: 'static',
     prerender: {
+      crawlLinks: true,
+      failOnError: true,
+      ignore: ['/schedule', '/en/schedule'],
       routes: [
+        '/',
+        '/not-found',
+        '/en/not-found',
         '/en',
         '/en/tickets',
         '/en/festival',

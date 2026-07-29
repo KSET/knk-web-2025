@@ -5,21 +5,15 @@ WORKDIR /app
 COPY . .
 
 # Install all dependencies (including in workspaces)
-RUN npm install
+RUN npm ci --legacy-peer-deps
 
 # Build the Nuxt app (you can add studio if needed)
-RUN npm run --workspace=nuxt-app build
+RUN npm run --workspace=nuxt-app generate
 
 # Production stage: serve with Caddy
 FROM caddy:2-alpine
 
-RUN cat > /etc/caddy/Caddyfile <<EOF
-:80 {
-  root * /app
-  try_files {path} /index.html
-  file_server
-}
-EOF
+COPY Caddyfile /etc/caddy/Caddyfile
 
 # Copy static output from the build stage
 COPY --from=build /app/nuxt-app/.output/public /app

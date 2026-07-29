@@ -48,7 +48,6 @@ const initMap = (): void => {
     const openInGmaps = (): void => {
       window.open(gmapsUrl, '_blank', 'noopener,noreferrer')
     }
-    // Both the pin and its (interactive) label trigger the same action.
     marker.on('click', openInGmaps)
     marker.getTooltip()?.on('click', openInGmaps)
 
@@ -62,7 +61,7 @@ const initMap = (): void => {
   }
 }
 
-// Leaflet is loaded async via CDN — poll briefly until window.L is ready.
+// Leaflet is loaded async via CDN - poll briefly until window.L is ready.
 const waitForLeaflet = (attempts = 0): void => {
   if (window.L) {
     initMap()

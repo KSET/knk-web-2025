@@ -1,6 +1,4 @@
 <script setup>
-navigateTo('/', { redirectCode: 301 })
-
 import { ref } from 'vue'
 import Footer from '~/components/Footer.vue'
 import Schedule from '~/components/Schedule.vue'

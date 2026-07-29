@@ -58,6 +58,18 @@
     "title": "kampiranje",
     "info": "kamp"
   },
+  "notFound": {
+    "title": "izgubljen/a?",
+    "text": "Ova stranica ne postoji - možda je otplutala. Probaj nešto od ovoga:",
+    "home": "natrag na naslovnicu",
+    "tickets": "ulaznice",
+    "lineup": "izvođači",
+    "festival": "o festivalu"
+  },
+  "error": {
+    "title": "ups, nešto je puklo",
+    "text": "Dogodila se greška na našoj strani. Pokušaj ponovno ili kreni odavde:"
+  },
   "footer": {
     "allRightsReserved": "Sva prava pridržana © 2026",
     "studentUnion": "Savez studenata FER-a",
@@ -66,7 +78,42 @@
   },
   "meta": {
     "title": "KSET na Krku",
-    "description": "KSET na Krku četverodnevni je festival, organiziran od strane Saveza studenata Fakulteta elektrotehnike i računarstva (poznatijeg kao KSET), koji promiče kulturu i neformalnu edukaciju te aktivno druženje uz razmjenu znanja i suradnju mladih."
+    "description": "KSET na Krku četverodnevni je festival, organiziran od strane Saveza studenata Fakulteta elektrotehnike i računarstva (poznatijeg kao KSET), koji promiče kulturu i neformalnu edukaciju te aktivno druženje uz razmjenu znanja i suradnju mladih.",
+    "pages": {
+      "tickets": {
+        "title": "Ulaznice",
+        "description": "Kupi ulaznice za KSET na Krku."
+      },
+      "festival": {
+        "title": "O festivalu",
+        "description": "Sve o festivalu KSET na Krku: program, lokacija i sve što trebaš znati prije dolaska."
+      },
+      "lineup": {
+        "title": "Izvođači",
+        "description": "Pogledaj lineup festivala KSET na Krku - svi izvođači i raspored nastupa."
+      },
+      "workshops": {
+        "title": "Radionice",
+        "description": "Radionice na KSET-u na Krku - neformalna edukacija, razmjena znanja i kreativno druženje."
+      },
+      "camping": {
+        "title": "Kampiranje",
+        "description": "Informacije o kampiranju na festivalu KSET na Krku - smještaj, oprema i pravila kampa."
+      },
+      "gallery": {
+        "title": "Galerija",
+        "description": "Fotografije s prošlih izdanja festivala KSET na Krku."
+      },
+      "rules": {
+        "title": "Pravila",
+        "description": "Pravila ponašanja i uvjeti sudjelovanja na festivalu KSET na Krku."
+      },
+      "privacy": {
+        "title": "Politika privatnosti",
+        "description": "Politika privatnosti i obrada osobnih podataka za festival KSET na Krku."
+      }
+    },
+    "homeTitle": "KSET na Krku - festival kulture i glazbe na otoku Krku"
   },
   "days": {
     "sun": "NED",

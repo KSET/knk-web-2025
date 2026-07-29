@@ -12,15 +12,25 @@ import type { Translation } from '~/types/Translation'
 const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
+
+useSeoMeta({
+  title: () => t('meta.pages.rules.title'),
+  description: () => t('meta.pages.rules.description'),
+  ogTitle: () => `${t('meta.pages.rules.title')} | KSET na Krku`,
+  ogDescription: () => t('meta.pages.rules.description'),
+})
 
 const translations = Object.fromEntries(
-  translationsRaw.value?.map((entry) => [entry.key, { hr: entry.text, en: entry.textEn }]) || [],
+  translationsRaw.value?.map((entry) => [
+    entry.key,
+    { hr: entry.text, en: entry.textEn },
+  ]) || [],
 )
 
 const pravilaBlocks = computed(() => {
   const t = translations?.opcaPravilaText
-  return (locale.value === 'en' && t?.en) ? t.en : t?.hr
+  return locale.value === 'en' && t?.en ? t.en : t?.hr
 })
 
 useHead({

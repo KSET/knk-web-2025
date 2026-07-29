@@ -127,7 +127,6 @@ onUnmounted(() => {
   border-radius: 0;
 }
 
-/* Slide transition */
 .sticky-slide-enter-active,
 .sticky-slide-leave-active {
   transition: transform 0.3s ease, opacity 0.3s ease;

@@ -1,4 +1,12 @@
 <script setup lang="ts">
+const { t } = useI18n()
+useSeoMeta({
+  title: () => t('meta.pages.lineup.title'),
+  description: () => t('meta.pages.lineup.description'),
+  ogTitle: () => `${t('meta.pages.lineup.title')} | KSET na Krku`,
+  ogDescription: () => t('meta.pages.lineup.description'),
+})
+
 import { ref } from 'vue'
 import ArtistCard from '~/components/ArtistCard.vue'
 import Footer from '~/components/Footer.vue'
@@ -14,13 +22,10 @@ const toggleVisibleRight = (): void => {
   visibleRight.value = !visibleRight.value
 }
 
-onMounted(async () => {
-  await artistsStore.fetchArtists()
-})
+await artistsStore.fetchArtists()
 
 const selectedDay = ref('all')
 
-// Day filter pills: an "all" pill plus one per non-empty day group.
 const dayPills = computed(() => {
   const pills = [{ key: 'all', label: '' as string }]
   ;[artistsStore.day1, artistsStore.day2, artistsStore.day3].forEach(
@@ -43,7 +48,10 @@ const visibleArtists = computed(() => {
 
 <template>
   <StickyHeader v-model:drawer-visible="visibleRight" />
-  <Marquee backgroundColor="var(--knk-orange)" textShadowColor="var(--knk-lightblue)" />
+  <Marquee
+    backgroundColor="var(--knk-orange)"
+    textShadowColor="var(--knk-lightblue)"
+  />
 
   <div class="page-header">
     <p class="page-title">{{ $t('nav.lineup') }}</p>
@@ -91,7 +99,10 @@ const visibleArtists = computed(() => {
   </div>
 
   <Footer decor-image="/assets/icons/knjiga.svg" />
-  <Marquee backgroundColor="var(--knk-orange)" textShadowColor="var(--knk-lightblue)" />
+  <Marquee
+    backgroundColor="var(--knk-orange)"
+    textShadowColor="var(--knk-lightblue)"
+  />
 
   <NavDrawer v-model="visibleRight" />
 </template>
@@ -124,7 +135,9 @@ const visibleArtists = computed(() => {
 
   cursor: pointer;
   text-transform: lowercase;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .filter-pill.active {
@@ -254,11 +267,9 @@ const visibleArtists = computed(() => {
 }
 
 @media (max-width: 900px) {
-
   .ticket-buy-button {
     padding: 10px 28px;
   }
-
 }
 
 @media (max-width: 480px) {
