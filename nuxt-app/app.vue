@@ -51,13 +51,27 @@ useHead({
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
-        '@type': 'Organization',
-        name: 'KSET na Krku',
-        url: siteUrl,
-        logo: `${siteUrl}/assets/icons/kset-logo.svg`,
-        sameAs: [
-          'https://www.instagram.com/ksetnakrku/',
-          'https://www.kset.org/',
+        '@graph': [
+          {
+            '@type': 'WebSite',
+            '@id': `${siteUrl}/#website`,
+            name: 'KSET na Krku',
+            alternateName: 'KNK',
+            url: `${siteUrl}/`,
+            inLanguage: 'hr',
+            publisher: { '@id': `${siteUrl}/#organization` },
+          },
+          {
+            '@type': 'Organization',
+            '@id': `${siteUrl}/#organization`,
+            name: 'KSET na Krku',
+            url: siteUrl,
+            logo: `${siteUrl}/assets/icons/kset-logo.svg`,
+            sameAs: [
+              'https://www.instagram.com/ksetnakrku/',
+              'https://www.kset.org/',
+            ],
+          },
         ],
       }),
     },
