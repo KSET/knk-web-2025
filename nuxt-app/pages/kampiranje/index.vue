@@ -1,10 +1,21 @@
 <script setup lang="ts">
 import Footer from '~/components/Footer.vue'
+import WorkshopCard from '~/components/WorkshopCard.vue'
 import type { Translation } from '~/types/Translation'
+import type { Workshop } from '~/types/Workshop'
 import { ref } from 'vue'
 
 const query2 = groq`*[ _type == "translation"]`
 const { data: translationsRaw } = await useSanityQuery<Translation[]>(query2)
+
+const campQuery = groq`*[
+  _type == "workshop" && lower(location) == "kamp"] | order(orderRank asc){
+    ...,
+    "okvirUrl": okvir.asset->url
+  }`
+const { data: campWorkshops } = await useSanityQuery<Workshop[]>(campQuery)
+
+const formLink = await useWorkshopFormLink()
 
 const { locale, t } = useI18n()
 
@@ -74,6 +85,38 @@ const toggleVisibleRight = (): void => {
         <div class="info-text">
           <BlockContent :blocks="infoKampBlocks" class="info-text" />
         </div>
+      </div>
+    </div>
+
+    <div v-if="campWorkshops?.length" class="camp-workshops-section">
+      <div class="camp-workshops-header">
+        <h2 class="camp-workshops-title">{{ $t('camping.activities') }}</h2>
+        <a
+          v-if="formLink"
+          :href="formLink"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="title-button"
+        >
+          {{ $t('workshops.moreInfo') }}
+          <img
+            src="/assets/icons/arrow-right.svg"
+            alt="arrow-right"
+            class="arrow-icon"
+          />
+        </a>
+      </div>
+
+      <p class="camp-note">{{ $t('schedule.campNote') }}</p>
+
+      <div class="workshops-container">
+        <WorkshopCard
+          v-for="(workshop, index) in campWorkshops"
+          :key="workshop._id"
+          :workshop="workshop"
+          :index="index"
+          :form-link="formLink"
+        />
       </div>
     </div>
 
@@ -235,11 +278,99 @@ const toggleVisibleRight = (): void => {
   line-height: 1.6;
 }
 
-@media (max-width: 480px) {
-  .page-title {
-    text-shadow: 2px 3px 0 var(--knk-orange);
-  }
+.camp-workshops-section {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  padding: 2rem 0;
+  text-align: center;
+}
 
+.camp-workshops-header {
+  width: 90%;
+  margin: 0 auto 1rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.camp-workshops-title {
+  font-family: 'Rokkitt', serif;
+  font-size: var(--text-heading);
+  font-weight: 900;
+  color: white;
+  text-shadow: 3px 4px 0 var(--knk-orange);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.camp-note {
+  width: 90%;
+  margin: 0 auto 1.5rem;
+  color: white;
+  font-family: 'Montserrat';
+  font-size: var(--text-body);
+  text-align: left;
+  opacity: 0.85;
+}
+
+.workshops-container {
+  width: 90%;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5rem;
+}
+
+.title-button {
+  font-family: 'Montserrat';
+  color: #fff;
+  padding: 0 0 0.2rem 0;
+  border-radius: 0;
+  text-align: center;
+  cursor: pointer;
+  width: fit-content;
+
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+  text-decoration: none;
+}
+
+.title-button:hover {
+  border-bottom: 1px solid white;
+}
+
+.arrow-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.5rem;
+}
+
+@media (max-width: 1400px) {
+  .workshops-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1000px) {
+  .workshops-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 570px) {
+  .workshops-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
   .info-title {
     padding: 0.2rem 1rem;
   }
@@ -249,16 +380,27 @@ const toggleVisibleRight = (): void => {
     padding: 2rem 0 0 0;
   }
 
+  .workshops-container {
+    width: calc(100% - 2rem);
+  }
+
+  .camp-workshops-title {
+    text-shadow: 2px 3px 0 var(--knk-orange);
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    text-shadow: 2px 3px 0 var(--knk-orange);
+    text-align: left;
+  }
+
   .burger-icon {
     width: 1.8rem;
   }
 
   .page-header {
     padding: 1rem;
-  }
-
-  .page-title {
-    text-align: left;
   }
 }
 </style>

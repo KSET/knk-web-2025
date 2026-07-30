@@ -27,7 +27,11 @@ onUnmounted(() => {
     <div v-show="visible" class="sticky-header">
       <NuxtLink :to="localePath('/tickets')" class="sticky-btn">
         {{ $t('common.buyTickets') }}
-        <img src="/assets/icons/arrow-right-orange.svg" alt="" class="sticky-btn-arrow" />
+        <img
+          src="/assets/icons/arrow-right-orange.svg"
+          alt=""
+          class="sticky-btn-arrow"
+        />
       </NuxtLink>
 
       <div class="sticky-center">
@@ -129,7 +133,9 @@ onUnmounted(() => {
 
 .sticky-slide-enter-active,
 .sticky-slide-leave-active {
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .sticky-slide-enter-from,
@@ -152,7 +158,7 @@ onUnmounted(() => {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 570px) {
   .sticky-header {
     padding: 0.4rem 0.6rem;
   }

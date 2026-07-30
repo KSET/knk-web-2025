@@ -44,7 +44,7 @@ const visibleArtists = computed(() => {
 })
 
 const query4 = groq`*[
-  _type == "workshop" && (!defined(location) || lower(location) != "kamp")] | order(orderRank asc){
+  _type == "workshop"] | order(orderRank asc){
     ...,
     "okvirUrl": okvir.asset->url
   }`
@@ -503,7 +503,6 @@ img {
   margin-left: 0.5rem;
 }
 
-
 .header-wrapper {
   background-color: var(--knk-blue);
   width: 100%;
@@ -613,7 +612,6 @@ img {
   height: 2rem;
   width: auto;
 }
-
 
 .wall-divider {
   background-color: #e55a8e;
@@ -738,9 +736,10 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   gap: 1rem;
   padding: 0 0.5rem;
+  width: 100%;
 }
 
 /* Only one workshop layout is in the DOM at a time; v-if picks it. */
@@ -878,7 +877,6 @@ img {
   justify-content: center;
 }
 
-
 .beach-wrapper {
   background-color: var(--knk-blue);
   height: fit-content;
@@ -955,7 +953,6 @@ img {
   align-items: center;
   justify-content: center;
 }
-
 
 .sea-wrapper {
   background-color: var(--knk-yellow);
@@ -1043,7 +1040,6 @@ img {
   width: 100%;
 }
 
-
 .wall-wrapper,
 .izvodjaci-wrapper,
 .ulaznice-wrapper,
@@ -1115,24 +1111,6 @@ img {
 }
 
 @media (max-width: 480px) {
-  .title-text {
-    text-shadow: 2px 3px 0 var(--knk-orange);
-  }
-
-  .header-top-row {
-    justify-content: space-between;
-    position: static;
-  }
-
-  .header-right-top {
-    position: static;
-    flex-shrink: 0;
-  }
-
-  .header-text {
-    line-height: 2.5rem;
-  }
-
   .ticket-buy-button {
     padding: 8px 20px;
   }
@@ -1170,6 +1148,24 @@ img {
 
   .burger-icon-top {
     height: 1.5rem;
+  }
+
+  .title-text {
+    text-shadow: 2px 3px 0 var(--knk-orange);
+  }
+
+  .header-top-row {
+    justify-content: space-between;
+    position: static;
+  }
+
+  .header-right-top {
+    position: static;
+    flex-shrink: 0;
+  }
+
+  .header-text {
+    line-height: 2.5rem;
   }
 }
 </style>

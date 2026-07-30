@@ -5,6 +5,7 @@ const props = defineProps<{
   workshop: Workshop
   index?: number
   formLink?: string
+  priority?: boolean
 }>()
 
 import { ref } from 'vue'
@@ -24,6 +25,23 @@ const toggleShowDialog = (): void => {
 
 const name = computed(() =>
   locale.value === 'en' && props.workshop.nameEn ? props.workshop.nameEn : props.workshop.name,
+)
+
+const { $urlFor } = useNuxtApp()
+
+const cardWidths = [300, 450, 600, 900]
+
+const cardSrc = computed(() =>
+  $urlFor(props.workshop.imageSmall).width(600).quality(75).auto('format').url(),
+)
+
+const cardSrcset = computed(() =>
+  cardWidths
+    .map(
+      (w) =>
+        `${$urlFor(props.workshop.imageSmall).width(w).quality(75).auto('format').url()} ${w}w`,
+    )
+    .join(', '),
 )
 
 const description = computed(() => {
@@ -70,12 +88,23 @@ function formatFullTimeline(start?: string | Date, end?: string | Date) {
     <div class="workshop-image-wrap">
       <img
         v-if="workshop.imageSmall"
-        :src="$urlFor(workshop.imageSmall).width(800).url()"
-        alt="workshop image"
+        :src="cardSrc"
+        :srcset="cardSrcset"
+        sizes="(max-width: 570px) 100vw, (max-width: 1000px) 45vw, (max-width: 1400px) 30vw, 23vw"
+        :alt="name"
         class="workshop-image"
+        :loading="priority ? 'eager' : 'lazy'"
+        :fetchpriority="priority ? 'high' : 'auto'"
+        decoding="async"
       />
     </div>
-    <img :src="okvir" alt="" class="okvir-frame" />
+    <img
+      :src="okvir"
+      alt=""
+      aria-hidden="true"
+      class="okvir-frame"
+      decoding="async"
+    />
 
     <p class="workshop-name">{{ name }}</p>
 
@@ -102,13 +131,15 @@ function formatFullTimeline(start?: string | Date, end?: string | Date) {
           v-if="workshop.imageLarge"
           :src="
             $urlFor(workshop.imageLarge)
-              .width(1200)
-              .quality(100)
+              .width(960)
+              .quality(80)
               .auto('format')
               .url()
           "
-          alt="workshop image"
+          :alt="name"
           class="workshop-dialog-image"
+          loading="lazy"
+          decoding="async"
         />
       </div>
       <p v-if="workshop.timeline?.start" style="opacity: 0.7">
@@ -194,21 +225,22 @@ a {
 .workshop-card {
   position: relative;
   width: 100%;
+  aspect-ratio: 484.1 / 690.96;
   cursor: pointer;
   overflow: hidden;
   border-radius: 11.5% / 8.1%;
 }
 
 .workshop-image-wrap {
-  position: relative;
-  width: 100%;
+  position: absolute;
+  inset: 0;
   padding-block: 14%;
 }
 
 .workshop-image {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
 }
 

@@ -11,7 +11,7 @@ const toggleVisibleRight = (): void => {
 }
 
 const query = groq`*[
-  _type == "workshop" && (!defined(location) || lower(location) != "kamp")] | order(orderRank asc){
+  _type == "workshop"] | order(orderRank asc){
     ...,
     "okvirUrl": okvir.asset->url
   }`
@@ -33,6 +33,7 @@ useSeoMeta({
 const locationLabel = (location: string) => {
   if (location === 'škola') return t('workshops.school')
   if (location === 'vanjska') return t('workshops.outdoor')
+  if (location === 'kamp') return t('workshops.camp')
   return location
 }
 
@@ -143,8 +144,7 @@ const formLink = await useWorkshopFormLink()
           </div>
         </div>
       </noscript>
-      -->
-      </div>
+      --></div>
 
       <div class="filter-row">
         <div class="filter-pills">
@@ -191,6 +191,7 @@ const formLink = await useWorkshopFormLink()
           :key="workshop._id"
           :workshop="workshop"
           :index="index"
+          :priority="index < 4"
           :form-link="formLink"
         />
       </div>
@@ -429,9 +430,16 @@ const formLink = await useWorkshopFormLink()
   }
 }
 
+@media (max-width: 570px) {
+  .workshops-container {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 480px) {
   .page-title {
     text-shadow: 2px 3px 0 var(--knk-orange);
+    text-align: left;
   }
 
   .burger-icon {
@@ -442,22 +450,12 @@ const formLink = await useWorkshopFormLink()
     padding: 1rem;
   }
 
-  .page-title {
-    text-align: left;
-  }
-
   .page-container {
     width: calc(100% - 2rem);
   }
 
   .workshops-container {
     width: calc(100% - 2rem);
-  }
-}
-
-@media (max-width: 530px) {
-  .workshops-container {
-    grid-template-columns: 1fr;
   }
 }
 </style>
