@@ -11,6 +11,7 @@ const localizedPages: [string, string][] = [
   ['/festival', '/en/festival'],
   ['/lineup', '/en/lineup'],
   ['/workshops', '/en/workshops'],
+  ['/schedule', '/en/schedule'],
   ['/kampiranje', '/en/camping'],
   ['/gallery', '/en/gallery'],
   ['/pravila', '/en/rules'],
@@ -160,7 +161,7 @@ export default defineNuxtConfig({
   },
 
   sitemap: {
-    exclude: ['/schedule', '/en/schedule', '/not-found', '/en/not-found'],
+    exclude: ['/not-found', '/en/not-found'],
     sitemaps: false,
     excludeAppSources: true,
     urls: sitemapUrls,
@@ -179,15 +180,19 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
       failOnError: true,
-      ignore: ['/schedule', '/en/schedule'],
       routes: [
         '/',
+        // Only linked from the nav drawer, which PrimeVue's Portal skips during
+        // SSR, so crawlLinks never reaches it.
+        '/schedule',
         '/not-found',
         '/en/not-found',
         '/en',
         '/en/tickets',
         '/en/festival',
         '/en/lineup',
+        '/en/workshops',
+        '/en/schedule',
         '/en/camping',
         '/en/gallery',
         '/en/rules',

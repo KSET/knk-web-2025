@@ -15,8 +15,6 @@ const { locale } = useI18n()
 const okvirDefault = '/assets/workshops/okvir.svg'
 const okvir = computed(() => props.workshop.okvirUrl ?? okvirDefault)
 
-const popupColor = computed(() => props.workshop.popupColor ?? 'var(--knk-orange)')
-
 const showDialog = ref(false)
 
 const toggleShowDialog = (): void => {
@@ -43,44 +41,6 @@ const cardSrcset = computed(() =>
     )
     .join(', '),
 )
-
-const description = computed(() => {
-  const w = props.workshop
-  const en = [w.descriptionLongEn, w.descriptionShortEn]
-  const hr = [w.descriptionLong, w.descriptionShort]
-  const preferred = locale.value === 'en' ? [...en, ...hr] : [...hr, ...en]
-  return preferred.find((d) => d && d.trim())
-})
-
-function formatFullTimeline(start?: string | Date, end?: string | Date) {
-  if (!start) return '-'
-
-  const startDate = new Date(start)
-  const endDate = end ? new Date(end) : null
-
-  const rawDate = startDate.toLocaleDateString('hr-HR', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-  })
-
-  const cleanDate = rawDate.replace(/\s/g, '')
-
-  const startTime =
-    startDate.toLocaleTimeString('hr-HR', {
-      hour: '2-digit',
-      minute: '2-digit',
-    }) + 'h'
-
-  const endTime = endDate
-    ? endDate.toLocaleTimeString('hr-HR', {
-        hour: '2-digit',
-        minute: '2-digit',
-      }) + 'h'
-    : '?'
-
-  return `${cleanDate} ${startTime} - ${endTime}`
-}
 </script>
 
 <template>
@@ -118,103 +78,12 @@ function formatFullTimeline(start?: string | Date, end?: string | Date) {
     </div>
   </div>
 
-  <Dialog
+  <WorkshopDialog
     v-model:visible="showDialog"
-    modal
-    :header="name"
-    class="workshop-dialog"
-    :style="{ maxWidth: '30rem', backgroundColor: popupColor }"
-  >
-    <template #default>
-      <div class="workshop-dialog-image-wrapper">
-        <img
-          v-if="workshop.imageLarge"
-          :src="
-            $urlFor(workshop.imageLarge)
-              .width(960)
-              .quality(80)
-              .auto('format')
-              .url()
-          "
-          :alt="name"
-          class="workshop-dialog-image"
-          loading="lazy"
-          decoding="async"
-        />
-      </div>
-      <p v-if="workshop.timeline?.start" style="opacity: 0.7">
-        Datum i vrijeme:
-        {{ formatFullTimeline(workshop.timeline.start, workshop.timeline.end) }}
-      </p>
-
-      <p
-        v-if="workshop.location"
-        style="opacity: 0.7; text-transform: capitalize"
-      >
-        Lokacija: {{ workshop.location }}
-      </p>
-
-      <p v-if="description">{{ description }}</p>
-      <p v-else>Nema dodatnih informacija.</p>
-    </template>
-    <template #footer>
-      <a
-        v-if="props.formLink"
-        :href="props.formLink"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="title-button"
-      >
-        {{ $t('common.signUp') }}
-        <img
-          src="/assets/icons/arrow-right.svg"
-          alt="arrow-right"
-          class="arrow-icon"
-        />
-      </a>
-    </template>
-  </Dialog>
+    :workshop="workshop"
+    :form-link="props.formLink"
+  />
 </template>
-
-<style>
-.p-dialog-close-button,
-.p-dialog {
-  color: white !important;
-}
-
-.p-dialog-close-button:not(:disabled):hover {
-  color: black !important;
-}
-
-.workshop-dialog .p-dialog-header {
-  padding-top: 16rem;
-  padding-bottom: 0rem;
-  font-family: 'Rokkitt', serif;
-}
-
-.workshop-dialog {
-  width: 95%;
-  max-width: 30rem;
-  height: fit-content;
-  margin: auto;
-
-  display: flex;
-  flex-direction: column;
-  gap: 0rem;
-
-  border-radius: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.workshop-dialog .p-dialog-content {
-  font-family: 'Montserrat';
-  color: #efe5dd;
-}
-
-.workshop-dialog .p-dialog-content p {
-  color: #efe5dd;
-}
-</style>
 
 <style scoped>
 a {

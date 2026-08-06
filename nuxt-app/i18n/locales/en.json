@@ -5,6 +5,7 @@
     "festival": "Festival",
     "lineup": "Lineup",
     "workshops": "Workshops",
+    "schedule": "Schedule",
     "camping": "Camping",
     "gallery": "Gallery"
   },
@@ -31,7 +32,11 @@
     "camp": "Camp*",
     "campNote": "* Camp workshops are available exclusively with tickets that include camp accommodation",
     "day": "Day",
-    "gates": "Gates"
+    "gates": "Gates",
+    "noWorkshops": "No workshops",
+    "dateAndTime": "Date and time",
+    "location": "Location",
+    "noInfo": "No additional information."
   },
   "gallery": {
     "title": "gallery",
@@ -80,7 +85,7 @@
   },
   "meta": {
     "title": "KSET na Krku",
-    "description": "KSET na Krku is a multi-day festival organized by the Students' Association of the Faculty of Electrical Engineering and Computing (known as KSET), promoting culture, informal education, and active socializing through knowledge exchange and youth collaboration.",
+    "description": "KSET na Krku is a three-day summer festival taking place from 14 to 16 August 2026 in the town of Krk.",
     "pages": {
       "tickets": {
         "title": "Tickets",
@@ -113,6 +118,10 @@
       "privacy": {
         "title": "Privacy policy",
         "description": "Privacy policy and personal data processing for the KSET na Krku festival."
+      },
+      "schedule": {
+        "title": "Schedule",
+        "description": "The KSET na Krku workshop schedule - by day and location."
       }
     },
     "homeTitle": "KSET na Krku - culture and music festival on the island of Krk"

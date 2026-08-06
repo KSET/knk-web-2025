@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { type Artist } from '~/types/Artist'
 import { useSanity, useState } from '#imports'
+import { festivalDateKey } from '~/utils/festivalTime'
 import groq from 'groq'
 
 interface DayGroup {
@@ -91,7 +92,7 @@ export const useArtistsStore = defineStore('artists', () => {
         continue
       }
 
-      const dateKey = `${start.getFullYear()}-${start.getMonth()}-${start.getDate()}`
+      const dateKey = festivalDateKey(start)
 
       if (!grouped.has(dateKey)) {
         grouped.set(dateKey, { start: artist.timeline.start, artists: [] })

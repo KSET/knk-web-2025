@@ -5,9 +5,6 @@
 	root * /app
 	encode zstd gzip
 
-	redir /schedule / 301
-	redir /en/schedule /en 301
-
 	@trailing_slash_query {
 		path_regexp trailing ^(/.+)/$
 		expression {query} != ""

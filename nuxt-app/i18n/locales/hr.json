@@ -5,6 +5,7 @@
     "festival": "festival",
     "lineup": "izvođači",
     "workshops": "radionice",
+    "schedule": "raspored",
     "camping": "kampiranje",
     "gallery": "galerija"
   },
@@ -31,7 +32,11 @@
     "camp": "Kamp*",
     "campNote": "* Radionice u kampu dostupne su isključivo uz ulaznice koje uključuju smještaj u kampu",
     "day": "Dan",
-    "gates": "Vrata"
+    "gates": "Vrata",
+    "noWorkshops": "Nema radionica",
+    "dateAndTime": "Datum i vrijeme",
+    "location": "Lokacija",
+    "noInfo": "Nema dodatnih informacija."
   },
   "gallery": {
     "title": "galerija",
@@ -80,7 +85,7 @@
   },
   "meta": {
     "title": "KSET na Krku",
-    "description": "KSET na Krku četverodnevni je festival, organiziran od strane Saveza studenata Fakulteta elektrotehnike i računarstva (poznatijeg kao KSET), koji promiče kulturu i neformalnu edukaciju te aktivno druženje uz razmjenu znanja i suradnju mladih.",
+    "description": "KSET na Krku trodnevni je ljetni festival koji se održava od 14. do 16. kolovoza 2026. u gradu Krku.",
     "pages": {
       "tickets": {
         "title": "Ulaznice",
@@ -113,6 +118,10 @@
       "privacy": {
         "title": "Politika privatnosti",
         "description": "Politika privatnosti i obrada osobnih podataka za festival KSET na Krku."
+      },
+      "schedule": {
+        "title": "Raspored",
+        "description": "Raspored radionica na festivalu KSET na Krku - po danima i lokacijama."
       }
     },
     "homeTitle": "KSET na Krku - festival kulture i glazbe na otoku Krku"

@@ -13,13 +13,14 @@ export function useDayLabel() {
     const d = new Date(dateStr)
     if (isNaN(d.getTime())) return ''
 
-    const weekday = t(`days.${WEEKDAY_KEYS[d.getDay()]}`)
+    const { month, day, weekday: weekdayIndex } = festivalDateParts(d)
+    const weekday = t(`days.${WEEKDAY_KEYS[weekdayIndex]}`)
 
     if (locale.value === 'en') {
-      return `${weekday} ${EN_MONTHS[d.getMonth()]} ${d.getDate()}`
+      return `${weekday} ${EN_MONTHS[month - 1]} ${day}`
     }
 
-    return `${weekday} ${d.getDate()}.${d.getMonth() + 1}.`
+    return `${weekday} ${day}.${month}.`
   }
 
   return { formatDayLabel }

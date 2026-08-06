@@ -30,12 +30,7 @@ useSeoMeta({
   ogDescription: () => t('meta.pages.workshops.description'),
 })
 
-const locationLabel = (location: string) => {
-  if (location === 'škola') return t('workshops.school')
-  if (location === 'vanjska') return t('workshops.outdoor')
-  if (location === 'kamp') return t('workshops.camp')
-  return location
-}
+const { locationLabel } = useLocationLabel()
 
 const selectedFilter = ref<string>('sve')
 
