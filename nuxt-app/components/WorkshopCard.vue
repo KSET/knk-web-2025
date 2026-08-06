@@ -189,7 +189,7 @@ function formatFullTimeline(start?: string | Date, end?: string | Date) {
 .workshop-dialog .p-dialog-header {
   padding-top: 16rem;
   padding-bottom: 0rem;
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
 }
 
 .workshop-dialog {
@@ -264,7 +264,7 @@ a {
   display: flex;
   align-items: center;
 
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-size: var(--text-title);
   font-weight: bold;
   color: #efe5dd;
@@ -281,7 +281,7 @@ a {
   height: 17%;
   padding: 0 1.1rem;
 
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-weight: bold;
   font-size: var(--text-body);
   color: #efe5dd;

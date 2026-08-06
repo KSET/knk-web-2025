@@ -591,7 +591,7 @@ img {
 }
 
 .header-date-text {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-size: var(--text-heading);
   font-weight: bold;
   color: #efe5dd;
@@ -705,7 +705,7 @@ img {
 }
 
 .filter-pill {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-weight: 700;
   font-size: var(--text-body);
 
@@ -1060,7 +1060,7 @@ img {
 }
 
 .coming-soon-text {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-size: var(--text-subheading);
   font-weight: bold;
   color: white;

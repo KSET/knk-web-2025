@@ -209,7 +209,7 @@ const galleryTypeLabel = (type: string) => {
   flex-shrink: 0;
   margin-top: 0.5rem;
   text-align: right;
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-size: var(--text-body);
   color: #efe5dd;
 }
@@ -260,7 +260,7 @@ const galleryTypeLabel = (type: string) => {
 }
 
 .year-button {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-size: var(--text-title);
   font-weight: 700;
   padding: 0.5rem 1.75rem;
@@ -279,7 +279,7 @@ const galleryTypeLabel = (type: string) => {
 }
 
 .gallery-title {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-size: var(--text-subheading);
   font-weight: 600;
   color: #efe5dd;

@@ -25,7 +25,7 @@ const switchLocalePath = useSwitchLocalePath()
 }
 
 .lang-link {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-weight: 700;
   font-size: var(--text-body);
   color: var(--knk-orange);

@@ -92,7 +92,7 @@ const toggleShowDialog = (): void => {
 .p-dialog-header {
   padding-top: 16rem;
   padding-bottom: 0rem;
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
 }
 
 .artist-dialog {
@@ -176,7 +176,7 @@ const toggleShowDialog = (): void => {
 }
 
 .artist-name {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-size: var(--text-subheading);
   font-weight: bold;
   margin: 0;

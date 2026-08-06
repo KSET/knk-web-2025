@@ -107,7 +107,7 @@ const navItems = [
 }
 
 .drawer-text {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-size: var(--text-title);
   text-align: center;
   margin: 0;

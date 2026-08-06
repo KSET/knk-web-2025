@@ -123,7 +123,7 @@ const visibleArtists = computed(() => {
 }
 
 .filter-pill {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-weight: 700;
   font-size: var(--text-body);
 
@@ -220,7 +220,7 @@ const visibleArtists = computed(() => {
 }
 
 .coming-soon-text {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-size: var(--text-subheading);
   font-weight: bold;
   color: white;

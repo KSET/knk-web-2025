@@ -89,7 +89,7 @@ const bio = computed(() =>
 .p-dialog-header {
   padding-top: 16rem;
   padding-bottom: 0rem;
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
 }
 
 .artist-dialog {
@@ -186,7 +186,7 @@ const bio = computed(() =>
 }
 
 .artist-name {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-size: var(--text-title);
   text-align: center;
   margin-top: 0.25rem;

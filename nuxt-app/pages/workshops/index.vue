@@ -356,7 +356,7 @@ const formLink = await useWorkshopFormLink()
 }
 
 .filter-pill {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-weight: 700;
   font-size: var(--text-body);
 

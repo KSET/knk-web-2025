@@ -166,7 +166,7 @@ const toggleVisibleRight = (): void => {
 }
 
 .info-title {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-size: var(--text-heading);
   font-weight: 900;
   color: white;

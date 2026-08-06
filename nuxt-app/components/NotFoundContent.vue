@@ -95,7 +95,7 @@ const links = [
 }
 
 .notfound-title {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-size: var(--text-subheading);
   font-weight: bold;
   color: var(--knk-yellow);
@@ -120,7 +120,7 @@ const links = [
 }
 
 .notfound-link {
-  font-family: 'Rockwell', serif;
+  font-family: 'Rokkitt', serif;
   font-weight: 700;
   font-size: var(--text-body);
   text-transform: lowercase;
