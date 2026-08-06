@@ -1,13 +1,23 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { type Workshop } from '~/types/Workshop'
+import { type Workshop, type WorkshopTimeslot } from '~/types/Workshop'
 import { useSanity, useState } from '#imports'
-import { festivalDateKey } from '~/utils/festivalTime'
+import { festivalDateKeyToISO } from '~/utils/festivalTime'
+import {
+  timeslotDayKey,
+  timeslotSortKey,
+  workshopTimeslots,
+} from '~/composables/useWorkshopTimeslots'
 import groq from 'groq'
+
+export interface WorkshopOccurrence {
+  workshop: Workshop
+  slot: WorkshopTimeslot
+}
 
 export interface WorkshopDayGroup {
   date: string
-  workshops: Workshop[]
+  occurrences: WorkshopOccurrence[]
 }
 
 export const useWorkshopsStore = defineStore('workshops', () => {
@@ -45,7 +55,6 @@ export const useWorkshopsStore = defineStore('workshops', () => {
         applyWorkshops(workshops)
       } catch (err: any) {
         error.value = err
-        // Prerender must fail loudly rather than ship an empty schedule.
         if (import.meta.server) throw err
       } finally {
         loading.value = false
@@ -56,8 +65,6 @@ export const useWorkshopsStore = defineStore('workshops', () => {
     return inFlight
   }
 
-  // A transient Sanity blip would otherwise fail `nuxt generate` (failOnError)
-  // and block the whole deploy, so give the CDN a couple of chances at build time.
   const fetchWithRetry = async (query: string) => {
     const sanity = useSanity()
     const attempts = import.meta.server ? 3 : 1
@@ -80,43 +87,42 @@ export const useWorkshopsStore = defineStore('workshops', () => {
   const applyWorkshops = (workshops: Workshop[]) => {
     all.value = workshops ?? []
 
-    const grouped = new Map<string, WorkshopDayGroup>()
+    const grouped = new Map<string, WorkshopOccurrence[]>()
 
     for (const workshop of workshops ?? []) {
-      if (!workshop.timeline?.start) continue
+      const slots = workshopTimeslots(workshop)
 
-      const start = new Date(workshop.timeline.start)
-
-      if (isNaN(start.getTime())) {
-        console.warn('Invalid date:', workshop.timeline.start)
-        continue
+      if (!slots.length && (workshop.timeslots?.length || workshop.timeline)) {
+        console.warn('Workshop has no usable date:', workshop.name)
       }
 
-      const dateKey = festivalDateKey(start)
+      for (const slot of slots) {
+        const dateKey = timeslotDayKey(slot.start)
 
-      if (!grouped.has(dateKey)) {
-        grouped.set(dateKey, { date: workshop.timeline.start, workshops: [] })
+        if (!grouped.has(dateKey)) grouped.set(dateKey, [])
+        grouped.get(dateKey)!.push({ workshop, slot })
       }
-      grouped.get(dateKey)!.workshops.push(workshop)
     }
 
-    days.value = [...grouped.values()]
-      .map((day) => ({
-        // The day label only needs a date, but sorting needs the earliest start.
-        date: day.workshops.reduce(
-          (earliest, w) =>
-            new Date(w.timeline!.start) < new Date(earliest)
-              ? w.timeline!.start
-              : earliest,
-          day.date,
-        ),
-        // orderRank is authoring order; a timetable has to read chronologically.
-        workshops: [...day.workshops].sort(
-          (a, b) =>
-            new Date(a.timeline!.start).getTime() -
-            new Date(b.timeline!.start).getTime(),
-        ),
-      }))
+    days.value = [...grouped.entries()]
+      .flatMap(([dateKey, occurrences]) => {
+        const date = festivalDateKeyToISO(dateKey)
+
+        if (!date) {
+          console.warn('Invalid date key:', dateKey)
+          return []
+        }
+
+        return [
+          {
+            date,
+            occurrences: [...occurrences].sort(
+              (a, b) =>
+                timeslotSortKey(a.slot.start) - timeslotSortKey(b.slot.start),
+            ),
+          },
+        ]
+      })
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
   }
 

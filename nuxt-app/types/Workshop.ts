@@ -1,5 +1,10 @@
 import type { ImageAsset } from '@sanity/types'
 
+export interface WorkshopTimeslot {
+  start: string
+  end?: string
+}
+
 export interface Workshop {
   _id: string
   _type: 'workshop'
@@ -10,6 +15,7 @@ export interface Workshop {
     start: string
     end: string
   }
+  timeslots?: WorkshopTimeslot[]
   location: 'škola' | 'kamp' | 'vanjska'
   popupColor?: string
   imageLarge?: ImageAsset

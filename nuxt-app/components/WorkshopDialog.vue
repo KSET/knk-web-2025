@@ -35,8 +35,6 @@ const description = computed(() => {
   return preferred.find((d) => d && d.trim())
 })
 
-// Pinned to festival time so the dialog agrees with the card that opened it,
-// and so the prerendered text survives hydration outside the build zone.
 const formatTime = (iso: string) =>
   new Date(iso).toLocaleTimeString('hr-HR', {
     hour: '2-digit',
@@ -44,23 +42,16 @@ const formatTime = (iso: string) =>
     timeZone: FESTIVAL_TIME_ZONE,
   })
 
-// e.g. "PET 14.8. · 11:00 - 13:00"
-const dayAndTime = computed(() => {
-  const tl = props.workshop?.timeline
-  if (!tl?.start) return ''
+const dayAndTimes = computed(() => {
+  if (!props.workshop) return []
 
-  const day = formatDayLabel(tl.start)
-  const date = new Date(tl.start).toLocaleDateString('hr-HR', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    timeZone: FESTIVAL_TIME_ZONE,
+  return workshopTimeslots(props.workshop).map((slot) => {
+    const time = slot.end
+      ? `${formatTime(slot.start)} - ${formatTime(slot.end)}`
+      : formatTime(slot.start)
+
+    return `${formatDayLabel(slot.start)} · ${time}`
   })
-  const time = tl.end
-    ? `${formatTime(tl.start)} - ${formatTime(tl.end)}`
-    : formatTime(tl.start)
-
-  return `${day} ${date.replace(/\s/g, '')} · ${time}`
 })
 </script>
 
@@ -90,9 +81,17 @@ const dayAndTime = computed(() => {
         />
       </div>
 
-      <p v-if="dayAndTime" style="opacity: 0.7">
-        {{ $t('schedule.dateAndTime') }}: {{ dayAndTime }}
-      </p>
+      <div v-if="dayAndTimes.length" style="opacity: 0.7">
+        <p v-if="dayAndTimes.length === 1">
+          {{ $t('schedule.dateAndTime') }}: {{ dayAndTimes[0] }}
+        </p>
+        <template v-else>
+          <p>{{ $t('schedule.datesAndTimes') }}:</p>
+          <p v-for="line in dayAndTimes" :key="line" class="timeslot-line">
+            {{ line }}
+          </p>
+        </template>
+      </div>
 
       <p v-if="workshop?.location" style="opacity: 0.7">
         {{ $t('schedule.location') }}: {{ locationLabel(workshop.location) }}
@@ -121,7 +120,6 @@ const dayAndTime = computed(() => {
   </Dialog>
 </template>
 
-<!-- PrimeVue internals can only be reached from an unscoped block. -->
 <style>
 .p-dialog-close-button,
 .p-dialog {
@@ -205,5 +203,9 @@ a {
 .arrow-icon {
   height: 1rem;
   margin-left: 0.5rem;
+}
+
+.timeslot-line {
+  padding-left: 1rem;
 }
 </style>

@@ -1,6 +1,3 @@
-// Festival dates are authored in local time but stored as UTC, and day grouping
-// runs at prerender time in whatever zone the build container happens to use.
-// These read the parts in festival time so the output does not depend on it.
 export const FESTIVAL_TIME_ZONE = 'Europe/Zagreb'
 
 const partsFormatter = new Intl.DateTimeFormat('en-US', {
@@ -23,9 +20,9 @@ const WEEKDAY_INDEX: Record<string, number> = {
 
 export interface FestivalDateParts {
   year: number
-  month: number // 1-12, unlike Date#getMonth
+  month: number
   day: number
-  weekday: number // 0-6, matching Date#getDay
+  weekday: number
 }
 
 export const festivalDateParts = (date: Date): FestivalDateParts => {
@@ -41,8 +38,14 @@ export const festivalDateParts = (date: Date): FestivalDateParts => {
   }
 }
 
-// Stable per-calendar-day key in festival time.
 export const festivalDateKey = (date: Date): string => {
   const { year, month, day } = festivalDateParts(date)
   return `${year}-${month}-${day}`
+}
+
+export const festivalDateKeyToISO = (key: string): string | null => {
+  const [year, month, day] = key.split('-').map(Number)
+  const date = new Date(Date.UTC(year, month - 1, day, 12))
+
+  return isNaN(date.getTime()) ? null : date.toISOString()
 }

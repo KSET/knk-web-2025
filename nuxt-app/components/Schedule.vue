@@ -11,23 +11,14 @@ const { locationLabel } = useLocationLabel()
 const workshopsStore = useWorkshopsStore()
 await workshopsStore.fetchWorkshops()
 
-// Column order is fixed by the design, not by what the CMS happens to return.
 const LOCATIONS = WORKSHOP_LOCATIONS
 
-// Compared in festival time so "today" means the day on site, not the day in
-// whichever zone the visitor happens to be browsing from.
-const isSameDay = (a: Date, b: Date) =>
-  festivalDateKey(a) === festivalDateKey(b)
-
-// Prerender has no meaningful "today", and baking the build date into the HTML
-// would make crawlers and first paint disagree with the client. Day 1 renders
-// statically; the real day is picked after mount.
 const selectedDayIndex = ref(0)
 
 onMounted(() => {
-  const today = new Date()
-  const i = workshopsStore.days.findIndex((d) =>
-    isSameDay(new Date(d.date), today),
+  const todayKey = timeslotDayKey(new Date().toISOString())
+  const i = workshopsStore.days.findIndex(
+    (d) => festivalDateKey(new Date(d.date)) === todayKey,
   )
   if (i >= 0) selectedDayIndex.value = i
 })
@@ -52,8 +43,6 @@ const formatTime = (iso?: string) => {
   })
 }
 
-// An unrecognised CMS location gets its own trailing column rather than being
-// folded into škola, where it would sit under the wrong heading with no colour.
 const columnFor = (location: string) => {
   const i = LOCATIONS.indexOf(location as (typeof LOCATIONS)[number])
   return i >= 0 ? i + 1 : LOCATIONS.length + 1
@@ -62,28 +51,22 @@ const columnFor = (location: string) => {
 const knownLocation = (location: string) =>
   LOCATIONS.includes(location as (typeof LOCATIONS)[number])
 
-// Cards align horizontally by start time, so every distinct start in the day
-// becomes one grid row and a location with nothing at that time leaves a gap.
 const placedCards = computed(() => {
-  // The store drops untimed workshops, but this guard keeps a blank start from
-  // becoming a row key that sorts ahead of every real time.
-  const items = (activeDay.value?.workshops ?? []).filter((w) =>
-    formatTime(w.timeline?.start),
+  const items = (activeDay.value?.occurrences ?? []).filter((o) =>
+    formatTime(o.slot.start),
   )
 
-  const rowKeys = [
-    ...new Set(items.map((w) => formatTime(w.timeline?.start))),
-  ].sort()
+  const rowKeys = [...new Set(items.map((o) => formatTime(o.slot.start)))]
 
-  const hasUnknown = items.some((w) => !knownLocation(w.location))
+  const hasUnknown = items.some((o) => !knownLocation(o.workshop.location))
   const columnCount = LOCATIONS.length + (hasUnknown ? 1 : 0)
 
   const taken = new Set<string>()
   let extraRows = 0
 
-  const cards = items.map((w) => {
-    const start = formatTime(w.timeline?.start)
-    const column = columnFor(w.location)
+  const cards = items.map(({ workshop, slot }, index) => {
+    const start = formatTime(slot.start)
+    const column = columnFor(workshop.location)
     let row = rowKeys.indexOf(start) + 1
 
     if (taken.has(`${row}:${column}`)) {
@@ -94,11 +77,12 @@ const placedCards = computed(() => {
     taken.add(`${row}:${column}`)
 
     return {
-      workshop: w,
+      key: `${workshop._id}-${index}`,
+      workshop,
       row,
       column,
       start,
-      end: formatTime(w.timeline?.end),
+      end: formatTime(slot.end),
     }
   })
 
@@ -113,7 +97,6 @@ const openWorkshop = (w: Workshop) => {
   showDialog.value = true
 }
 
-// Same sign-up link the workshops page shows in its popup.
 const formLink = await useWorkshopFormLink()
 </script>
 
@@ -151,7 +134,7 @@ const formLink = await useWorkshopFormLink()
       >
         <button
           v-for="card in placedCards.cards"
-          :key="card.workshop._id"
+          :key="card.key"
           type="button"
           :class="[
             'event-card',
@@ -191,7 +174,6 @@ const formLink = await useWorkshopFormLink()
   padding: 0 1rem 3rem;
 }
 
-/* Day picker, matching the pill filter used on /lineup and /workshops. */
 .filter-pills {
   display: flex;
   flex-wrap: wrap;
@@ -263,7 +245,6 @@ const formLink = await useWorkshopFormLink()
   text-transform: lowercase;
 }
 
-/* Rows are start times, columns are locations, so an empty slot stays empty. */
 .time-grid {
   display: grid;
   grid-template-columns: repeat(var(--cols, 3), 1fr);
@@ -302,7 +283,6 @@ const formLink = await useWorkshopFormLink()
   gap: 0;
 
   padding: 0.85rem 0.9rem;
-  /* Slightly darker than the name half, as in the design. */
   background: rgba(0, 0, 0, 0.12);
 
   font-family: 'Rokkitt', serif;
@@ -332,10 +312,6 @@ const formLink = await useWorkshopFormLink()
   overflow-wrap: anywhere;
 }
 
-/*
- * Same location -> colour mapping the CMS uses for each workshop's popupColor,
- * so a card matches the popup it opens. Ink is picked per fill for legibility.
- */
 .loc-škola {
   --card-bg: var(--knk-blue);
   --card-ink: #f9f9f9;
@@ -351,7 +327,6 @@ const formLink = await useWorkshopFormLink()
   --card-ink: var(--black);
 }
 
-/* Fallback for a location the CMS added but the design has no colour for. */
 .loc-unknown {
   --card-bg: var(--knk-blue);
   --card-ink: #f9f9f9;
@@ -389,10 +364,6 @@ const formLink = await useWorkshopFormLink()
     border-radius: 2rem;
   }
 
-  /*
-   * The time axis cannot survive three columns on a phone, so cards fall back
-   * to a single full-width chronological stack.
-   */
   .time-grid {
     display: flex;
     flex-direction: column;
