@@ -365,7 +365,7 @@ const formLink = await useWorkshopFormLink()
 
 .loc-kamp {
   --card-bg: var(--knk-lightblue);
-  --card-ink: var(--black);
+  --card-ink: #fff;
 }
 
 .loc-unknown {

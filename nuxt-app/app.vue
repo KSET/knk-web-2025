@@ -133,6 +133,26 @@ p {
   color: white;
 }
 
+.page-title {
+  font-family: 'Rokkitt', serif;
+  font-size: var(--text-display);
+  font-weight: 900;
+  color: #efe5dd;
+  text-shadow: 3px 4px 0 var(--page-title-shadow, var(--knk-orange));
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    text-shadow: 2px 3px 0 var(--page-title-shadow, var(--knk-orange));
+    text-align: left;
+  }
+}
+
 @media (max-width: 900px) {
   :root {
     --text-title: 1.25rem;

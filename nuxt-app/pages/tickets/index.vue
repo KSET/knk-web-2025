@@ -96,6 +96,7 @@ onMounted(() => {
 
 <style scoped>
 .page-header {
+  --page-title-shadow: var(--knk-blue);
   background-color: var(--knk-orange);
   display: flex;
   justify-content: space-between;
@@ -103,19 +104,6 @@ onMounted(() => {
   align-items: center;
   position: relative;
   padding: 1.5rem 1rem;
-}
-
-.page-title {
-  font-family: 'Rokkitt', serif;
-  font-size: var(--text-display);
-  font-weight: 500;
-  color: #efe5dd;
-  text-shadow: 3px 4px 0 var(--knk-blue);
-  margin: 0;
-  flex: 1;
-  min-width: 0;
-  text-align: center;
-  overflow-wrap: anywhere;
 }
 
 .header-right {
@@ -209,20 +197,12 @@ onMounted(() => {
 }
 
 @media (max-width: 480px) {
-  .page-title {
-    text-shadow: 2px 3px 0 var(--knk-blue);
-  }
-
   .burger-icon {
     width: 1.8rem;
   }
 
   .page-header {
     padding: 1rem;
-  }
-
-  .page-title {
-    text-align: left;
   }
 
   .page-container {

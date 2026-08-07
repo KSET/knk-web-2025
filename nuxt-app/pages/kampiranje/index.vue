@@ -26,15 +26,22 @@ useSeoMeta({
   ogDescription: () => t('meta.pages.camping.description'),
 })
 
-const translations = Object.fromEntries(
-  translationsRaw.value?.map((entry) => [
-    entry.key,
-    { hr: entry.text, en: entry.textEn },
-  ]) || [],
+const translations = computed(() =>
+  Object.fromEntries(
+    translationsRaw.value?.map((entry) => [
+      entry.key,
+      { hr: entry.text, en: entry.textEn },
+    ]) || [],
+  ),
 )
 
 const infoKampBlocks = computed(() => {
-  const t = translations?.infoKampText
+  const t = translations.value?.infoKampText
+  return locale.value === 'en' && t?.en ? t.en : t?.hr
+})
+
+const campNoteBlocks = computed(() => {
+  const t = translations.value?.campNote
   return locale.value === 'en' && t?.en ? t.en : t?.hr
 })
 
@@ -88,6 +95,24 @@ const toggleVisibleRight = (): void => {
       </div>
     </div>
 
+    <div class="reception-hours">
+      <h2 class="reception-title">{{ $t('camping.receptionHours') }}</h2>
+      <ul class="reception-list">
+        <li>
+          <span>13. 8.</span><span>-</span>
+          <span>11:00 {{ $t('camping.receptionTo') }} 21:00</span>
+        </li>
+        <li>
+          <span>14., 15., 16. 8.</span><span>-</span>
+          <span>10:00 {{ $t('camping.receptionTo') }} 18:00</span>
+        </li>
+        <li>
+          <span>17. 8.</span><span>-</span>
+          <span>{{ $t('camping.receptionTo') }} 11:00</span>
+        </li>
+      </ul>
+    </div>
+
     <div v-if="campWorkshops?.length" class="camp-workshops-section">
       <div class="camp-workshops-header">
         <h2 class="camp-workshops-title">{{ $t('camping.activities') }}</h2>
@@ -107,7 +132,9 @@ const toggleVisibleRight = (): void => {
         </a>
       </div>
 
-      <p class="camp-note">{{ $t('schedule.campNote') }}</p>
+      <div v-if="campNoteBlocks" class="camp-note">
+        <BlockContent :blocks="campNoteBlocks" />
+      </div>
 
       <div class="workshops-container">
         <WorkshopCard
@@ -120,15 +147,7 @@ const toggleVisibleRight = (): void => {
       </div>
     </div>
 
-    <div
-      style="
-        display: flex;
-        width: 100%;
-        padding: 0 1rem;
-        position: relative;
-        z-index: 3;
-      "
-    >
+    <div class="map-section">
       <ClientOnly>
         <LocationMap
           :markers="[
@@ -153,6 +172,17 @@ const toggleVisibleRight = (): void => {
 </template>
 
 <style scoped>
+.info-content,
+.reception-hours,
+.camp-workshops-header,
+.camp-note,
+.workshops-container,
+.map-section {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .page-header {
   background-color: var(--knk-blue);
   display: flex;
@@ -160,20 +190,7 @@ const toggleVisibleRight = (): void => {
   gap: 1rem;
   align-items: center;
   position: relative;
-  padding: 1.5rem 1rem;
-}
-
-.page-title {
-  font-family: 'Rokkitt', serif;
-  font-size: var(--text-display);
-  font-weight: 500;
-  color: #efe5dd;
-  text-shadow: 3px 4px 0 var(--knk-orange);
-  margin: 0;
-  flex: 1;
-  min-width: 0;
-  text-align: center;
-  overflow-wrap: anywhere;
+  padding: 1.5rem 5%;
 }
 
 .header-right {
@@ -195,17 +212,15 @@ const toggleVisibleRight = (): void => {
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 2rem 1rem;
-  margin-top: -6rem;
+  margin-top: -2rem;
   overflow: visible;
 }
 
 .info-content {
   position: relative;
   z-index: 1;
-  width: 60%;
-  text-align: center;
-  padding: 3rem 2rem;
+  text-align: left;
+  padding: 3rem 0;
 }
 
 .info-title {
@@ -215,9 +230,6 @@ const toggleVisibleRight = (): void => {
   color: white;
   text-shadow: 3px 4px 0 var(--knk-orange);
   margin: 0 0 1rem 0;
-  border: 3px solid white;
-  display: inline-block;
-  padding: 0.25rem 1.5rem;
 }
 
 .page-wrapper {
@@ -278,17 +290,51 @@ const toggleVisibleRight = (): void => {
   line-height: 1.6;
 }
 
+.reception-hours {
+  position: relative;
+  z-index: 3;
+  text-align: left;
+}
+
+.reception-title {
+  font-family: 'Rokkitt', serif;
+  font-size: var(--text-heading);
+  font-weight: 900;
+  color: white;
+  text-shadow: 3px 4px 0 var(--knk-orange);
+  margin: 0 0 1rem 0;
+  overflow-wrap: anywhere;
+}
+
+.reception-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: white;
+  font-size: var(--text-title);
+  line-height: 1.6;
+
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: start;
+  column-gap: 0.5rem;
+  text-align: left;
+}
+
+.reception-list li {
+  display: contents;
+}
+
 .camp-workshops-section {
   position: relative;
   z-index: 3;
   width: 100%;
   padding: 2rem 0;
-  text-align: center;
+  text-align: left;
 }
 
 .camp-workshops-header {
-  width: 90%;
-  margin: 0 auto 1rem;
+  margin-bottom: 1rem;
 
   display: flex;
   justify-content: space-between;
@@ -308,8 +354,7 @@ const toggleVisibleRight = (): void => {
 }
 
 .camp-note {
-  width: 90%;
-  margin: 0 auto 1.5rem;
+  margin-bottom: 1.5rem;
   color: white;
   font-family: 'Montserrat';
   font-size: var(--text-body);
@@ -317,13 +362,20 @@ const toggleVisibleRight = (): void => {
   opacity: 0.85;
 }
 
-.workshops-container {
-  width: 90%;
-  margin: 0 auto;
+.camp-note :deep(p) {
+  margin: 0;
+}
 
+.workshops-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2.5rem;
+}
+
+.map-section {
+  display: flex;
+  position: relative;
+  z-index: 3;
 }
 
 .title-button {
@@ -371,36 +423,18 @@ const toggleVisibleRight = (): void => {
 }
 
 @media (max-width: 480px) {
-  .info-title {
-    padding: 0.2rem 1rem;
-  }
-
   .info-content {
-    width: 80%;
     padding: 2rem 0 0 0;
   }
 
-  .workshops-container {
-    width: calc(100% - 2rem);
-  }
-
-  .camp-workshops-title {
-    text-shadow: 2px 3px 0 var(--knk-orange);
-  }
-}
-
-@media (max-width: 480px) {
-  .page-title {
-    text-shadow: 2px 3px 0 var(--knk-orange);
-    text-align: left;
-  }
-
+  .camp-workshops-title,
+  .reception-title,
   .burger-icon {
     width: 1.8rem;
   }
 
   .page-header {
-    padding: 1rem;
+    padding: 1rem 5%;
   }
 }
 </style>

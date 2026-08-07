@@ -88,19 +88,6 @@ useHead({
   padding: 1.5rem 1rem;
 }
 
-.page-title {
-  font-family: 'Rokkitt', serif;
-  font-size: var(--text-display);
-  font-weight: 500;
-  color: #efe5dd;
-  text-shadow: 3px 4px 0 var(--knk-orange);
-  margin: 0;
-  flex: 1;
-  min-width: 0;
-  text-align: center;
-  overflow-wrap: anywhere;
-}
-
 .header-right {
   flex-shrink: 0;
   display: flex;
@@ -115,20 +102,12 @@ useHead({
 }
 
 @media (max-width: 480px) {
-  .page-title {
-    text-shadow: 2px 3px 0 var(--knk-orange);
-  }
-
   .burger-icon {
     width: 1.8rem;
   }
 
   .page-header {
     padding: 1rem;
-  }
-
-  .page-title {
-    text-align: left;
   }
 
   .page-container {

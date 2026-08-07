@@ -30,7 +30,6 @@
     "school": "Škola",
     "outdoor": "Vanjske",
     "camp": "Kamp*",
-    "campNote": "* Radionice u kampu dostupne su isključivo uz ulaznice koje uključuju smještaj u kampu",
     "day": "Dan",
     "gates": "Vrata",
     "noWorkshops": "Nema radionica",
@@ -64,7 +63,9 @@
   "camping": {
     "title": "kampiranje",
     "info": "kamp",
-    "activities": "aktivnosti u kampu"
+    "activities": "aktivnosti u kampu",
+    "receptionHours": "radno vrijeme recepcije",
+    "receptionTo": "do"
   },
   "notFound": {
     "title": "izgubljen/a?",

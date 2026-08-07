@@ -30,7 +30,6 @@
     "school": "School",
     "outdoor": "Outdoor",
     "camp": "Camp*",
-    "campNote": "* Camp workshops are available exclusively with tickets that include camp accommodation",
     "day": "Day",
     "gates": "Gates",
     "noWorkshops": "No workshops",
@@ -64,7 +63,9 @@
   "camping": {
     "title": "camping",
     "info": "camp",
-    "activities": "camp activities"
+    "activities": "camp activities",
+    "receptionHours": "reception hours",
+    "receptionTo": "to"
   },
   "notFound": {
     "title": "lost?",
