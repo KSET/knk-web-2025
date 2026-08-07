@@ -115,6 +115,13 @@ const formLink = await useWorkshopFormLink()
     </div>
 
     <div class="panel">
+      <span class="panel-decor panel-decor-tr" aria-hidden="true">
+        <img src="/assets/icons/smokva.svg" alt="" />
+      </span>
+      <span class="panel-decor panel-decor-bl" aria-hidden="true">
+        <img src="/assets/icons/smokva.svg" alt="" />
+      </span>
+
       <ul class="legend">
         <li v-for="entry in legend" :key="entry.location" class="legend-item">
           <span :class="['legend-swatch', `loc-${entry.location}`]" />
@@ -168,10 +175,14 @@ const formLink = await useWorkshopFormLink()
 
 <style scoped>
 .schedule {
+  --decor-size: clamp(5rem, 14vw, 9rem);
+  --decor-hang: min(2rem, calc(var(--decor-size) * 0.22));
+  --decor-gutter: calc(var(--decor-hang) + var(--decor-size) * 0.2);
+
   width: 100%;
   max-width: 75rem;
   margin: 0 auto;
-  padding: 0 1rem 3rem;
+  padding: 0 calc(1rem + var(--decor-gutter)) 3rem;
 }
 
 .filter-pills {
@@ -210,12 +221,40 @@ const formLink = await useWorkshopFormLink()
 }
 
 .panel {
+  position: relative;
   border: 5px solid white;
   border-radius: 3rem;
   padding: 2rem;
 }
 
+.panel-decor {
+  position: absolute;
+  width: var(--decor-size);
+  aspect-ratio: 298 / 353;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.panel-decor img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.panel-decor-tr {
+  top: calc(var(--decor-hang) * -1);
+  right: calc(var(--decor-hang) * -1);
+  transform: rotate(-40deg);
+}
+
+.panel-decor-bl {
+  bottom: calc(var(--decor-hang) * -1);
+  left: calc(var(--decor-hang) * -1);
+}
+
 .legend {
+  position: relative;
+  z-index: 1;
   list-style: none;
   margin: 0 0 2rem;
   padding: 0;
@@ -246,6 +285,8 @@ const formLink = await useWorkshopFormLink()
 }
 
 .time-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(var(--cols, 3), 1fr);
   grid-template-rows: repeat(var(--rows, 1), auto);
@@ -351,6 +392,8 @@ const formLink = await useWorkshopFormLink()
 }
 
 .panel-empty {
+  position: relative;
+  z-index: 1;
   margin: 0;
   text-align: center;
   font-family: 'Rokkitt', serif;
@@ -362,6 +405,10 @@ const formLink = await useWorkshopFormLink()
   .panel {
     padding: 1.25rem;
     border-radius: 2rem;
+  }
+
+  .panel-decor {
+    width: 5rem;
   }
 
   .time-grid {

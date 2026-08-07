@@ -61,26 +61,10 @@ const toggleVisibleRight = (): void => {
 </template>
 
 <style scoped>
-/* Same background treatment as the workshops page. */
 .schedule-bg {
   position: relative;
   background-color: var(--knk-yellow);
   overflow: hidden;
-}
-
-.schedule-bg::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  aspect-ratio: 2500.82 / 915.09;
-  background-image: url('/assets/workshops/sunc.svg');
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-position: center top;
-  pointer-events: none;
-  z-index: 0;
 }
 
 .schedule-wrapper {

@@ -325,6 +325,27 @@ onBeforeUnmount(() => {
           />
         </div>
       </div>
+
+      <div class="home-schedule">
+        <div class="title-text-container">
+          <p class="title-text" style="color: white">
+            {{ $t('schedule.title') }}
+          </p>
+
+          <NuxtLink :to="localePath('/schedule')" style="text-decoration: none">
+            <span class="title-button-blue" style="color: white">
+              {{ $t('common.seeMore') }}
+              <img
+                src="/assets/icons/arrow-right.svg"
+                alt="arrow-right"
+                class="arrow-icon"
+              />
+            </span>
+          </NuxtLink>
+        </div>
+
+        <Schedule />
+      </div>
     </div>
   </div>
 
@@ -780,6 +801,17 @@ img {
 
 .workshops-carousel {
   padding-right: 1rem;
+}
+
+/* Schedule brings its own max-width and horizontal padding; the wall-container
+   already pads the left, so pull it back to stay centered. */
+.home-schedule {
+  margin-top: 3rem;
+  margin-left: -1rem;
+}
+
+.home-schedule .title-text-container {
+  padding-left: 1rem;
 }
 
 .tickets-container {

@@ -182,8 +182,6 @@ export default defineNuxtConfig({
       failOnError: true,
       routes: [
         '/',
-        // Only linked from the nav drawer, which PrimeVue's Portal skips during
-        // SSR, so crawlLinks never reaches it.
         '/schedule',
         '/not-found',
         '/en/not-found',

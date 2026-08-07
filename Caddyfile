@@ -5,6 +5,9 @@
 	root * /app
 	encode zstd gzip
 
+	@trailing_slash_any path_regexp ^(/.+)/$
+	header @trailing_slash_any Cache-Control "max-age=300"
+
 	@trailing_slash_query {
 		path_regexp trailing ^(/.+)/$
 		expression {query} != ""
