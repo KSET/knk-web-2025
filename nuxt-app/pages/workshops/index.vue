@@ -50,23 +50,33 @@ const translations = Object.fromEntries(
   ]) || [],
 )
 
-const workshopsHeaderBlocks = computed(() => {
-  const tr = translations?.workshopsHeaderText
+const workshopsTextBlocks = computed(() => {
+  const tr = translations?.workshopsText
   return locale.value === 'en' && tr?.en ? tr.en : tr?.hr
 })
 
 const formLink = await useWorkshopFormLink()
 
-// loading pretix script (commented out - keep for future use)
-// import { onMounted } from 'vue'
-//
-// onMounted(() => {
-//   const script = document.createElement('script')
-//   script.src = 'https://karte.kset.org/widget/v1.en.js'
-//   script.async = true
-//   script.crossOrigin = 'anonymous'
-//   document.head.appendChild(script)
-// })
+useHead({
+  link: [
+    {
+      rel: 'stylesheet',
+      type: 'text/css',
+      href: 'https://karte.kset.org/kset/knk26-radionice/widget/v2.css',
+      crossorigin: '',
+    },
+  ],
+})
+
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  const script = document.createElement('script')
+  script.src = 'https://karte.kset.org/widget/v2.en.js'
+  script.async = true
+  script.crossOrigin = 'anonymous'
+  document.head.appendChild(script)
+})
 </script>
 
 <template>
@@ -117,29 +127,32 @@ const formLink = await useWorkshopFormLink()
 
     <div class="workshops-wrapper">
       <div class="page-container">
-        <BlockContent :blocks="workshopsHeaderBlocks" class="wall-text" />
+        <BlockContent :blocks="workshopsTextBlocks" class="wall-text" />
+      </div>
 
-        <!-- Pretix ticket widget - commented out, keep for future use
-      <div
-        class="pretix-widget-compat"
-        event="https://karte.kset.org/kset/kset-na-krku-radionice/"
-        single-item-select="button"
-      ></div>
-      <noscript>
-        <div class="pretix-widget">
-          <div class="pretix-widget-info-message">
-            JavaScript is disabled in your browser. To access our ticket shop
-            without JavaScript, please
-            <a
-              target="_blank"
-              rel="noopener"
-              href="https://karte.kset.org/kset/kset-na-krku-radionice/"
-              >click here</a
-            >.
+      <div class="pretix-container">
+        <client-only>
+          <div
+            class="pretix-widget-compat"
+            event="https://karte.kset.org/kset/knk26-radionice/"
+            single-item-select="button"
+          ></div>
+        </client-only>
+        <noscript>
+          <div class="pretix-widget">
+            <div class="pretix-widget-info-message">
+              JavaScript is disabled in your browser. To access our ticket shop
+              without JavaScript, please
+              <a
+                target="_blank"
+                rel="noopener"
+                href="https://karte.kset.org/kset/knk26-radionice/"
+                >click here</a
+              >.
+            </div>
           </div>
-        </div>
-      </noscript>
-      --></div>
+        </noscript>
+      </div>
 
       <div class="filter-row">
         <div class="filter-pills">
@@ -207,7 +220,6 @@ const formLink = await useWorkshopFormLink()
   <NavDrawer v-model="visibleRight" />
 </template>
 
-<!-- Pretix widget styles - commented out, keep for future use
 <style>
 .pretix-widget {
   background-color: white !important;
@@ -218,7 +230,6 @@ const formLink = await useWorkshopFormLink()
   color: gray !important;
 }
 </style>
--->
 
 <style scoped>
 .workshops-bg {
@@ -331,6 +342,12 @@ const formLink = await useWorkshopFormLink()
   width: 90%;
   margin: 0 auto;
   padding: 1rem 0;
+}
+
+.pretix-container {
+  width: 90%;
+  margin: 0 auto;
+  padding-bottom: 1rem;
 }
 
 .filter-row {
@@ -446,6 +463,10 @@ const formLink = await useWorkshopFormLink()
   }
 
   .page-container {
+    width: calc(100% - 2rem);
+  }
+
+  .pretix-container {
     width: calc(100% - 2rem);
   }
 

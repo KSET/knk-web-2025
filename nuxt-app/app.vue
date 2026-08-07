@@ -130,7 +130,7 @@ body {
 }
 
 p {
-  color: #efe5dd;
+  color: white;
 }
 
 @media (max-width: 900px) {
