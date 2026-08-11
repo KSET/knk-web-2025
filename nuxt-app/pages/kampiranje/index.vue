@@ -427,8 +427,6 @@ const toggleVisibleRight = (): void => {
     padding: 2rem 0 0 0;
   }
 
-  .camp-workshops-title,
-  .reception-title,
   .burger-icon {
     width: 1.8rem;
   }
