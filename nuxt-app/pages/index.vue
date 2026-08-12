@@ -229,8 +229,44 @@ onBeforeUnmount(() => {
 
   <div class="prijelaz-hero">
     <img
-      src="/assets/prijelazi/ulaynice-dole.svg"
-      alt="prijelaz-ulaznice-dole"
+      src="/assets/prijelazi/ulaznice-raspored.svg?v=2"
+      alt="prijelaz-ulaznice-raspored"
+    />
+  </div>
+
+  <div class="sea-wrapper">
+    <div class="wall-container">
+      <div class="home-schedule">
+        <div class="title-text-container">
+          <p class="title-text" style="color: white">
+            {{ $t('schedule.title') }}
+          </p>
+
+          <NuxtLink :to="localePath('/schedule')" style="text-decoration: none">
+            <span class="title-button-blue" style="color: white">
+              {{ $t('common.seeMore') }}
+              <img
+                src="/assets/icons/arrow-right.svg"
+                alt="arrow-right"
+                class="arrow-icon"
+              />
+            </span>
+          </NuxtLink>
+        </div>
+
+        <p class="schedule-subtitle">{{ $t('schedule.workshopsSection') }}</p>
+        <Schedule />
+
+        <p class="schedule-subtitle">{{ $t('schedule.artistsSection') }}</p>
+        <ArtistSchedule />
+      </div>
+    </div>
+  </div>
+
+  <div class="prijelaz-hero prijelaz-flipped">
+    <img
+      src="/assets/prijelazi/prijelaz-plaza-more.svg?v=3"
+      alt="prijelaz-raspored-kamp"
     />
   </div>
 
@@ -326,26 +362,6 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
-      <div class="home-schedule">
-        <div class="title-text-container">
-          <p class="title-text" style="color: white">
-            {{ $t('schedule.title') }}
-          </p>
-
-          <NuxtLink :to="localePath('/schedule')" style="text-decoration: none">
-            <span class="title-button-blue" style="color: white">
-              {{ $t('common.seeMore') }}
-              <img
-                src="/assets/icons/arrow-right.svg"
-                alt="arrow-right"
-                class="arrow-icon"
-              />
-            </span>
-          </NuxtLink>
-        </div>
-
-        <Schedule />
-      </div>
     </div>
   </div>
 
@@ -806,12 +822,21 @@ img {
 /* Schedule brings its own max-width and horizontal padding; the wall-container
    already pads the left, so pull it back to stay centered. */
 .home-schedule {
-  margin-top: 3rem;
   margin-left: -1rem;
 }
 
 .home-schedule .title-text-container {
   padding-left: 1rem;
+}
+
+.schedule-subtitle {
+  font-family: 'Rokkitt', serif;
+  font-weight: bold;
+  font-size: var(--text-subheading);
+  text-transform: lowercase;
+  color: white;
+  text-align: center;
+  margin: 2rem 0 1rem;
 }
 
 .tickets-container {

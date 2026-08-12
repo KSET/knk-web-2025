@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import Footer from '~/components/Footer.vue'
 import Schedule from '~/components/Schedule.vue'
+import ArtistSchedule from '~/components/ArtistSchedule.vue'
 
 const { t } = useI18n()
 
@@ -41,7 +42,11 @@ const toggleVisibleRight = (): void => {
     </div>
 
     <div class="schedule-wrapper">
+      <h2 class="section-title">{{ $t('schedule.workshopsSection') }}</h2>
       <Schedule />
+
+      <h2 class="section-title">{{ $t('schedule.artistsSection') }}</h2>
+      <ArtistSchedule />
     </div>
   </div>
 
@@ -77,6 +82,16 @@ const toggleVisibleRight = (): void => {
   gap: 1rem;
   min-height: 40rem;
   padding-top: 2rem;
+}
+
+.section-title {
+  font-family: 'Rokkitt', serif;
+  font-weight: bold;
+  font-size: var(--text-heading);
+  text-transform: lowercase;
+  color: white;
+  text-align: center;
+  margin: 0;
 }
 
 .page-header {
