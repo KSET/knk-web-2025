@@ -18,10 +18,6 @@ const description = computed(() =>
   locale.value === 'en' && props.artist.descriptionEn ? props.artist.descriptionEn : props.artist.description
 )
 
-const bio = computed(() =>
-  locale.value === 'en' && props.artist.bioEn ? props.artist.bioEn : props.artist.bio
-)
-
 const toggleShowDialog = (): void => {
   showDialog.value = !showDialog.value
 }
@@ -56,27 +52,11 @@ const toggleShowDialog = (): void => {
     </div>
   </div>
 
-  <Dialog
+  <ArtistDialog
     v-model:visible="showDialog"
-    modal
-    :header="artist.name"
-    class="artist-dialog"
-    style="max-width: 30rem"
-  >
-    <template #default>
-      <div class="artist-dialog-image-wrapper">
-        <img
-          v-if="artist.image"
-          :src="$urlFor(artist.image).url()"
-          alt="artist image"
-          class="artist-dialog-image"
-        />
-        <img :src="okvirs[(index ?? 0) % 3]" alt="" class="okvir-overlay dialog-okvir" />
-      </div>
-      <p v-if="bio">{{ bio }}</p>
-      <p v-else>Nema dodatnih informacija.</p>
-    </template>
-  </Dialog>
+    :artist="artist"
+    :index="index ?? 0"
+  />
 </template>
 
 <style>
@@ -95,20 +75,6 @@ const toggleShowDialog = (): void => {
   font-family: 'Rokkitt', serif;
 }
 
-.artist-dialog {
-  width: 95%;
-  max-width: 30rem;
-  height: fit-content;
-  margin: auto;
-
-  display: flex;
-  flex-direction: column;
-  gap: 0rem;
-
-  background-color: var(--knk-orange);
-  border-radius: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
 </style>
 
 <style scoped>
@@ -220,32 +186,6 @@ const toggleShowDialog = (): void => {
   width: 1rem;
   height: 1rem;
   margin-left: 0.5rem;
-}
-
-.artist-dialog-image-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 15rem;
-}
-
-.artist-dialog-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0;
-}
-
-.dialog-okvir {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  pointer-events: none;
-  border-radius: 0;
 }
 
 @media (max-width: 900px) {

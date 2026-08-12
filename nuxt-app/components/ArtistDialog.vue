@@ -2,8 +2,15 @@
 import { computed } from 'vue'
 import { type Artist } from '~/types/Artist'
 
+const okvirs = [
+  '/assets/icons/okvir-1.svg',
+  '/assets/icons/okvir-2.svg',
+  '/assets/icons/okvir-3.svg',
+]
+
 const props = defineProps<{
   artist: Artist | null
+  index?: number
 }>()
 
 const visible = defineModel<boolean>('visible', { required: true })
@@ -58,9 +65,16 @@ const dayAndTime = computed(() => {
           loading="lazy"
           decoding="async"
         />
+        <img
+          v-if="index !== undefined"
+          :src="okvirs[index % 3]"
+          alt=""
+          aria-hidden="true"
+          class="dialog-okvir"
+        />
       </div>
 
-      <p v-if="dayAndTime" style="opacity: 0.7">
+      <p v-if="dayAndTime" class="artist-dialog-datetime">
         {{ $t('schedule.dateAndTime') }}: {{ dayAndTime }}
       </p>
 
@@ -102,6 +116,10 @@ const dayAndTime = computed(() => {
 .artist-dialog-schedule .p-dialog-content p {
   color: #efe5dd;
 }
+
+.artist-dialog-schedule .p-dialog-content p.artist-dialog-datetime {
+  color: #fff;
+}
 </style>
 
 <style scoped>
@@ -117,6 +135,17 @@ const dayAndTime = computed(() => {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 0;
+}
+
+.dialog-okvir {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
   border-radius: 0;
 }
 </style>

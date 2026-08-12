@@ -108,7 +108,7 @@ const toggleVisibleRight = (): void => {
         </li>
         <li>
           <span>17. 8.</span><span>-</span>
-          <span>{{ $t('camping.receptionTo') }} 11:00</span>
+          <span>{{ $t('camping.checkout') }} {{ $t('camping.receptionTo') }} 11:00</span>
         </li>
       </ul>
     </div>

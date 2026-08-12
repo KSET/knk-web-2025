@@ -81,7 +81,7 @@ const dayAndTimes = computed(() => {
         />
       </div>
 
-      <div v-if="dayAndTimes.length" style="opacity: 0.7">
+      <div v-if="dayAndTimes.length">
         <p v-if="dayAndTimes.length === 1">
           {{ $t('schedule.dateAndTime') }}: {{ dayAndTimes[0] }}
         </p>
@@ -93,7 +93,7 @@ const dayAndTimes = computed(() => {
         </template>
       </div>
 
-      <p v-if="workshop?.location" style="opacity: 0.7">
+      <p v-if="workshop?.location">
         {{ $t('schedule.location') }}: {{ locationLabel(workshop.location) }}
       </p>
 

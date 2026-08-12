@@ -20,7 +20,7 @@ export function useDayLabel() {
       return `${weekday} ${EN_MONTHS[month - 1]} ${day}`
     }
 
-    return `${weekday} ${day}.${month}.`
+    return `${weekday} ${day}. ${month}.`
   }
 
   return { formatDayLabel }

@@ -7,36 +7,20 @@ defineProps<{
   artists: Artist[]
 }>()
 
-const { locale } = useI18n()
-
 const selectedArtist = ref<Artist | null>(null)
+const selectedIndex = ref(0)
 const showDialog = ref(false)
 
-function openArtist(artist: Artist) {
+function openArtist(artist: Artist, index: number) {
   selectedArtist.value = artist
+  selectedIndex.value = index
   showDialog.value = true
 }
-
-const description = computed(() =>
-  selectedArtist.value
-    ? (locale.value === 'en' && selectedArtist.value.descriptionEn
-        ? selectedArtist.value.descriptionEn
-        : selectedArtist.value.description)
-    : undefined
-)
-
-const bio = computed(() =>
-  selectedArtist.value
-    ? (locale.value === 'en' && selectedArtist.value.bioEn
-        ? selectedArtist.value.bioEn
-        : selectedArtist.value.bio)
-    : undefined
-)
 </script>
 
 <template>
   <div class="artist-container">
-    <div v-for="(artist, index) in artists" :key="artist._id" class="artist-item" @click="openArtist(artist)">
+    <div v-for="(artist, index) in artists" :key="artist._id" class="artist-item" @click="openArtist(artist, index)">
       <div class="artist-image-wrapper">
         <img
           v-if="artist.image"
@@ -52,28 +36,11 @@ const bio = computed(() =>
     </div>
   </div>
 
-  <Dialog
-    v-if="selectedArtist"
+  <ArtistDialog
     v-model:visible="showDialog"
-    modal
-    :header="selectedArtist.name"
-    class="artist-dialog"
-    style="max-width: 30rem"
-  >
-    <template #default>
-      <div class="artist-dialog-image-wrapper">
-        <img
-          v-if="selectedArtist.image"
-          :src="$urlFor(selectedArtist.image).url()"
-          alt="artist image"
-          class="artist-dialog-image"
-        />
-        <img :src="okvirs[artists.indexOf(selectedArtist) % 3]" alt="" class="okvir-overlay dialog-okvir" />
-      </div>
-      <p v-if="bio">{{ bio }}</p>
-      <p v-else>Nema dodatnih informacija.</p>
-    </template>
-  </Dialog>
+    :artist="selectedArtist"
+    :index="selectedIndex"
+  />
 </template>
 
 <style>
@@ -91,21 +58,6 @@ const bio = computed(() =>
   padding-bottom: 0rem;
   font-family: 'Rokkitt', serif;
 }
-
-.artist-dialog {
-  width: 95%;
-  max-width: 30rem;
-  height: fit-content;
-  margin: auto;
-
-  display: flex;
-  flex-direction: column;
-  gap: 0rem;
-
-  background-color: var(--knk-orange);
-  border-radius: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
 </style>
 
 <style scoped>
@@ -113,7 +65,6 @@ const bio = computed(() =>
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  padding-right: 1rem;
   margin-bottom: 2rem;
   margin-top: 1rem;
 }
@@ -133,6 +84,7 @@ const bio = computed(() =>
     scrollbar-width: none;
     -ms-overflow-style: none;
     margin-left: -1rem;
+    margin-right: -1rem;
     padding-left: 1rem;
     padding-right: 1rem;
   }
@@ -192,29 +144,4 @@ const bio = computed(() =>
   margin-top: 0.25rem;
 }
 
-.artist-dialog-image-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 15rem;
-}
-
-.artist-dialog-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0;
-}
-
-.dialog-okvir {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  pointer-events: none;
-  border-radius: 0;
-}
 </style>

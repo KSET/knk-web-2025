@@ -3,7 +3,7 @@
     "home": "Home",
     "tickets": "Tickets",
     "festival": "Festival",
-    "lineup": "Lineup",
+    "lineup": "lineup",
     "workshops": "Workshops",
     "schedule": "Schedule",
     "camping": "Camping",
@@ -68,7 +68,8 @@
     "info": "camp",
     "activities": "camp activities",
     "receptionHours": "reception hours",
-    "receptionTo": "to"
+    "receptionTo": "to",
+    "checkout": "checkout"
   },
   "notFound": {
     "title": "lost?",

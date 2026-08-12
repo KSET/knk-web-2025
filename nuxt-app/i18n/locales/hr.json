@@ -68,7 +68,8 @@
     "info": "kamp",
     "activities": "aktivnosti u kampu",
     "receptionHours": "radno vrijeme recepcije",
-    "receptionTo": "do"
+    "receptionTo": "do",
+    "checkout": "checkout"
   },
   "notFound": {
     "title": "izgubljen/a?",

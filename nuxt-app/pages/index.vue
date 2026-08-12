@@ -507,7 +507,6 @@ img {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding-right: 1rem;
 }
 
 .title-button-blue,
@@ -656,18 +655,6 @@ img {
   height: 1rem;
 }
 
-.wall-wrapper {
-  background-color: var(--knk-orange);
-  height: fit-content;
-  width: 100%;
-
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-
-  margin-bottom: -1px;
-}
-
 .izvodjaci-wrapper {
   background-color: var(--knk-blue);
   height: fit-content;
@@ -701,20 +688,7 @@ img {
 
 .wall-container {
   width: 100%;
-  padding-left: 1rem;
-}
-
-.wall-text {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  font-size: var(--text-title);
-  padding: 1.25rem;
-  margin-right: 1rem;
-  backdrop-filter: blur(6px);
-}
-
-.wall-text :deep(p) {
-  color: inherit;
+  padding: 0 1rem;
 }
 
 .title-text {
@@ -728,7 +702,6 @@ img {
 }
 
 .ulaznice-wrapper .title-text,
-.wall-wrapper .title-text,
 .sea-wrapper .title-text {
   text-shadow: 3px 4px 0 var(--knk-blue);
 }
@@ -737,7 +710,6 @@ img {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  padding-right: 1rem;
   margin-bottom: 0.5rem;
 }
 
@@ -790,6 +762,7 @@ img {
   -ms-overflow-style: none;
   gap: 1rem;
   margin-left: -1rem;
+  margin-right: -1rem;
   padding-left: 1rem;
   padding-right: 1rem;
 }
@@ -815,18 +788,10 @@ img {
   display: flex;
 }
 
-.workshops-carousel {
-  padding-right: 1rem;
-}
-
-/* Schedule brings its own max-width and horizontal padding; the wall-container
-   already pads the left, so pull it back to stay centered. */
+/* Schedule brings its own max-width and symmetric padding, so it centers itself
+   inside the wall-container gutter. */
 .home-schedule {
-  margin-left: -1rem;
-}
-
-.home-schedule .title-text-container {
-  padding-left: 1rem;
+  margin-top: 3rem;
 }
 
 .schedule-subtitle {
@@ -845,7 +810,7 @@ img {
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
-  padding: 40px 1rem;
+  padding: 40px 0;
 }
 
 .ticket-card {
@@ -914,7 +879,7 @@ img {
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 0 1rem 1rem 1rem;
+  padding: 0 0 1rem;
 }
 
 .ticket-buy-button {
@@ -944,14 +909,8 @@ img {
   flex-direction: column;
 }
 
-.beach-container {
-  width: 100%;
-  padding-left: 1rem;
-}
-
 .kamp-image-wrapper {
   position: relative;
-  margin-right: 1rem;
   margin-top: 1rem;
   margin-bottom: 4rem;
 }
@@ -991,7 +950,7 @@ img {
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 0 1rem 2rem 1rem;
+  padding: 0 0 2rem;
 }
 
 .kamp-buy-button {
@@ -1021,11 +980,6 @@ img {
   flex-direction: column;
   padding-top: 2rem;
   padding-bottom: 2rem;
-}
-
-.sea-container {
-  width: 100%;
-  padding-left: 1rem;
 }
 
 .gallery-section-seam {
@@ -1097,7 +1051,6 @@ img {
   width: 100%;
 }
 
-.wall-wrapper,
 .izvodjaci-wrapper,
 .ulaznice-wrapper,
 .beach-wrapper,
@@ -1110,8 +1063,6 @@ img {
 }
 
 .wall-container,
-.beach-container,
-.sea-container,
 .header-container {
   width: 100%;
 }

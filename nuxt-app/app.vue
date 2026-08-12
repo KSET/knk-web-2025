@@ -39,10 +39,10 @@ useSeoMeta({
   ogImageWidth: 1200,
   ogImageHeight: 630,
   ogImageType: 'image/png',
-  ogImageAlt: 'KSET na Krku, 14.-16.8.2026., grad Krk',
+  ogImageAlt: 'KSET na Krku, 14. - 16. 8. 2026., grad Krk',
   twitterCard: 'summary_large_image',
   twitterImage: `${siteUrl}/assets/icons/og-image.png`,
-  twitterImageAlt: 'KSET na Krku, 14.-16.8.2026., grad Krk',
+  twitterImageAlt: 'KSET na Krku, 14. - 16. 8. 2026., grad Krk',
 })
 
 useHead({

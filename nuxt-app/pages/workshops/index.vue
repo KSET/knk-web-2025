@@ -327,7 +327,24 @@ onMounted(() => {
   max-width: 50rem;
   width: 90%;
   margin: 0 auto;
-  padding: 1rem 0;
+  padding: 2rem;
+
+  position: relative;
+  z-index: 1;
+  background-color: var(--knk-blue);
+  border: 5px solid white;
+  border-radius: 3rem;
+}
+
+.page-container :deep(p),
+.page-container :deep(span),
+.page-container :deep(li) {
+  color: #efe5dd;
+}
+
+.page-container :deep(a) {
+  color: #efe5dd;
+  text-decoration: underline;
 }
 
 .pretix-container {
@@ -445,6 +462,9 @@ onMounted(() => {
 
   .page-container {
     width: calc(100% - 2rem);
+    padding: 1.25rem;
+    border-width: 3px;
+    border-radius: 1.5rem;
   }
 
   .pretix-container {
