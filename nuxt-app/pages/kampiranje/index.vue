@@ -151,7 +151,12 @@ const toggleVisibleRight = (): void => {
       <ClientOnly>
         <LocationMap
           :markers="[
-            { label: $t('camping.title'), lat: 45.0354848, lng: 14.576015 },
+            {
+              label: $t('camping.title'),
+              lat: 45.0346413,
+              lng: 14.5756002,
+              url: 'https://www.google.com/maps?q=45.0346413,14.5756002&entry=gps&shh=CAE&lucs=,94297699,94231188,94280568,47071704,94218641,94282134,100813464,94286869,100820247,100822499&g_ep=CAISEjI2LjMyLjUuOTU4MDQ3MzAzMBgAINeCAypdLDk0Mjk3Njk5LDk0MjMxMTg4LDk0MjgwNTY4LDQ3MDcxNzA0LDk0MjE4NjQxLDk0MjgyMTM0LDEwMDgxMzQ2NCw5NDI4Njg2OSwxMDA4MjAyNDcsMTAwODIyNDk5QgJIUg%3D%3D&skid=17a4d375-6317-4fb4-bfa6-82e1b9078e19&g_st=ic',
+            },
             {
               label: `${$t('festival.title')} - OŠ Fran Krsto Frankopan`,
               lat: 45.0281636,
