@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type Artist } from '~/types/Artist'
 import { type GallerySection } from '~/types/GallerySection'
-import { type Ticket } from '~/types/Ticket'
+// import { type Ticket } from '~/types/Ticket'
 import { ref } from 'vue'
 import { useArtistsStore } from '../stores/artists'
 
@@ -60,8 +60,9 @@ const responsiveOptionsGalleryCarousel = [
   },
 ]
 
-const query3 = groq`*[ _type == "ticket"] | order(orderRank)`
-const { data: tickets } = await useSanityQuery<Ticket[]>(query3)
+// Unused while the ulaznice section is hidden (see template).
+// const query3 = groq`*[ _type == "ticket"] | order(orderRank)`
+// const { data: tickets } = await useSanityQuery<Ticket[]>(query3)
 
 const visibleRight = ref(false)
 
@@ -163,12 +164,23 @@ onBeforeUnmount(() => {
     </div>
   </div>
 
+  <!-- Ulaznice section hidden while ticketing is closed, so the transition goes
+  straight from izvodjaci (blue) to raspored (yellow). izvodjaci-raspored.svg is
+  ulaznice-raspored.svg with its orange top recoloured blue. To restore: swap
+  back to ulaynice-gore.svg here, uncomment the section, and re-add the
+  ulaznice-raspored.svg prijelaz below it. -->
   <div class="prijelaz-hero">
-    <img src="/assets/prijelazi/ulaynice-gore.svg" alt="prijelaz-ulaznice" />
+    <img
+      src="/assets/prijelazi/izvodjaci-raspored.svg"
+      alt="prijelaz-izvodjaci-raspored"
+    />
   </div>
 
-  <div class="ulaznice-wrapper">
-    <div class="wall-container">
+  <!-- Ulaznice section: hidden via v-if rather than a comment so the original
+  markup below stays syntactically valid (HTML comments can't nest). Flip to
+  v-if="true" and uncomment the inner block to restore. -->
+  <div v-if="false" class="ulaznice-wrapper">
+    <!-- <div class="wall-container">
       <div class="title-text-container">
         <p class="title-text">{{ $t('home.tickets') }}</p>
 
@@ -224,14 +236,7 @@ onBeforeUnmount(() => {
           </button>
         </NuxtLink>
       </div>
-    </div>
-  </div>
-
-  <div class="prijelaz-hero">
-    <img
-      src="/assets/prijelazi/ulaznice-raspored.svg?v=2"
-      alt="prijelaz-ulaznice-raspored"
-    />
+    </div> -->
   </div>
 
   <div class="sea-wrapper">
@@ -242,7 +247,7 @@ onBeforeUnmount(() => {
             {{ $t('schedule.title') }}
           </p>
 
-          <NuxtLink :to="localePath('/schedule')" style="text-decoration: none">
+          <!-- <NuxtLink :to="localePath('/schedule')" style="text-decoration: none">
             <span class="title-button-blue" style="color: white">
               {{ $t('common.seeMore') }}
               <img
@@ -251,7 +256,7 @@ onBeforeUnmount(() => {
                 class="arrow-icon"
               />
             </span>
-          </NuxtLink>
+          </NuxtLink> -->
         </div>
 
         <p class="schedule-subtitle">{{ $t('schedule.workshopsSection') }}</p>

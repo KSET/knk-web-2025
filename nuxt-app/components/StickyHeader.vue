@@ -25,14 +25,14 @@ onUnmounted(() => {
 <template>
   <Transition name="sticky-slide">
     <div v-show="visible" class="sticky-header">
-      <NuxtLink :to="localePath('/tickets')" class="sticky-btn">
+      <!-- <NuxtLink :to="localePath('/tickets')" class="sticky-btn">
         {{ $t('common.buyTickets') }}
         <img
           src="/assets/icons/arrow-right-orange.svg"
           alt=""
           class="sticky-btn-arrow"
         />
-      </NuxtLink>
+      </NuxtLink> -->
 
       <div class="sticky-center">
         <NuxtLink :to="localePath('/')" class="sticky-title">knk</NuxtLink>

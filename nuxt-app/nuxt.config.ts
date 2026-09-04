@@ -7,11 +7,10 @@ const visualEditingEnabled = process.env.NUXT_SANITY_VISUAL_EDITING === 'true'
 
 const localizedPages: [string, string][] = [
   ['/', '/en'],
-  ['/tickets', '/en/tickets'],
+  // /tickets and /schedule are omitted on purpose: both redirect home now.
   ['/festival', '/en/festival'],
   ['/lineup', '/en/lineup'],
   ['/workshops', '/en/workshops'],
-  ['/schedule', '/en/schedule'],
   ['/kampiranje', '/en/camping'],
   ['/gallery', '/en/gallery'],
   ['/pravila', '/en/rules'],
@@ -34,12 +33,12 @@ export default defineNuxtConfig({
   app: {
     head: {
       link: [
-        {
-          rel: 'stylesheet',
-          type: 'text/css',
-          href: 'https://karte.kset.org/kset/kset-na-krku/widget/v1.css',
-          crossorigin: '',
-        },
+        // {
+        //   rel: 'stylesheet',
+        //   type: 'text/css',
+        //   href: 'https://karte.kset.org/kset/kset-na-krku/widget/v1.css',
+        //   crossorigin: '',
+        // },
         {
           rel: 'stylesheet',
           type: 'text/css',
@@ -49,11 +48,11 @@ export default defineNuxtConfig({
         },
       ],
       script: [
-        {
-          src: 'https://karte.kset.org/widget/v1.en.js',
-          async: true,
-          crossorigin: '',
-        },
+        // {
+        //   src: 'https://karte.kset.org/widget/v1.en.js',
+        //   async: true,
+        //   crossorigin: '',
+        // },
         {
           src: 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
           integrity: 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=',

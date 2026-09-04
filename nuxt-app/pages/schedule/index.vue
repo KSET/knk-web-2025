@@ -1,4 +1,10 @@
 <script setup lang="ts">
+// Schedule is hidden for now, so this route redirects home. Caddy 302s it
+// server-side; this covers dev, where Caddy isn't in play. Delete these three
+// lines to bring the page back — everything below still works.
+const localePath = useLocalePath()
+await navigateTo(localePath('/'), { redirectCode: 302 })
+
 import { ref } from 'vue'
 import Footer from '~/components/Footer.vue'
 import Schedule from '~/components/Schedule.vue'

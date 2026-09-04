@@ -57,26 +57,26 @@ const workshopsTextBlocks = computed(() => {
 
 const formLink = await useWorkshopFormLink()
 
-useHead({
-  link: [
-    {
-      rel: 'stylesheet',
-      type: 'text/css',
-      href: 'https://karte.kset.org/kset/knk26-radionice/widget/v2.css',
-      crossorigin: '',
-    },
-  ],
-})
+// useHead({
+//   link: [
+//     {
+//       rel: 'stylesheet',
+//       type: 'text/css',
+//       href: 'https://karte.kset.org/kset/knk26-radionice/widget/v2.css',
+//       crossorigin: '',
+//     },
+//   ],
+// })
 
-import { onMounted } from 'vue'
+// import { onMounted } from 'vue'
 
-onMounted(() => {
-  const script = document.createElement('script')
-  script.src = 'https://karte.kset.org/widget/v2.en.js'
-  script.async = true
-  script.crossOrigin = 'anonymous'
-  document.head.appendChild(script)
-})
+// onMounted(() => {
+//   const script = document.createElement('script')
+//   script.src = 'https://karte.kset.org/widget/v2.en.js'
+//   script.async = true
+//   script.crossOrigin = 'anonymous'
+//   document.head.appendChild(script)
+// })
 </script>
 
 <template>
@@ -130,7 +130,7 @@ onMounted(() => {
         <BlockContent :blocks="workshopsTextBlocks" class="wall-text" />
       </div>
 
-      <div class="pretix-container">
+      <!-- <div class="pretix-container">
         <client-only>
           <div
             class="pretix-widget-compat"
@@ -152,7 +152,7 @@ onMounted(() => {
             </div>
           </div>
         </noscript>
-      </div>
+      </div> -->
 
       <div class="filter-row">
         <div class="filter-pills">

@@ -89,13 +89,13 @@ const visibleArtists = computed(() => {
       />
     </div>
 
-    <div class="ticket-buy-container">
+    <!-- <div class="ticket-buy-container">
       <NuxtLink :to="localePath('/tickets')" style="text-decoration: none">
         <button class="ticket-buy-button">
           {{ $t('common.buyTickets') }}
         </button>
       </NuxtLink>
-    </div>
+    </div> -->
   </div>
 
   <Footer decor-image="/assets/icons/knjiga.svg" />

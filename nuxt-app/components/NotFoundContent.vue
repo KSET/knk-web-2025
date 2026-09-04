@@ -18,7 +18,7 @@ const textKey = computed(() => (props.generic ? 'error.text' : 'notFound.text'))
 
 const links = [
   { to: '/', key: 'home', primary: true },
-  { to: '/tickets', key: 'tickets', primary: false },
+  // { to: '/tickets', key: 'tickets', primary: false },
   { to: '/lineup', key: 'lineup', primary: false },
   { to: '/festival', key: 'festival', primary: false },
 ]
